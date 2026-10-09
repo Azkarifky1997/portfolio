@@ -2,7 +2,7 @@
 name: Azka Rifky
 role: CX research and service designer
 intro: I design services and products that work for people with very different lives, from first-time borrowers to rural bus passengers.
-photo:
+photo: 1684752387570.jpeg
 photo_alt: Portrait of Azka Rifky
 facts:
   5+ years: designing services and leading research
