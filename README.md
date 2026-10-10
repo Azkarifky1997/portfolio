@@ -43,7 +43,7 @@ slug: rural-loan                      ← the web address: /work/rural-loan/
 summary: One line shown on the card and under the title
 card_role: Short role shown on the home page card
 card_result: Headline result shown on the home page card
-thumbnail: rural-loan-kyc.png         ← picture on the home page card
+thumbnail: rural-loan-kyc.png         ← picture on the home page card (cropped to a wide 16:9 frame)
 hero_image: workshop.jpg              ← optional large picture at the top of the page
 hero_alt: Describe the picture       ← alt text for that picture
 hero_caption: Optional caption
