@@ -29,7 +29,7 @@ My two colleagues and I went to smallholder tea farms in Sri Lanka's Southern Pr
 
 - **Sitting with farmers.** We interviewed farmers in Sinhala, so they could speak freely in their own language. We talked about their living standards, how weather affected their income month by month, how they used loans from the factory and how they repaid them.
 
-![](tea-farmers-interview.jpg "Sitting with farmers during interviews")
+![](Farmer interviews.jpeg "Sitting with farmers during interviews")
 
 - **Riding with leaf collectors.** We rode along with the collectors who visit each farmer, weigh their bagged tea leaves and put a price on them. This showed us a regular, face-to-face link between farmers and the factory.
 
