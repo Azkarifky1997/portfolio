@@ -4,7 +4,7 @@ slug: rural-bus
 summary: Three short test-and-learn studies on three rural bus routes lifted passenger numbers on every route, by up to around 40%.
 card_role: Co-led all three studies, from fieldwork to evaluation
 card_result: Passenger numbers rose on all three routes, by up to around 40% on the strongest, after adjusting for other causes
-thumbnail: bus-result.png
+thumbnail: bus-card.jpg
 snapshot:
   Client: A rural county council in England (anonymised)
   My role: Co-led all three studies with the CEO of the company I worked at, from fieldwork to evaluation. A designer created the campaign materials.
