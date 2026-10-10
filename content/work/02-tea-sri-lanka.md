@@ -38,7 +38,7 @@ My two colleagues and I went to smallholder tea farms in Sri Lanka's Southern Pr
 - **Talking to factory staff.** We spoke with factory staff about how they buy tea from smallholders and how their lending works.
 - **Synthesis.** Afterwards, we synthesised everything on the wall, clustering what we heard into themes, pain points and opportunities, then mapped farmers' journeys across the year.
 
-![](tea-synthesis-wall.jpg "Synthesising the fieldwork")
+![](Synthesis walls .jpeg "Synthesising the fieldwork")
 
 ## What we learned
 
