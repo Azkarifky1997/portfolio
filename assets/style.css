@@ -614,11 +614,136 @@ h3 { font-size: 1.25rem; margin: 2.5rem 0 0.75rem; }
 
 /* ---------- About ---------- */
 
-.about { padding-top: 3rem; display: grid; gap: 2rem; }
-@media (min-width: 48rem) {
-  .about { grid-template-columns: 12rem 1fr; gap: 3rem; }
+.about-page { padding-top: clamp(2.5rem, 7vw, 4rem); }
+.about-section { margin: 0 0 clamp(3.5rem, 9vw, 6rem); }
+.about-section h1 { margin-top: 0; }
+.about-section > h2:first-child,
+.story__text > h2:first-child { margin-top: 0; }
+
+/* Story: text with a photo beside it, alternating sides. On phones the photo sits above. */
+.story { display: grid; gap: 2rem; align-items: center; }
+.story__photo { width: min(80%, 18rem); }
+@media (min-width: 52rem) {
+  .story--photo-right { grid-template-columns: 1fr 22rem; gap: 4rem; }
+  .story--photo-right .story__photo { order: 2; }
+  .story--photo-left { grid-template-columns: 22rem 1fr; gap: 4rem; }
+  .story__photo { width: 100%; }
+  /* Mirror the outline on left-hand photos so the page feels balanced. */
+  .story--photo-left .hero__photo::before { transform: translate(-4%, 4%) rotate(-8deg); }
 }
-.about h2 { font-size: 1.375rem; margin-top: 2.5rem; }
+.story__text h3 { margin-top: 2rem; }
+
+/* "What I always do": numbered cards, two columns on desktop */
+.principles {
+  list-style: none;
+  counter-reset: principle;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+@media (min-width: 48rem) { .principles { grid-template-columns: 1fr 1fr; } }
+.principles li {
+  counter-increment: principle;
+  position: relative;
+  margin: 0;
+  padding: 1.5rem 1.5rem 1.5rem 4.5rem;
+  border: 1px solid var(--rule);
+  border-top: 5px solid var(--ochre);
+  border-radius: 6px;
+  line-height: 1.6;
+}
+.principles li::before {
+  content: counter(principle);
+  position: absolute;
+  left: 1.5rem;
+  top: 1.4rem;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9375rem;
+}
+.principles strong { display: block; margin-bottom: 0.25rem; font-size: 1.0625rem; }
+
+/* UK projects: small cards, two columns on desktop, with text below */
+.projects { margin-top: calc(-1 * clamp(1.5rem, 5vw, 3rem)); }
+.projects > h3 { margin: 0 0 1.25rem; }
+.projects > p { max-width: var(--measure); margin: 0 0 1.25rem; }
+.project-cards {
+  list-style: none;
+  margin: 0 0 2.5rem;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+@media (min-width: 48rem) { .project-cards { grid-template-columns: 1fr 1fr; } }
+.project-cards li {
+  margin: 0;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--rule);
+  border-left: 5px solid var(--ochre);
+  border-radius: 0 6px 6px 0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.project-cards strong { display: block; margin-bottom: 0.3rem; font-size: 1.0625rem; color: var(--text); }
+
+/* Fun facts: small cards with icons, two columns on desktop */
+.fact-cards {
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+@media (min-width: 48rem) { .fact-cards { grid-template-columns: 1fr 1fr; } }
+.fact-cards li {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  background: var(--ochre-tint);
+  border-radius: 6px;
+}
+.fact-cards p { margin: 0; font-size: 0.9375rem; line-height: 1.55; }
+.fact-card__icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--accent);
+}
+
+/* Education and skills: two compact columns */
+.about-columns { display: grid; gap: 2rem; }
+@media (min-width: 48rem) { .about-columns { grid-template-columns: 1fr 1fr; gap: 3rem; } }
+.about-columns h2 { margin: 0 0 1rem; font-size: 1.375rem; }
+.about-columns ul { margin: 0; padding-left: 1.2rem; font-size: 0.9375rem; line-height: 1.6; }
+.about-columns li { margin-bottom: 0.6rem; }
+.about-columns li::marker { color: var(--ochre); }
+
+/* Closing: centred, with buttons */
+.closing {
+  max-width: 40rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: clamp(2rem, 6vw, 3rem) clamp(1.25rem, 5vw, 3rem);
+  text-align: center;
+  background: var(--ochre-tint);
+  border-radius: 6px;
+}
+.closing h2 { margin: 0 0 0.75rem; }
+.closing p { margin: 0 0 1.5rem; }
+.closing__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin: 0 !important; }
 
 /* ---------- Contact and simple pages ---------- */
 

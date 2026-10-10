@@ -12,7 +12,7 @@ site rebuilds and goes live by itself, usually within two minutes.
 | --- | --- |
 | `content/home.md` | Your name, role line, intro, photo, the "About me" text and the three quick facts on the home page |
 | `content/skills.md` | The "What I do" skill cards and the "Tools I use" list on the home page |
-| `content/about.md` | The About page (and its photo) |
+| `content/about.md` | The About page: story sections with photos, principles, fun facts, education and closing |
 | `content/contact.md` | Your email, phone and LinkedIn link |
 | `content/work/` | One file per case study. The number at the start sets the order. |
 | `images/` | Original PNG or JPG pictures. The site makes small, fast copies automatically. |
@@ -84,6 +84,30 @@ Keep the indented snapshot lines indented with two spaces.
 To change the order of case studies, change the numbers at the start of the
 file names. To remove one, delete its file.
 
+## Edit the About page
+
+`content/about.md` is split into sections. Each one starts with a small
+settings block between two `+++` lines, followed by normal text. The notes at
+the top of the file explain every option.
+
+**To add the three About photos:** upload `main-photo.jpg`, `story-photo.jpg`
+and `uk-photo.jpg` to `images/`, then in `content/about.md` describe each
+photo after its `photo_alt:` line, for example:
+
+```
+photo: main-photo.jpg
+photo_alt: Azka smiling at a desk in a bright office
+side: right
+```
+
+Alt text is required: if a photo has none, the site will not update and the
+Actions tab shows a red cross with a message telling you which photo needs it.
+Until a photo is uploaded, its section simply shows the text on its own.
+
+You can change `side: right` to `side: left`, edit any text, add fun facts
+(add an icon name to the `icons:` line too), or copy a whole section to make
+a new one.
+
 ## Edit your skills
 
 Open `content/skills.md`. Each `## Heading` is one card: the heading, then an
@@ -96,7 +120,6 @@ changing the comma-separated `tools:` line.
 There are three places waiting for a picture:
 
 - **Home page photo (in the ochre shape at the top):** in `content/home.md`, change `photo:` to `photo: azka.jpg`. A photo with you in the centre works best, as the edges get rounded off.
-- **About page photo:** in `content/about.md`, change `photo:` to `photo: azka.jpg`
 - **Top of each case study:** in its file, fill in `hero_image:`, `hero_alt:` and
   (optionally) `hero_caption:`
 

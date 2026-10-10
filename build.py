@@ -248,15 +248,6 @@ def placeholder(label, where, css_class=""):
     )
 
 
-def portrait(meta, root, where, image_sizes):
-    """Your photo if one is set, otherwise your initials (and a note in the preview)."""
-    if meta.get("photo"):
-        return image_tag(meta["photo"], meta.get("photo_alt", ""), root, "12rem", image_sizes, lazy=False)
-    return placeholder("your photo", where, "placeholder--round") or (
-        '<div class="monogram" aria-hidden="true">AR</div>'
-    )
-
-
 # Simple line icons for the skills section. Pick one per skill in content/skills.md.
 ICONS = {
     "journey": '<circle cx="5" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 6h8a3 3 0 0 1 0 6H9a3 3 0 0 0 0 6h8"/>',
@@ -266,6 +257,12 @@ ICONS = {
     "systems": '<rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="3" width="6" height="6" rx="1"/><rect x="9" y="15" width="6" height="6" rx="1"/><path d="M6 9v3h12V9M12 12v3"/>',
     "measure": '<path d="M4 20V4"/><path d="M4 20h16"/><path d="M8 16v-4M12 16V8M16 16v-6"/>',
     "workshop": '<circle cx="8" cy="8" r="2.5"/><circle cx="16" cy="8" r="2.5"/><path d="M3.5 19a4.5 4.5 0 0 1 9 0M11.5 19a4.5 4.5 0 0 1 9 0"/>',
+    "gem": '<path d="M6 3h12l3 6-9 12L3 9z"/><path d="M3 9h18M9 3l3 6 3-6M12 21 9 9M12 21l3-12"/>',
+    "home": '<path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/>',
+    "coins": '<ellipse cx="9" cy="7" rx="6" ry="3"/><path d="M3 7v4c0 1.7 2.7 3 6 3s6-1.3 6-3V7"/><path d="M9 14v3c0 1.7 2.7 3 6 3s6-1.3 6-3v-4c0-1.6-2.3-2.8-5.3-3"/>',
+    "bus": '<rect x="4" y="3" width="16" height="14" rx="2"/><path d="M4 11h16M8 17v3M16 17v3"/><circle cx="8" cy="14" r=".5"/><circle cx="16" cy="14" r=".5"/>',
+    "ball": '<circle cx="12" cy="12" r="9"/><path d="m12 7 4 3-1.5 4.5h-5L8 10z"/><path d="M12 3v4M16 10l4.5-1.5M14.5 14.5 17 19M9.5 14.5 7 19M8 10 3.5 8.5"/>',
+    "globe": '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/>',
     "linkedin": '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10.5V16M8 7.5v.01M12 16v-3.5a2 2 0 0 1 4 0V16M12 10.5V16"/>',
     "email": '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/>',
 }
@@ -440,17 +437,96 @@ def case_study_page(study, next_study, image_sizes):
 </nav>"""
 
 
+def parse_settings(text):
+    settings = {}
+    for line in text.splitlines():
+        key, _, value = line.partition(":")
+        if key.strip():
+            settings[key.strip()] = value.strip()
+    return settings
+
+
+def about_section(settings, text, root, image_sizes, index):
+    """Build one section of the About page from its settings and Markdown text."""
+    e = html.escape
+    layout_name = settings.get("layout", "story")
+    text = text.replace("{root}", root)
+    body = render_markdown(text, root, image_sizes)
+
+    if layout_name == "story":
+        photo, name = "", settings.get("photo", "")
+        if name and name in image_sizes:
+            alt = settings.get("photo_alt", "")
+            if not alt:
+                sys.exit(
+                    f"content/about.md: the photo {name} needs alt text. "
+                    "Add a description after photo_alt:"
+                )
+            photo = image_tag(name, alt, root, "(min-width: 52rem) 24rem, calc(100vw - 2rem)",
+                              image_sizes, lazy=index > 0)
+        elif name and PREVIEW:
+            photo = (f'<p class="hero__photo-note"><strong>Space for a photo</strong><br>'
+                     f"Upload <code>{e(name)}</code> to images/</p>")
+        side = "left" if settings.get("side") == "left" else "right"
+        # Same blob shape and teal outline as the photo on the home page.
+        photo_html = (
+            f'<div class="story__photo hero__photo"><div class="hero__blob">{photo}</div></div>'
+            if photo else ""
+        )
+        modifier = f" story--photo-{side}" if photo else ""
+        return f'<section class="about-section story{modifier}">{photo_html}<div class="story__text prose">{body}</div></section>'
+
+    if layout_name == "grid":
+        body = body.replace("<ol>", '<ol class="principles">', 1)
+        return f'<section class="about-section">{body}</section>'
+
+    if layout_name == "projects":
+        body = body.replace("<ul>", '<ul class="project-cards">', 1)
+        return f'<section class="about-section projects">{body}</section>'
+
+    if layout_name == "cards":
+        icons = [i.strip() for i in settings.get("icons", "").split(",") if i.strip()]
+        count = [0]
+
+        def card(match):
+            name = icons[count[0]] if count[0] < len(icons) else "journey"
+            count[0] += 1
+            return f'<li><span class="fact-card__icon">{icon(name, 22)}</span><p>{match.group(1)}</p></li>'
+
+        body = re.sub(r"<li>(.*?)</li>", card, body, flags=re.S)
+        body = body.replace("<ul>", '<ul class="fact-cards">', 1)
+        return f'<section class="about-section">{body}</section>'
+
+    if layout_name == "columns":
+        columns = [c for c in re.split(r"(?=<h2)", body) if c.strip()]
+        inner = "".join(f'<div class="about-columns__col">{c}</div>' for c in columns)
+        return f'<section class="about-section about-columns">{inner}</section>'
+
+    if layout_name == "closing":
+        # The last paragraph's links become buttons: the first filled, the rest outlined.
+        paragraphs = body.rsplit("<p>", 1)
+        if len(paragraphs) == 2 and "<a " in paragraphs[1]:
+            links = re.findall(r'<a href="([^"]+)">(.*?)</a>', paragraphs[1])
+            buttons = "".join(
+                f'<a class="button{" button--secondary" if i else ""}" href="{href}">{label}</a>'
+                for i, (href, label) in enumerate(links)
+            )
+            body = paragraphs[0] + f'<p class="closing__actions">{buttons}</p>'
+        return f'<section class="about-section closing">{body}</section>'
+
+    return f'<section class="about-section prose">{body}</section>'
+
+
 def about_page(meta, body, image_sizes):
     root = "../"
+    parts = re.split(r"^\+\+\+\n(.*?)\n\+\+\+\n", body, flags=re.M | re.S)
+    # parts = [text before first section, settings, text, settings, text, ...]
+    sections = []
+    for i in range(1, len(parts), 2):
+        sections.append(about_section(parse_settings(parts[i]), parts[i + 1], root, image_sizes, len(sections)))
     return f"""
-<div class="wrap">
-  <div class="about">
-    <div class="about__photo">{portrait(meta, root, "content/about.md (photo:)", image_sizes)}</div>
-    <div class="prose">
-      <h1>{html.escape(meta['title'])}</h1>
-{render_markdown(body, root, image_sizes)}
-    </div>
-  </div>
+<div class="wrap about-page">
+{''.join(sections)}
 </div>"""
 
 
