@@ -9,6 +9,7 @@ or change case studies: see README.md.
 """
 
 import datetime
+import hashlib
 import html
 import re
 import shutil
@@ -87,8 +88,12 @@ def load_case_studies():
 
 
 def web_name(name):
-    """A web-safe version of a file name: "Farmer interviews.jpeg" -> "farmer-interviews"."""
-    return re.sub(r"[^a-z0-9]+", "-", Path(name).stem.lower()).strip("-")
+    """A web-safe version of a file name, plus a short fingerprint of the picture:
+    "Farmer interviews.jpeg" -> "farmer-interviews-3fa9c1". When you replace a
+    picture, the fingerprint changes, so browsers fetch the new one straight away."""
+    slug = re.sub(r"[^a-z0-9]+", "-", Path(name).stem.lower()).strip("-")
+    digest = hashlib.sha1((IMAGES / name).read_bytes()).hexdigest()[:6]
+    return f"{slug}-{digest}"
 
 
 def optimise_images():
@@ -159,6 +164,9 @@ def render_markdown(text, root, image_sizes):
         full = f"{root}images/{web_name(name)}-full.webp"
         w, h = image_sizes[name]
         shape = " figure--portrait" if h > w else ""
+        # Photos (JPEGs) are shown smaller than diagrams, which need room for their text.
+        if Path(name).suffix.lower() in (".jpg", ".jpeg"):
+            shape += " figure--photo"
         label = html.escape(caption.split(".")[0]) if caption else "this image"
         return (
             f'\n<figure class="figure{shape}">{img}<figcaption>{html.escape(caption)} '

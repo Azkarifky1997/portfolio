@@ -776,4 +776,8 @@ h3 { font-size: 1.25rem; margin: 2.5rem 0 0.75rem; }
 
 /* Tall (portrait) photos: shown narrower so they don't fill the whole screen */
 .prose > .figure--portrait { max-width: 26rem; }
-.figure--portrait img { width: auto; max-width: 100%; max-height: min(75vh, 40rem); }
+/* Photos: kept small so they support the text rather than dominate it */
+.prose > .figure--photo { max-width: 26rem; }
+.prose > .figure--photo.figure--portrait { max-width: 15rem; }
+.figure--photo { margin: 1.5rem 0 2rem; }
+.figure--portrait img { width: auto; max-width: 100%; max-height: min(60vh, 22rem); }
