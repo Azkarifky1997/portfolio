@@ -53,7 +53,7 @@ layout: story
 
 ## From tea estates to vanilla farms
 
-I grew into the role of Team Lead, Business Design at Innovation Quotient, leading a team of business designers on projects in fintech, insurance, mobile technology and agriculture. Highlights included two long-term agritech projects with GSMA, co-leading the design of Rural Loan, a first loan for vanilla farmers in Papua New Guinea, and designing a repayment journey linking smallholder tea farmers with their tea factory.
+I grew into the role of Team Lead, Business Design at Innovation Quotient, leading a team of business designers on projects in fintech, insurance, mobile technology and agriculture. Highlights included two long-term agritech projects with GSMA, co-leading the design of Rural Loan, a first loan for vanilla farmers in Papua New Guinea, and researching how tea factories lend to smallholder farmers in Sri Lanka, to test whether the same channel could deliver weather-index insurance.
 
 +++
 layout: story
