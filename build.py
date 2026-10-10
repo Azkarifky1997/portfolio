@@ -138,6 +138,16 @@ def render_markdown(text, root, image_sizes):
     def figure(match):
         alt, src, caption = match["alt"], match["src"], match["caption"] or ""
         name = Path(src).name
+        if name not in image_sizes:
+            # Not uploaded yet: a labelled space in the preview, nothing on the live site.
+            print(f"Note: images/{name} is not uploaded yet, so it is left out for now.")
+            note = placeholder(f"a photo ({name})", f"Upload {name} to images/", "figure-placeholder")
+            return f"\n{note}\n" if note else ""
+        if not alt.strip():
+            sys.exit(
+                f"The picture {name} needs alt text: describe it between the [ ] "
+                f"in ![ ]({name} ...)"
+            )
         img = image_tag(
             name, alt, root, "(min-width: 72rem) 64rem, calc(100vw - 2rem)", image_sizes
         )
@@ -263,6 +273,7 @@ ICONS = {
     "bus": '<rect x="4" y="3" width="16" height="14" rx="2"/><path d="M4 11h16M8 17v3M16 17v3"/><circle cx="8" cy="14" r=".5"/><circle cx="16" cy="14" r=".5"/>',
     "ball": '<circle cx="12" cy="12" r="9"/><path d="m12 7 4 3-1.5 4.5h-5L8 10z"/><path d="M12 3v4M16 10l4.5-1.5M14.5 14.5 17 19M9.5 14.5 7 19M8 10 3.5 8.5"/>',
     "globe": '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/>',
+    "leaf": '<path d="M5 19c0-8 5-14 15-15-1 10-7 15-15 15z"/><path d="M5 19 13 11"/>',
     "linkedin": '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10.5V16M8 7.5v.01M12 16v-3.5a2 2 0 0 1 4 0V16M12 10.5V16"/>',
     "email": '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/>',
 }
@@ -306,9 +317,13 @@ def home_page(home, home_body, studies, image_sizes):
     e = html.escape
     cards = []
     for i, s in enumerate(studies):
-        thumb = image_tag(
-            s["thumbnail"], "", "", "(min-width: 48rem) 24rem, 85vw", image_sizes, lazy=True,
-        )
+        if s.get("thumbnail") in image_sizes:
+            thumb = image_tag(
+                s["thumbnail"], "", "", "(min-width: 48rem) 24rem, 85vw", image_sizes, lazy=True,
+            )
+        else:
+            # Card picture not uploaded yet: a plain panel with a leaf mark.
+            thumb = f'<div class="card__image-fallback">{icon("leaf", 40)}</div>'
         cards.append(f"""
       <li class="card">
         <div class="card__image">{thumb}</div>
@@ -406,7 +421,7 @@ def case_study_page(study, next_study, image_sizes):
             + "</figure>"
         )
     else:
-        hero = placeholder("a lead image", f"content/work/{study['file']} (hero_image:)", "case__hero")
+        hero = ""
     body = render_markdown(study["body"], root, image_sizes)
     return f"""
 <article class="case">
@@ -415,7 +430,7 @@ def case_study_page(study, next_study, image_sizes):
     <header class="case__header">
       <p class="eyebrow">Case study</p>
       <h1>{e(study['title'])}</h1>
-      <p class="standfirst">{e(study['summary'])}</p>
+      <p class="standfirst">{e(study.get('intro') or study['summary'])}</p>
     </header>
     {hero}
     <section class="snapshot" aria-labelledby="snapshot-heading">

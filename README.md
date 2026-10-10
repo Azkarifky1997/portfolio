@@ -44,9 +44,6 @@ summary: One line shown on the card and under the title
 card_role: Short role shown on the home page card
 card_result: Headline result shown on the home page card
 thumbnail: rural-loan-kyc.png         ← picture on the home page card (cropped to a wide 16:9 frame)
-hero_image: workshop.jpg              ← optional large picture at the top of the page
-hero_alt: Describe the picture       ← alt text for that picture
-hero_caption: Optional caption
 snapshot:
   My role: ...                        ← each indented line is one row
   Client: ...                            in the snapshot box, in this order
@@ -115,20 +112,12 @@ Open `content/skills.md`. Each `## Heading` is one card: the heading, then an
 The icons you can choose are listed at the top of the file. Edit the tools by
 changing the comma-separated `tools:` line.
 
-## Add your photo, or a lead image on a case study
+## Change your home page photo
 
-There are three places waiting for a picture:
-
-- **Home page photo (in the ochre shape at the top):** in `content/home.md`, change `photo:` to `photo: azka.jpg`. A photo with you in the centre works best, as the edges get rounded off.
-- **Top of each case study:** in its file, fill in `hero_image:`, `hero_alt:` and
-  (optionally) `hero_caption:`
-
-Upload the picture to `images/` first. Photos of you work best roughly square.
-
-Until you add them, the live site shows a circle with your initials instead of
-a photo, and simply leaves out the case study lead image. In the preview on
-your computer, each empty space shows as a dashed box telling you which file
-to edit, so you can see where pictures will go.
+Upload the photo to `images/`, then in `content/home.md` change the `photo:`
+line to its file name and describe it on the `photo_alt:` line. A photo with
+you in the centre works best, as the edges get rounded off. Without a photo,
+the site shows your initials in the ochre shape instead.
 
 You can also add more pictures anywhere inside a case study, using the
 picture line described above.

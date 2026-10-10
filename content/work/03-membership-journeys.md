@@ -5,9 +5,6 @@ summary: Redesigning how students and members join, qualify, upgrade and renew, 
 card_role: Service and UX design
 card_result: In build, with my functional specifications handed to the development team
 thumbnail: membership-pathways.png
-hero_image:
-hero_alt:
-hero_caption:
 snapshot:
   Client: A UK professional body (anonymised)
   My role: Service and UX design: research, process mapping, wireframes and functional specifications

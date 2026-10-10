@@ -5,9 +5,6 @@ summary: Designing a first loan for farmers who had never had a bank account, ID
 card_role: Co-lead, human-centred design partner
 card_result: Launched by MiBank. The pilot gave 355 loans to 330 farmers over 2.5 years, 35% of them women.
 thumbnail: rural-loan-kyc.png
-hero_image:
-hero_alt:
-hero_caption:
 snapshot:
   Project: Rural Loan, a credit product for smallholder vanilla farmers in Madang Province, Papua New Guinea
   Year: 2021 (research and design phase)
