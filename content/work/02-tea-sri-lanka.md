@@ -33,7 +33,7 @@ My two colleagues and I went to smallholder tea farms in Sri Lanka's Southern Pr
 
 - **Riding with leaf collectors.** We rode along with the collectors who visit each farmer, weigh their bagged tea leaves and put a price on them. This showed us a regular, face-to-face link between farmers and the factory.
 
-![](tea-leaf-collector.jpg "A leaf collector weighing bagged tea leaves")
+![](Leaf collector weighing tea leaves.jpeg "A leaf collector weighing bagged tea leaves")
 
 - **Talking to factory staff.** We spoke with factory staff about how they buy tea from smallholders and how their lending works.
 - **Synthesis.** Afterwards, we synthesised everything on the wall, clustering what we heard into themes, pain points and opportunities, then mapped farmers' journeys across the year.
