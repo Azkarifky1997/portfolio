@@ -86,6 +86,11 @@ def load_case_studies():
 # ----------------------------------------------------------------- images
 
 
+def web_name(name):
+    """A web-safe version of a file name: "Farmer interviews.jpeg" -> "farmer-interviews"."""
+    return re.sub(r"[^a-z0-9]+", "-", Path(name).stem.lower()).strip("-")
+
+
 def optimise_images():
     """Make small, fast WebP copies of every picture in images/."""
     CACHE.mkdir(parents=True, exist_ok=True)
@@ -97,8 +102,8 @@ def optimise_images():
             im = im.convert("RGB")
             ratio = im.height / im.width
             sizes[src.name] = (im.width, im.height)
-            targets = [(w, f"{src.stem}-{w}.webp") for w in IMAGE_WIDTHS]
-            targets.append((FULL_WIDTH, f"{src.stem}-full.webp"))
+            targets = [(w, f"{web_name(src.name)}-{w}.webp") for w in IMAGE_WIDTHS]
+            targets.append((FULL_WIDTH, f"{web_name(src.name)}-full.webp"))
             for width, name in targets:
                 dest = CACHE / name
                 if dest.exists() and dest.stat().st_mtime >= src.stat().st_mtime:
@@ -111,7 +116,7 @@ def optimise_images():
 
 
 def image_tag(name, alt, root, sizes_attr, image_sizes, lazy=True):
-    stem = Path(name).stem
+    stem = web_name(name)
     if name not in image_sizes:
         sys.exit(f"Missing picture: images/{name} (check the file name)")
     w, h = image_sizes[name]
@@ -129,7 +134,7 @@ def image_tag(name, alt, root, sizes_attr, image_sizes, lazy=True):
 
 # --------------------------------------------------------------- markdown
 
-FIGURE_LINE = re.compile(r'^!\[(?P<alt>[^\]]*)\]\((?P<src>\S+?)(?:\s+"(?P<caption>[^"]*)")?\)\s*$')
+FIGURE_LINE = re.compile(r'^!\[(?P<alt>[^\]]*)\]\((?P<src>[^")]+?)(?:\s+"(?P<caption>[^"]*)")?\)\s*$')
 
 
 def render_markdown(text, root, image_sizes):
@@ -151,10 +156,12 @@ def render_markdown(text, root, image_sizes):
         img = image_tag(
             name, alt, root, "(min-width: 72rem) 64rem, calc(100vw - 2rem)", image_sizes
         )
-        full = f"{root}images/{Path(name).stem}-full.webp"
+        full = f"{root}images/{web_name(name)}-full.webp"
+        w, h = image_sizes[name]
+        shape = " figure--portrait" if h > w else ""
         label = html.escape(caption.split(".")[0]) if caption else "this image"
         return (
-            f'\n<figure class="figure">{img}<figcaption>{html.escape(caption)} '
+            f'\n<figure class="figure{shape}">{img}<figcaption>{html.escape(caption)} '
             f'<a class="figure__full" href="{full}">View full size'
             f'<span class="visually-hidden">: {label}</span></a></figcaption></figure>\n'
         )

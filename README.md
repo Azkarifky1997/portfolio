@@ -57,7 +57,7 @@ Keep the indented snapshot lines indented with two spaces.
 ## Add a picture with a caption
 
 1. Upload the PNG or JPG into the `images` folder (on GitHub: open `images`,
-   then **Add file → Upload files**). Use a short name with no spaces, such as
+   then **Add file → Upload files**). Any file name works, though short names are easiest, such as
    `bus-timetable.png`.
 2. In the case study, put this on its own line, with an empty line above and below:
 

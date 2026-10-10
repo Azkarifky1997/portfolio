@@ -773,3 +773,7 @@ h3 { font-size: 1.25rem; margin: 2.5rem 0 0.75rem; }
 
 /* Case study photo not uploaded yet (preview only) */
 .figure-placeholder { aspect-ratio: 3 / 2; max-width: var(--wide); margin: 2rem 0 2.5rem; }
+
+/* Tall (portrait) photos: shown narrower so they don't fill the whole screen */
+.prose > .figure--portrait { max-width: 26rem; }
+.figure--portrait img { width: auto; max-width: 100%; max-height: min(75vh, 40rem); }

@@ -5,7 +5,7 @@ summary: Field research with tea farmers and leaf collectors to test whether a t
 intro: Could the tea factory, a relationship farmers already trusted, become the way to protect them from drought?
 card_role: User research partner, team of three
 card_result: Research report, journey maps and recommendations for GSMA and Dialog
-thumbnail: tea-farmers-interview.jpg
+thumbnail: Farmer interviews.jpeg
 snapshot:
   Project: User research for a digital finance and weather-index insurance service for smallholder tea farmers, Southern Province, Sri Lanka
   Year: 2020
@@ -29,16 +29,16 @@ My two colleagues and I went to smallholder tea farms in Sri Lanka's Southern Pr
 
 - **Sitting with farmers.** We interviewed farmers in Sinhala, so they could speak freely in their own language. We talked about their living standards, how weather affected their income month by month, how they used loans from the factory and how they repaid them.
 
-![](Farmer interviews.jpeg "Sitting with farmers during interviews")
+![Two researchers sitting with an elderly tea farmer on the veranda of his home, taking notes on plastic chairs, while a woman watches from the doorway](Farmer interviews.jpeg "Sitting with farmers during interviews")
 
 - **Riding with leaf collectors.** We rode along with the collectors who visit each farmer, weigh their bagged tea leaves and put a price on them. This showed us a regular, face-to-face link between farmers and the factory.
 
-![](Leaf collector weighing tea leaves.jpeg "A leaf collector weighing bagged tea leaves")
+![A tea leaf collector weighing a large mesh sack of freshly picked tea leaves on a hanging digital scale, with a woman standing beside him](Leaf collector weighing tea leaves.jpeg "A leaf collector weighing bagged tea leaves")
 
 - **Talking to factory staff.** We spoke with factory staff about how they buy tea from smallholders and how their lending works.
 - **Synthesis.** Afterwards, we synthesised everything on the wall, clustering what we heard into themes, pain points and opportunities, then mapped farmers' journeys across the year.
 
-![](Synthesis walls .jpeg "Synthesising the fieldwork")
+![A wall of green and pink sticky notes titled Key users and issues, grouped into columns under the headings Farmer and Factory](Synthesis walls .jpeg "Synthesising the fieldwork")
 
 ## What we learned
 
