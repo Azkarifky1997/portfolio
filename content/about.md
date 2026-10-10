@@ -25,7 +25,7 @@ layout: closing  centred block. Links in the last line become buttons.
 
 +++
 layout: story
-photo: main-photo.jpg
+photo: 1684752387570.jpeg
 photo_alt:
 side: right
 +++
@@ -36,7 +36,7 @@ I'm Azka, a CX research and service designer based in the UK. I'm curious by nat
 
 +++
 layout: story
-photo: story-photo.jpg
+photo: 1684752387570.jpeg
 photo_alt:
 side: left
 +++
@@ -57,7 +57,7 @@ I grew into the role of Team Lead, Business Design at Innovation Quotient, leadi
 
 +++
 layout: story
-photo: uk-photo.jpg
+photo: 1684752387570.jpeg
 photo_alt:
 side: right
 +++
