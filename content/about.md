@@ -12,6 +12,7 @@ layout: story    text with an optional photo beside it
                  photo: file name in the images folder
                  photo_alt: describe the photo (required when there is a photo)
                  side: right or left (which side the photo sits on desktop)
+                 width: full (text uses the whole page width; for sections with no photo)
 layout: grid     each numbered item becomes a numbered card. Start each with **Bold title.**
 layout: projects each bullet becomes a small card: **Bold title** then the text.
                  Any paragraphs after the list show below the cards.
@@ -25,9 +26,7 @@ layout: closing  centred block. Links in the last line become buttons.
 
 +++
 layout: story
-photo: 1684752387570.jpeg
-photo_alt: Azka smiling at a café table, wearing a beige zip-up top, with a framed antique map on the wall behind her
-side: right
+width: full
 +++
 
 # Hello, it's lovely to meet you!
@@ -36,9 +35,7 @@ I'm Azka, a CX research and service designer based in the UK. I'm curious by nat
 
 +++
 layout: story
-photo: 1684752387570.jpeg
-photo_alt: Azka smiling at a café table, wearing a beige zip-up top, with a framed antique map on the wall behind her
-side: left
+width: full
 +++
 
 ## Finance by day, jewellery by night
@@ -49,6 +46,7 @@ Then I joined a start-up in Sri Lanka as a business designer and discovered desi
 
 +++
 layout: story
+width: full
 +++
 
 ## From tea estates to vanilla farms
@@ -57,9 +55,7 @@ I grew into the role of Team Lead, Business Design at Innovation Quotient, leadi
 
 +++
 layout: story
-photo: 1684752387570.jpeg
-photo_alt: Azka smiling at a café table, wearing a beige zip-up top, with a framed antique map on the wall behind her
-side: right
+width: full
 +++
 
 ## A new country, the same curiosity

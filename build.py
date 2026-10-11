@@ -504,6 +504,8 @@ def about_section(settings, text, root, image_sizes, index):
             if photo else ""
         )
         modifier = f" story--photo-{side}" if photo else ""
+        if settings.get("width") == "full":
+            modifier += " story--full"
         return f'<section class="about-section story{modifier}">{photo_html}<div class="story__text prose">{body}</div></section>'
 
     if layout_name == "grid":

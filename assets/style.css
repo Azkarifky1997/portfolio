@@ -632,6 +632,13 @@ h3 { font-size: 1.25rem; margin: 2.5rem 0 0.75rem; }
   .story--photo-left .hero__photo::before { transform: translate(-4%, 4%) rotate(-8deg); }
 }
 .story__text h3 { margin-top: 2rem; }
+/* Full-width text section (no photo) */
+.story--full .prose > * { max-width: none; }
+.projects > p { max-width: none; }
+/* Section headings on the About page are a little smaller than elsewhere */
+.about-page h2 { font-size: clamp(1.3rem, 3vw, 1.5rem); }
+.about-page h3 { font-size: 1.125rem; }
+.story--full .prose p { font-size: clamp(1.0625rem, 2.2vw, 1.25rem); line-height: 1.65; }
 
 /* "What I always do": numbered cards, two columns on desktop */
 .principles {
