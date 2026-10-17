@@ -52,6 +52,10 @@ My two colleagues and I went to smallholder tea farms in Sri Lanka's Southern Pr
 >
 > An elderly tea farmer, quoted by GSMA from a fact-finding visit in the Southern tea district
 
+## How our thinking changed
+
+We set out to understand whether farmers would take up weather-index insurance. Riding with leaf collectors and sitting with farmers widened the question: most households shared one basic phone, and many farmers were wary of being sold yet another product. Trust and how the service would be explained and delivered became as important in our thinking as the insurance itself.
+
 ## What we delivered
 
 We handed over a research report, journey maps showing farmers' lives and finances across the year, and recommendations on how a digital finance and insurance service could fit those lives.

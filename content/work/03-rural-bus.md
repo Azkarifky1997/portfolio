@@ -40,6 +40,10 @@ On the second route, research shaped the proposition itself: passengers showed u
 
 ![Three stylised route lines across a rural landscape, each with an icon and label: social and community trips, connecting journeys to trains and buses, and exploring heritage and nature.](bus-routes.png "Three routes, three propositions. Recreated and anonymised.")
 
+## How our thinking changed
+
+Each route started with a proposition we wanted to test, but riding the buses changed one of them entirely. On the route linking two market towns, passengers were using the bus mainly to connect to trains and other buses, so the campaign focused on joined-up journeys rather than the towns themselves. We also chose early not to recommend new buses or timetables, and to look for low-cost changes the council could deliver quickly.
+
 ## Recommendations: quick, cheap and doable
 
 We deliberately avoided recommendations that needed more buses or new timetables. Those take time, money and a lot of processing. Instead, each report set out changes the council could make quickly and at low cost:

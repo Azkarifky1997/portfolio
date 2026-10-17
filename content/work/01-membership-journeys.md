@@ -20,6 +20,10 @@ Members moved between several membership levels, and many steps relied on manual
 
 The answers sat across several teams and systems, so I worked in the open with all of them. I ran workshops and interviews with each department, mapped their processes in shared working documents they could review and correct, and checked with CRM operators and developers what the systems could and could not do. From there I designed end-to-end flows covering what the member sees and what happens behind the screen, then wireframes and functional specifications the developers could build from.
 
+## How our thinking changed
+
+We set out to automate as much as we could. Reviewing feasibility with the CRM and development teams showed that part of the automation would not fit the first release, so I designed it fully and phased it, and kept staff review for unusual cases rather than forcing everything through rules.
+
 ## Key design decisions
 
 ### Let the system do the checking

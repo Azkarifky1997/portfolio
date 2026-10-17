@@ -45,6 +45,10 @@ A loan is not just money. It lands in a life shaped by harvests, safety, gender 
 
 ![Five insight cards, each with an icon: Carrying cash is dangerous. Women often have no money of their own. Income arrives once a season. Many farmers have no ID. Banking is new to most farmers.](rural-loan-insights.png "What we heard from farmers: five insights that shaped the loan. Recreated from memory.")
 
+## How our thinking changed
+
+One early question was whether farmers could apply for the loan through an app themselves. Field research answered it quickly: many farmers had low literacy, little experience of formal finance and often no ID, so a self-service app would have shut most of them out. We shifted to an assisted model, with bank staff applying alongside farmers in their villages, and rethought identity checks around the trading records farmers already had.
+
 ## Key design decisions
 
 ### 1. Use a trusted trading relationship as identity
