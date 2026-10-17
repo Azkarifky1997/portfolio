@@ -70,7 +70,7 @@ layout: projects
 
 ### Some UK projects I've loved
 
-- **Membership journeys for professional bodies** Redesigned how members of two financial professional bodies join, qualify, upgrade and renew, mapping every process, data flow and team behind the website.
+- **Member services for membership organisations** Redesigned how members of two membership organisations join, progress and renew, mapping every process, data flow and team behind the website.
 - **Need states for a global membership body** Ran longitudinal research across four countries to understand what new and long-standing members need, and turned it into a need-state tool the client's teams use to plan.
 - **Getting more people on rural buses** Rode rural bus routes to talk to passengers, then ran three test-and-learn campaigns for a county council. Passenger numbers rose on every route, by up to around 40%.
 - **Ultra-luxury property in Saudi Arabia** Led a mixed-methods study of ultra-wealthy property buyers, building behavioural personas and presenting the findings to the client's executive team. The work led to a framework agreement.

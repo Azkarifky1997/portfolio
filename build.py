@@ -337,8 +337,8 @@ def home_page(home, home_body, studies, image_sizes):
                 s["thumbnail"], "", "", "(min-width: 48rem) 24rem, 85vw", image_sizes, lazy=True,
             )
         else:
-            # Card picture not uploaded yet: a plain panel with a leaf mark.
-            thumb = f'<div class="card__image-fallback">{icon("leaf", 40)}</div>'
+            # No card picture: a plain panel with an icon (set card_icon: to choose it).
+            thumb = f'<div class="card__image-fallback">{icon(s.get("card_icon") or "leaf", 40)}</div>'
         cards.append(f"""
       <li class="card">
         <div class="card__image">{thumb}</div>
