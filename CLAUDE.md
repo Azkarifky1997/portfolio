@@ -32,7 +32,7 @@ this file records how we have worked together so far.
 - WCAG 2.2 AA: keep heading order, visible focus, alt text on every image.
 - Mobile first: check there is no sideways scrolling at 375px.
 - Case study photos (JPEG) show small; diagrams (PNG) show wide.
-- The About page is text only and full width, with no photos.
+- The About page opens with full-width text, then a "journey" timeline: stops (layout: stop) along a winding line, with round photos or icons and a year on each.
 
 ## Rules for content
 

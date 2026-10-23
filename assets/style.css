@@ -788,3 +788,217 @@ h3 { font-size: 1.25rem; margin: 2.5rem 0 0.75rem; }
 .prose > .figure--photo.figure--portrait { max-width: 15rem; }
 .figure--photo { margin: 1.5rem 0 2rem; }
 .figure--portrait img { width: auto; max-width: 100%; max-height: min(60vh, 22rem); }
+
+/* ---------- About page journey: stops along a winding line ---------- */
+
+.journey {
+  --circle: 4.5rem;
+  --line: #d9c79f;           /* muted ochre, decorative */
+  list-style: none;
+  margin: 0 0 clamp(3.5rem, 9vw, 6rem);
+  padding: 0;
+}
+.stop {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--circle) 1fr;
+  gap: 1.25rem;
+  padding-bottom: 2.5rem;
+}
+/* The line running down from each circle to the next stop */
+.stop::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--circle) / 2 - 1px);
+  top: var(--circle);
+  bottom: 0;
+  width: 2px;
+  background: var(--line);
+}
+.stop--last::before { display: none; }
+.stop--last { padding-bottom: 0; }
+.stop__curve { display: none; }
+
+.stop__circle {
+  width: var(--circle);
+  height: var(--circle);
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 0 4px var(--bg), 0 0 0 6px var(--ochre);
+  background: var(--bg);
+}
+.stop__circle img { width: 100%; height: 100%; object-fit: cover; }
+.stop__circle--top img { object-position: 50% 30%; transform: scale(2); transform-origin: 50% 40%; }
+.stop__circle--icon {
+  display: grid;
+  place-items: center;
+  background: var(--ochre-tint);
+  color: var(--accent);
+}
+.stop__text > * { max-width: none; }
+.stop__year { margin: 0.4rem 0 0.5rem; }
+.stop__text h2 { margin: 0 0 0.75rem; }
+.stop__text p:last-child { margin-bottom: 0; }
+
+@media (min-width: 52rem) {
+  .journey { --circle: 9rem; }
+  .stop { gap: 3rem; padding-bottom: 6rem; align-items: start; }
+  .stop--left { grid-template-columns: 22% 1fr; }
+  .stop--right { grid-template-columns: 1fr 22%; }
+  .stop--right .stop__media { order: 2; }
+  .stop__media { display: flex; justify-content: center; }
+  .stop::before { bottom: 6rem; }
+  .stop--left::before { left: calc(11% - 1px); }
+  .stop--right::before { left: calc(89% - 1px); }
+  .stop__year { margin-top: 1.5rem; }
+  /* Curve from this circle across to the next one */
+  .stop__curve {
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 6rem;
+    overflow: visible;
+  }
+  .stop__curve path { fill: none; stroke: var(--line); stroke-width: 2px; }
+  .stop--right .stop__text { text-align: left; }
+}
+
+/* Smooth journey line (drawn by about.js). Without the script, the straight lines above show. */
+.journey { position: relative; }
+.journey__line { position: absolute; top: 0; left: 0; pointer-events: none; overflow: visible; }
+.journey__line path { fill: none; stroke: #c9ad6b; stroke-width: 4.5px; stroke-linecap: round; stroke-linejoin: round; }
+.journey--curved .stop::before,
+.journey--curved .stop__curve { display: none; }
+.stop__media, .stop__text { position: relative; z-index: 1; }
+
+/* ---------- Project banner (About page) ---------- */
+body { overflow-x: clip; }
+.ticker {
+  width: 100vw;
+  margin: 0 calc(50% - 50vw) clamp(3.5rem, 9vw, 6rem);
+  padding: clamp(2rem, 5vw, 3rem) 0;
+  background: var(--ochre);
+}
+.ticker__head {
+  max-width: calc(var(--wide) + 2 * var(--gutter));
+  margin: 0 auto 1.5rem;
+  padding: 0 var(--gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.about-page .ticker h2 { margin: 0; color: var(--text); }
+.ticker__toggle {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 2px solid var(--text);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+.ticker__toggle[hidden] { display: none; }
+.ticker__toggle:hover { background: rgba(255, 255, 255, 0.35); }
+.ticker__toggle:focus-visible { outline-color: var(--text); }
+.ticker__toggle .icon:last-child { display: none; }
+.ticker--paused .ticker__toggle .icon:first-child { display: none; }
+.ticker--paused .ticker__toggle .icon:last-child { display: block; }
+.ticker__viewport {
+  display: flex;
+  overflow-x: auto;
+  padding: 0.5rem 0 1rem;
+  scrollbar-width: thin;
+}
+.ticker__track {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 1.25rem;
+  display: flex;
+  gap: 1.25rem;
+  flex: none;
+}
+.ticker__track--copy { display: none; }
+.ticker-card {
+  position: relative;
+  flex: none;
+  width: 17rem;
+  padding: 1.25rem 1.4rem;
+  background: var(--bg);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+.ticker-card__stat { margin: 0 0 0.4rem; font-size: 1.6rem; font-weight: 700; line-height: 1.15; color: var(--accent); }
+.ticker-card__title { margin: 0 0 0.35rem; font-size: 1rem; line-height: 1.35; }
+.ticker-card__title a { color: var(--text); text-decoration: none; }
+.ticker-card__title a::after { content: ""; position: absolute; inset: 0; }
+.ticker-card:hover .ticker-card__title a { text-decoration: underline; }
+.ticker-card:focus-within { outline: 3px solid var(--text); outline-offset: 3px; }
+.ticker-card__title a:focus-visible { outline: none; }
+.ticker-card__desc { margin: 0; font-size: 0.875rem; line-height: 1.5; color: var(--muted); }
+.ticker-card__tag {
+  display: inline-block;
+  margin: 0 0 0.75rem;
+  padding: 0.15rem 0.7rem;
+  border-radius: 999px;
+  background: var(--accent-tint);
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* Moving version (only when the script runs and motion is allowed) */
+.ticker--moving .ticker__viewport { overflow: hidden; }
+.ticker--moving .ticker__track--copy { display: flex; }
+.ticker--moving .ticker__track { animation: ticker-roll 80s linear infinite; }
+.ticker--moving .ticker__viewport:hover .ticker__track,
+.ticker--moving .ticker__viewport:focus-within .ticker__track,
+.ticker--paused .ticker__track { animation-play-state: paused; }
+@keyframes ticker-roll { to { transform: translateX(-100%); } }
+
+/* "What I always do" as icon cards: bold title on its own line */
+.fact-cards strong { display: block; margin-bottom: 0.2rem; color: var(--text); }
+
+/* Education: year, qualification, where */
+.edu__list { list-style: none; margin: 1.25rem 0 0; padding: 0; border-top: 1px solid var(--rule); }
+.edu__row {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: 1rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+@media (min-width: 48rem) { .edu__row { grid-template-columns: 8rem 1fr; gap: 2rem; } }
+.edu__row p { margin: 0; }
+.edu__year { font-size: 1.25rem; font-weight: 700; color: var(--accent); line-height: 1.3; }
+.edu__what { font-weight: 700; line-height: 1.4; }
+.edu__where { color: var(--muted); font-size: 0.9375rem; }
+
+/* Where the journey line ends */
+.stop__today {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: inherit;
+  gap: inherit;
+  align-items: center;
+  margin-top: 2.5rem;
+  position: relative;
+  z-index: 1;
+}
+.stop__dot {
+  justify-self: center;
+  display: block;
+  width: 3.5rem;
+  height: 3.5rem;
+  transform: rotate(-8deg);
+}
+.chalk-star { display: block; width: 100%; height: 100%; overflow: visible; }
+.stop__today p { margin: 0; font-weight: 600; font-style: italic; color: var(--accent); }
+.stop--right .stop__today .stop__dot { order: 2; }

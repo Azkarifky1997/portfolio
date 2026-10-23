@@ -289,6 +289,8 @@ ICONS = {
     "ball": '<circle cx="12" cy="12" r="9"/><path d="m12 7 4 3-1.5 4.5h-5L8 10z"/><path d="M12 3v4M16 10l4.5-1.5M14.5 14.5 17 19M9.5 14.5 7 19M8 10 3.5 8.5"/>',
     "globe": '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/>',
     "leaf": '<path d="M5 19c0-8 5-14 15-15-1 10-7 15-15 15z"/><path d="M5 19 13 11"/>',
+    "pause": '<path d="M9 6v12M15 6v12"/>',
+    "play": '<path d="M8 5.5v13l11-6.5z"/>',
     "linkedin": '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10.5V16M8 7.5v.01M12 16v-3.5a2 2 0 0 1 4 0V16M12 10.5V16"/>',
     "email": '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/>',
 }
@@ -534,6 +536,45 @@ def about_section(settings, text, root, image_sizes, index):
         inner = "".join(f'<div class="about-columns__col">{c}</div>' for c in columns)
         return f'<section class="about-section about-columns">{inner}</section>'
 
+    if layout_name == "ticker":
+        # A moving banner of project cards. Each bullet: big number | title | one line | optional link
+        heading = re.search(r"^## (.+)$", text, re.M)
+        cards = []
+        for line in re.findall(r"^- (.+)$", text, re.M):
+            bits = [b.strip() for b in line.split("|")]
+            stat, title, desc, tag, link = (bits + ["", "", "", "", ""])[:5]
+            title_html = f'<a href="{e(link)}">{e(title)}</a>' if link else e(title)
+            tag_html = f'<p class="ticker-card__tag">{e(tag)}</p>' if tag else ""
+            cards.append(
+                f'<li class="ticker-card">{tag_html}<p class="ticker-card__stat">{e(stat)}</p>'
+                f'<h3 class="ticker-card__title">{title_html}</h3><p class="ticker-card__desc">{e(desc)}</p></li>'
+            )
+        track = "".join(cards)
+        # The second copy makes the loop seamless; it is hidden from screen readers and keyboards.
+        copy = re.sub(r'<a href=', '<a tabindex="-1" href=', track)
+        title = e(heading.group(1)) if heading else "Projects"
+        return (
+            f'<section class="ticker" aria-labelledby="ticker-heading">'
+            f'<div class="ticker__head"><h2 id="ticker-heading">{title}</h2>'
+            f'<button type="button" class="ticker__toggle" aria-label="Pause the moving project cards" hidden>'
+            f'{icon("pause", 18)}{icon("play", 18)}</button></div>'
+            f'<div class="ticker__viewport"><ul class="ticker__track">{track}</ul>'
+            f'<ul class="ticker__track ticker__track--copy" aria-hidden="true">{copy}</ul></div></section>'
+        )
+
+    if layout_name == "education":
+        # Each bullet: year | qualification | where
+        heading = re.search(r"^## (.+)$", text, re.M)
+        rows = []
+        for line in re.findall(r"^-(.*)$", text, re.M):
+            year, what, where = ([b.strip() for b in line.split("|")] + ["", "", ""])[:3]
+            rows.append(
+                f'<li class="edu__row"><p class="edu__year">{e(year)}</p>'
+                f'<div><p class="edu__what">{e(what)}</p><p class="edu__where">{e(where)}</p></div></li>'
+            )
+        title = e(heading.group(1)) if heading else "Education"
+        return f'<section class="about-section edu"><h2>{title}</h2><ul class="edu__list">{"".join(rows)}</ul></section>'
+
     if layout_name == "closing":
         # The last paragraph's links become buttons: the first filled, the rest outlined.
         paragraphs = body.rsplit("<p>", 1)
@@ -549,17 +590,88 @@ def about_section(settings, text, root, image_sizes, index):
     return f'<section class="about-section prose">{body}</section>'
 
 
+# A small hand-drawn star where the journey line ends, with the same chalky texture as the line.
+CHALK_STAR = (
+    '<svg class="chalk-star" viewBox="0 0 48 48" width="48" height="48" focusable="false">'
+    '<defs><filter id="chalk-star" x="-20%" y="-20%" width="140%" height="140%">'
+    '<feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="4" result="noise"/>'
+    '<feDisplacementMap in="SourceGraphic" in2="noise" scale="2.5" xChannelSelector="R" yChannelSelector="G" result="rough"/>'
+    '<feColorMatrix in="noise" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  2.6 0 0 0 -0.5" result="grain"/>'
+    '<feComposite in="rough" in2="grain" operator="in"/></filter></defs>'
+    '<g filter="url(#chalk-star)" fill="none" stroke="#c9ad6b" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">'
+    '<path d="M22 7 L26.6 18.4 L38.8 19.2 L29.4 27 L32.6 39.6 L21.8 32.6 L11 39.8 L14.6 27.2 L5 19.6 L17.4 18.2 Z L22.8 8.8"/>'
+    '<path d="M39 6 L42.5 2.5 M41 10.5 L45.5 9.5 M35.5 4 L36 0.5"/>'
+    '</g></svg>'
+)
+
+
+def journey_stop(settings, text, root, image_sizes, index, is_last):
+    """One stop on the About page journey: a year, a round photo or icon, and text."""
+    e = html.escape
+    side = "left" if index % 2 == 0 else "right"
+    name = settings.get("photo", "")
+    if name and name in image_sizes:
+        alt = settings.get("photo_alt", "")
+        if not alt:
+            sys.exit(f"content/about.md: the photo {name} needs alt text. Add a description after photo_alt:")
+        circle = image_tag(name, alt, root, "10rem", image_sizes)
+        focus = " stop__circle--top" if settings.get("focus") == "top" else ""
+    else:
+        circle = icon(settings.get("icon") or "journey", 34)
+        focus = " stop__circle--icon"
+    # A curved line from this stop's circle to the next one, which sits on the other side.
+    x1, x2 = (110, 890) if side == "left" else (890, 110)
+    curve = "" if is_last else (
+        '<svg class="stop__curve" viewBox="0 0 1000 100" preserveAspectRatio="none" '
+        f'aria-hidden="true" focusable="false"><path d="M{x1} 0 C{x1} 55, {x2} 45, {x2} 100" '
+        'vector-effect="non-scaling-stroke"/></svg>'
+    )
+    year = f'<p class="stop__year eyebrow">{e(settings.get("year", ""))}</p>' if settings.get("year") else ""
+    body = render_markdown(text.replace("{root}", root), root, image_sizes)
+    last = " stop--last" if is_last else ""
+    today = ""
+    if is_last and settings.get("today"):
+        # Where the journey line ends: a dot and a closing line.
+        today = (
+            f'<div class="stop__today"><span class="stop__dot" aria-hidden="true">{CHALK_STAR}</span>'
+            f'<p>{e(settings["today"])}</p></div>'
+        )
+    return (
+        f'<li class="stop stop--{side}{last}"><div class="stop__media">'
+        f'<div class="stop__circle{focus}">{circle}</div></div>'
+        f'<div class="stop__text prose">{year}{body}</div>{today}{curve}</li>'
+    )
+
+
 def about_page(meta, body, image_sizes):
     root = "../"
     parts = re.split(r"^\+\+\+\n(.*?)\n\+\+\+\n", body, flags=re.M | re.S)
     # parts = [text before first section, settings, text, settings, text, ...]
-    sections = []
-    for i in range(1, len(parts), 2):
-        sections.append(about_section(parse_settings(parts[i]), parts[i + 1], root, image_sizes, len(sections)))
+    blocks = [(parse_settings(parts[i]), parts[i + 1]) for i in range(1, len(parts), 2)]
+    sections, stops = [], []
+
+    def flush_stops():
+        # Consecutive "stop" sections become one winding journey line.
+        if stops:
+            items = "".join(
+                journey_stop(st, tx, root, image_sizes, n, n == len(stops) - 1)
+                for n, (st, tx) in enumerate(stops)
+            )
+            sections.append(f'<ol class="journey about-section" aria-label="My journey">{items}</ol>')
+            stops.clear()
+
+    for settings, text in blocks:
+        if settings.get("layout") == "stop":
+            stops.append((settings, text))
+            continue
+        flush_stops()
+        sections.append(about_section(settings, text, root, image_sizes, len(sections)))
+    flush_stops()
     return f"""
 <div class="wrap about-page">
 {''.join(sections)}
-</div>"""
+</div>
+<script src="{root}assets/about.js" defer></script>"""
 
 
 def contact_page(meta, body):
