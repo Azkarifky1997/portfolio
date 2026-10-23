@@ -20,7 +20,11 @@ layout: cards    each bullet becomes a small card. icons: one per card, in order
                  (choose from: gem, home, coins, bus, ball, globe, journey,
                  research, inclusive, wireframe, systems, measure, workshop)
 layout: columns  each ## heading starts a new column
-layout: stop     one stop on the journey timeline. Consecutive stops form one
+layout: journey  starts the journey (put the "## My journey" heading in it).
+layout: chapter  a chapter marker on the line, e.g. Sri Lanka.
+layout: period   a quiet period label on the line.
+layout: stop     one stop on the journey timeline. Optional: link: (a case study),
+                 highlight: yes (teal ring), and bullets become chips. Consecutive stops form one
                  winding line. year: label; icon: (as for cards) or
                  photo: + photo_alt: for a round photo; focus: top keeps faces in view.
                  today: a closing line where the journey line ends (last stop only).
@@ -41,58 +45,242 @@ width: full
 I'm Azka, a UX researcher based in the UK. I'm curious by nature, I love a good plan, and my favourite thing is helping people understand people, whether they're vanilla farmers getting their first loan or ultra-wealthy property buyers in Saudi Arabia.
 
 +++
+layout: journey
++++
+
+## My journey
+
++++
+layout: chapter
++++
+
+Sri Lanka
+
++++
 layout: stop
-year: 2017
+icon: book
++++
+
+### Growing up
+
+I grew up in Sri Lanka studying the Cambridge curriculum, through to O and A Levels.
+
++++
+layout: stop
+year: 2016 to 2017
 icon: coins
 +++
 
-## Finance by day, jewellery by night
+### Finance Intern, MAS Legato
 
-I have always been a creative person in a very analytical world. I began my career in finance, with a First Class degree in Applied Accounting, but I felt it held back my imagination. So I kept my creative side alive outside work, with short courses in fashion and interior design and a small jewellery design business I ran from home.
+My first job, in finance.
+
++++
+layout: stop
+year: 2017
+icon: gem
++++
+
+### Finance by day, jewellery by night
+
+I earned a First Class degree in Applied Accounting, but finance held back my imagination. So I kept my creative side alive with short courses in fashion and interior design, and a small jewellery design business I ran from home until 2021.
+
++++
+layout: stop
+year: 2018 to 2019
+icon: chart
++++
+
+### Junior Analyst, Uzabase
+
+Analysing industry trends, competitor landscapes and market attractiveness.
 
 +++
 layout: stop
 year: 2019
-icon: workshop
+icon: lightbulb
 +++
 
-Then I joined a start-up in Sri Lanka as a business designer and discovered design thinking. It brought everything together: the business mind from finance and the creativity I had always had, all in service of people. My first field research project, with smallholder farmers who didn't even own smartphones, taught me the lesson I still design by: start with people, not technology.
+### Discovering design thinking
+
+I joined Innovation Quotient, a start-up in Sri Lanka, as a business designer. Design thinking brought my business mind and my creativity together, all in service of people.
 
 +++
 layout: stop
-year: 2019–2021
+year: 2020
+icon: leaf
 photo: Farmer interviews.jpeg
 photo_alt: Two researchers sitting with an elderly tea farmer on the veranda of his home, taking notes as they talk with him
+link: tea-sri-lanka
 +++
 
-## From tea estates to vanilla farms
+### Tea, weather and trust
 
-I grew into the role of Team Lead, Business Design at Innovation Quotient, leading a team of business designers on projects in fintech, insurance, mobile technology and agriculture. Highlights included two long-term agritech projects with GSMA, co-leading the design of Rural Loan, a first loan for vanilla farmers in Papua New Guinea, and researching how tea factories lend to smallholder farmers in Sri Lanka, to test whether the same channel could deliver weather-index insurance.
+Field research in Sinhala with tea farmers, factory staff and leaf collectors. Meeting farmers who didn't own smartphones taught me the lesson I still design by: start with people, not technology.
+
++++
+layout: stop
+year: 2019 to 2021
+icon: workshop
++++
+
+### Team Lead, Business Design
+
+I grew into leading a team of business designers on projects in fintech, insurance, mobile technology and agriculture, including research and personas for a leading Sri Lankan bank's app.
+
++++
+layout: stop
+year: 2021
+icon: flower
+photo: rural-loan-kyc.png
+photo_alt: Diagram: before, the bank asks for ID so most farmers cannot apply; after, the exporter confirms the farmer from trading records so they can apply
+link: rural-loan
+highlight: yes
++++
+
+### Rural Loan, Papua New Guinea
+
+Co-leading the design of a first loan for vanilla farmers with no bank account, ID or credit history. We recruited and trained two local field researchers to interview farmers in their own languages.
+
++++
+layout: chapter
++++
+
+United Kingdom
+
++++
+layout: stop
+year: October 2021
+icon: plane
++++
+
+### A new country, the same curiosity
+
+I moved to the UK to study for my MA.
+
++++
+layout: stop
+year: 2021 to 2023
+icon: bag
++++
+
+### Sales Assistant, Pandora (part-time)
+
+Alongside my MA, front-line customer service showed me how every interaction shapes how people feel about a brand. I was the Cardiff store's top seller for 2022, with a certificate and incentive to show for it, and I was often one of the store's top sellers.
 
 +++
 layout: stop
 year: 2022
+icon: cap
 photo: Graduation MA.jpeg
 photo_alt: Azka in a graduation gown and cap over a teal sari, smiling in front of a University of South Wales backdrop
 focus: top
 +++
 
-## A new country, the same curiosity
+### MA Design Innovation, Distinction
 
-I came to the UK to study an MA in Design Innovation at the University of South Wales, graduating with a Distinction and specialising in inclusive design. For my dissertation I partnered with the UX team at Principality Building Society in Cardiff, running workshops to build more inclusive UX practices.
+University of South Wales. I specialised in inclusive design, including research with visually impaired people, and partnered with Principality Building Society's UX team on my dissertation, running workshops to build more inclusive UX practices.
+
++++
+layout: period
++++
+
+2023 to 2026 · A research-led design and digital agency
 
 +++
 layout: stop
-year: 2023–2026
-icon: research
-today: This is where I am today: still curious, still asking "why?"
+year: 2023
+icon: compass
 +++
 
-From 2023 to 2026 I worked at a research-led design and digital agency, growing from Product Marketing Consultant to Lead CX Research Consultant, across financial services, local government, transport, tourism, property and the public sector.
+### Joining the agency
 
-Highlights included redesigning member services for two membership organisations, running test-and-learn studies that grew rural bus passengers year on year by 38% and 23% on two routes, and research with thousands of people, from around 700 on wellbeing in Wales to around 3,000 on attitudes to AI. I also led a study of ultra-wealthy property buyers in Saudi Arabia that led to a framework agreement, and ran the agency's internal sessions on using AI well in research and design.
+I started as Product Marketing Consultant, became CX Research Consultant in 2024, and Lead CX Research Consultant in 2026.
 
-The people could hardly be more different, from vanilla farmers to ultra-wealthy buyers. But the job is always the same: listen with empathy, find what really drives people's decisions, and turn it into something an organisation can act on.
++++
+layout: stop
+year: 2023
+icon: wireframe
++++
+
+### Digital experience for a global professional body
+
+Reviewing members' experience across the member portal, learning platform, website and community platform, and designing a navigation strategy around members' needs.
+
++++
+layout: stop
+icon: systems
+link: membership-journeys
++++
+
+### Member services for membership organisations
+
+Redesigning how members of two membership organisations join, progress and renew, mapping every process, data flow and team behind the website.
+
++++
+layout: stop
+year: 2024
+icon: speech
++++
+
+### Wellbeing economy research across Wales
+
+Research with around 700 people across Wales, aged 7 to over 90, including children with their parents. It was presented at a conference in November 2024, and at Davos in 2025 and 2026 by the agency's CEO.
+
++++
+layout: stop
+year: 2024
+icon: globe
++++
+
+### What future members want
+
+A survey of 654 university and pre-university students in the UK, India, Singapore, Saudi Arabia and China for a global professional body. I designed the survey, analysed the data and wrote the report.
+
++++
+layout: stop
+icon: sparkle
++++
+
+### Along the way
+
+
+- Around 3,000 people on attitudes to AI, and a tool to measure readiness to adopt it
+- Ultra-luxury property buyers in Saudi Arabia: mixed methods, leading to a framework agreement
+- Brand perception research with over 1,000 respondents, and a customer intelligence portal, for a UK city destination
+- Brand and value proposition research for a cultural institution in the Middle East
+- Designing AI assistants and AI-driven search with clear routes to human help
+
++++
+layout: stop
+year: 2025
+icon: bus
+photo: bus-cycle.png
+photo_alt: Diagram of the four-step test-and-learn cycle: understand, design, launch, evaluate, repeated on three routes
+link: rural-bus
++++
+
+### Getting more people on rural buses
+
+Three test-and-learn studies for a county council. Year on year, passengers rose 38% on one route and 23% on another, through low-cost changes rather than new buses.
+
++++
+layout: stop
+icon: books
++++
+
+### Building a research practice
+
+Research standards, consent and GDPR processes, a searchable insight repository, coaching associate researchers, and leading the agency's training on using AI responsibly.
+
++++
+layout: stop
+icon: star
+today: This is where I am today: still curious, still asking 'why?'
++++
+
+### Today
+
 
 +++
 layout: ticker

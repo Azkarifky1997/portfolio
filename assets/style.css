@@ -1129,3 +1129,64 @@ body { overflow-x: clip; }
 .project:hover .project__cta a { text-decoration: underline; }
 .project__summary-only { margin: auto 0 0; color: var(--muted); font-size: 0.9375rem; font-style: italic; }
 .projects__empty { padding: 2rem 0; font-weight: 600; }
+
+/* ---------- My journey (About page) ---------- */
+.journey-band {
+  width: 100vw;
+  margin: 0 calc(50% - 50vw) clamp(3.5rem, 9vw, 6rem);
+  padding: clamp(2.5rem, 6vw, 4rem) max(var(--gutter), calc((100vw - var(--wide)) / 2));
+  background: var(--cream, #f7f3ea);
+}
+.about-page .journey-band > h2 { margin: 0 0 2rem; }
+.journey-band .journey { margin: 0; }
+.journey__list { list-style: none; margin: 0; padding: 0; }
+.journey-band .stop__circle { box-shadow: 0 0 0 4px var(--cream, #f7f3ea), 0 0 0 6px var(--ochre); }
+.journey-band .stop__circle--icon { background: var(--bg); }
+.stop--featured .stop__circle { box-shadow: 0 0 0 4px var(--cream, #f7f3ea), 0 0 0 8px var(--accent); }
+.stop__text h4 { margin: 0 0 0.4rem; font-size: 1.125rem; line-height: 1.35; }
+.stop__text p { margin: 0 0 0.5rem; }
+.stop__link { margin-top: 0.75rem !important; font-weight: 600; }
+.stop__link a { text-decoration-thickness: 1px; }
+.stop__chips { list-style: none; margin: 0.75rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.stop__chips li { margin: 0; padding: 0.45rem 0.85rem; border-radius: 8px; background: var(--bg); border: 1px solid #e6dfcf; font-size: 0.9375rem; line-height: 1.45; }
+.stop--today .stop__text h4 { margin-top: 0.4rem; }
+.stop__today-line { font-weight: 600; font-style: italic; color: var(--accent); }
+
+/* chapter and period markers sit on the line */
+.journey__chapter, .journey__period { position: relative; z-index: 1; text-align: center; margin: 0 0 3rem; }
+.journey__chapter span {
+  display: inline-block;
+  padding: 0.4rem 1.2rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.journey__period span {
+  display: inline-block;
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1.5px solid var(--accent);
+  color: var(--accent);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+.journey-band .journey { --circle: 3.5rem; }
+.journey-band .stop { padding-bottom: 2.5rem; }
+@media (min-width: 52rem) {
+  .journey-band .journey { --circle: 6rem; }
+  .journey-band .stop { padding-bottom: 4rem; }
+  .journey-band .stop::before { bottom: 4rem; }
+  .journey-band .stop__curve { height: 4rem; }
+  .journey-band .stop__year { margin-top: 0.75rem; }
+}
+/* On phones the line runs straight down the left; markers sit beside it */
+@media (max-width: 51.99rem) {
+  .journey__chapter, .journey__period { text-align: left; margin-left: calc(var(--circle) + 1.25rem); }
+}
+.stop--today .stop__media { display: flex; justify-content: center; }
+.journey-band .stop__dot { width: var(--circle); height: var(--circle); transform: rotate(-8deg); }

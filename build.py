@@ -305,6 +305,17 @@ ICONS = {
     "pause": '<path d="M9 6v12M15 6v12"/>',
     "play": '<path d="M8 5.5v13l11-6.5z"/>',
     "compass": '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',
+    "book": '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/>',
+    "chart": '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+    "lightbulb": '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',
+    "flower": '<circle cx="12" cy="9" r="2"/><path d="M12 7c0-3 3-4 3-4s1 3-1.5 4.5M12 7c0-3-3-4-3-4S8 6 10.5 7.5M14 9c3 0 4 3 4 3s-3 1-4.5-1.5M10 9c-3 0-4 3-4 3s3 1 4.5-1.5M12 11v10M12 17c-2-2-5-1-5-1M12 15c2-2 5-1 5-1"/>',
+    "plane": '<path d="M2 16l20-8-6 13-3-6z"/><path d="M13 15 22 8"/>',
+    "bag": '<path d="M5 8h14l-1 13H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
+    "cap": '<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5M22 9v6"/>',
+    "speech": '<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/>',
+    "sparkle": '<path d="M12 3c.6 4.2 2.8 6.4 7 7-4.2.6-6.4 2.8-7 7-.6-4.2-2.8-6.4-7-7 4.2-.6 6.4-2.8 7-7z"/><path d="M19 15v4M17 17h4"/>',
+    "books": '<path d="M4 4h4v16H4zM10 4h4v16h-4z"/><path d="m16 5 3.8-1 3 15.5-3.8 1z"/>',
+    "star": '<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
     "linkedin": '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10.5V16M8 7.5v.01M12 16v-3.5a2 2 0 0 1 4 0V16M12 10.5V16"/>',
     "email": '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/>',
 }
@@ -656,36 +667,76 @@ def journey_stop(settings, text, root, image_sizes, index, is_last):
     e = html.escape
     side = "left" if index % 2 == 0 else "right"
     name = settings.get("photo", "")
-    if name and name in image_sizes:
-        alt = settings.get("photo_alt", "")
-        if not alt:
-            sys.exit(f"content/about.md: the photo {name} needs alt text. Add a description after photo_alt:")
-        circle = image_tag(name, alt, root, "10rem", image_sizes)
-        focus = " stop__circle--top" if settings.get("focus") == "top" else ""
+    today_line = settings.get("today", "")
+    if today_line:
+        # The final "Today" stop: the hand-drawn chalk star instead of a circle.
+        media = f'<span class="stop__dot" aria-hidden="true">{CHALK_STAR}</span>'
     else:
-        circle = icon(settings.get("icon") or "journey", 34)
-        focus = " stop__circle--icon"
-    # A curved line from this stop's circle to the next one, which sits on the other side.
-    x1, x2 = (110, 890) if side == "left" else (890, 110)
-    curve = "" if is_last else (
-        '<svg class="stop__curve" viewBox="0 0 1000 100" preserveAspectRatio="none" '
-        f'aria-hidden="true" focusable="false"><path d="M{x1} 0 C{x1} 55, {x2} 45, {x2} 100" '
-        'vector-effect="non-scaling-stroke"/></svg>'
-    )
-    year = f'<p class="stop__year eyebrow">{e(settings.get("year", ""))}</p>' if settings.get("year") else ""
+        if name and name in image_sizes:
+            alt = settings.get("photo_alt", "")
+            if not alt:
+                sys.exit(f"content/about.md: the photo {name} needs alt text. Add a description after photo_alt:")
+            circle = image_tag(name, alt, root, "8rem", image_sizes)
+            focus = " stop__circle--top" if settings.get("focus") == "top" else ""
+        else:
+            circle = icon(settings.get("icon") or "journey", 30)
+            focus = " stop__circle--icon"
+        media = f'<div class="stop__circle{focus}">{circle}</div>'
+    year = f'<p class="stop__year eyebrow">{e(settings["year"])}</p>' if settings.get("year") else ""
     body = render_markdown(text.replace("{root}", root), root, image_sizes)
-    last = " stop--last" if is_last else ""
-    today = ""
-    if is_last and settings.get("today"):
-        # Where the journey line ends: a dot and a closing line.
-        today = (
-            f'<div class="stop__today"><span class="stop__dot" aria-hidden="true">{CHALK_STAR}</span>'
-            f'<p>{e(settings["today"])}</p></div>'
-        )
+    # Stop titles sit under the chapter headings (h3), so they are h4.
+    body = re.sub(r"<(/?)h3>", r"<\1h4>", body)
+    body = body.replace("<ul>", '<ul class="stop__chips">', 1)
+    if today_line:
+        body += f'<p class="stop__today-line">{e(today_line)}</p>'
+    link = ""
+    if settings.get("link"):
+        title = re.search(r"<h4>(.*?)</h4>", body)
+        about = f'<span class="visually-hidden"> about {title.group(1)}</span>' if title else ""
+        link = (f'<p class="stop__link"><a href="{root}work/{e(settings["link"])}/">Read the case study'
+                f'{about} <span aria-hidden="true">&rarr;</span></a></p>')
+    classes = f"stop stop--{side}" + (" stop--last" if is_last else "") + \
+        (" stop--featured" if settings.get("highlight") else "") + (" stop--today" if today_line else "")
     return (
-        f'<li class="stop stop--{side}{last}"><div class="stop__media">'
-        f'<div class="stop__circle{focus}">{circle}</div></div>'
-        f'<div class="stop__text prose">{year}{body}</div>{today}{curve}</li>'
+        f'<li class="{classes}"><div class="stop__media">{media}</div>'
+        f'<div class="stop__text prose">{year}{body}{link}</div></li>'
+    )
+
+
+def journey_section(items, root, image_sizes):
+    """The winding "My journey" path: a heading, chapter markers, period labels and stops."""
+    e = html.escape
+    out, open_list = [], False
+    stops_total = sum(1 for s, _ in items if s.get("layout") == "stop")
+    n = 0
+    heading = ""
+    for settings, text in items:
+        kind = settings.get("layout")
+        if kind == "journey":
+            m = re.search(r"^## (.+)$", text, re.M)
+            heading = e(m.group(1)) if m else "My journey"
+            continue
+        if kind == "stop":
+            if not open_list:
+                out.append('<ol class="journey__list">')
+                open_list = True
+            out.append(journey_stop(settings, text, root, image_sizes, n, n == stops_total - 1))
+            n += 1
+            continue
+        if open_list:
+            out.append("</ol>")
+            open_list = False
+        label = e(text.strip())
+        if kind == "chapter":
+            out.append(f'<h3 class="journey__chapter"><span>{label}</span></h3>')
+        else:
+            out.append(f'<p class="journey__period"><span>{label}</span></p>')
+    if open_list:
+        out.append("</ol>")
+    return (
+        f'<section class="journey-band" aria-labelledby="journey">'
+        f'<h2 id="journey">{heading or "My journey"}</h2>'
+        f'<div class="journey">{"".join(out)}</div></section>'
     )
 
 
@@ -694,25 +745,21 @@ def about_page(meta, body, image_sizes):
     parts = re.split(r"^\+\+\+\n(.*?)\n\+\+\+\n", body, flags=re.M | re.S)
     # parts = [text before first section, settings, text, settings, text, ...]
     blocks = [(parse_settings(parts[i]), parts[i + 1]) for i in range(1, len(parts), 2)]
-    sections, stops = [], []
+    sections, journey = [], []
 
-    def flush_stops():
-        # Consecutive "stop" sections become one winding journey line.
-        if stops:
-            items = "".join(
-                journey_stop(st, tx, root, image_sizes, n, n == len(stops) - 1)
-                for n, (st, tx) in enumerate(stops)
-            )
-            sections.append(f'<ol class="journey about-section" aria-label="My journey">{items}</ol>')
-            stops.clear()
+    def flush_journey():
+        # Consecutive journey, chapter, period and stop sections become one winding path.
+        if journey:
+            sections.append(journey_section(journey, root, image_sizes))
+            journey.clear()
 
     for settings, text in blocks:
-        if settings.get("layout") == "stop":
-            stops.append((settings, text))
+        if settings.get("layout") in ("journey", "chapter", "period", "stop"):
+            journey.append((settings, text))
             continue
-        flush_stops()
+        flush_journey()
         sections.append(about_section(settings, text, root, image_sizes, len(sections)))
-    flush_stops()
+    flush_journey()
     return f"""
 <div class="wrap about-page">
 {''.join(sections)}
