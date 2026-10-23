@@ -309,12 +309,13 @@ layout: ticker
 - +38% | Rural bus test-and-learn | Year-on-year passenger growth on one route, 23% on another | Public transport | {root}work/rural-bus/
 - 355 loans | Rural Loan, Papua New Guinea | Pilot loans to 330 farmers, 35% of them women | Financial inclusion | {root}work/rural-loan/
 - In Sinhala | Tea, weather and trust | Field research with tea farmers and leaf collectors | Agriculture | {root}work/tea-sri-lanka/
-- ~3,000 people | How people feel about AI | Attitudes survey and AI-readiness tool | Technology
-- 4 countries | Need states for a global membership body | Longitudinal research | Membership
-- ~700 respondents | Wellbeing economy in Wales | What wellbeing means to people and communities | Public sector
-- 1,000+ respondents | Understanding a city's visitors | Brand perception study and customer intelligence portal | Tourism
-- Mixed methods | Ultra-luxury property in Saudi Arabia | Behavioural personas for the executive team | Property
-- AI assistants | Designing AI assistants | Chatbots and AI-driven search, with routes to human help | Digital
+- 654 students | What future members want | Survey across 5 countries | Education | {root}work/#what-future-members-want
+- ~3,000 people | How people feel about AI | Attitudes survey and AI-readiness tool | Technology | {root}work/#how-people-feel-about-ai
+- Longitudinal | Need states for a global membership body | Research with members over several waves | Membership | {root}work/#need-states-for-a-global-membership-body
+- ~700 respondents | Wellbeing economy in Wales | What wellbeing means to people and communities | Public sector | {root}work/#wellbeing-economy-in-wales
+- 1,000+ respondents | Understanding a city's visitors | Brand perception study and customer intelligence portal | Tourism | {root}work/#understanding-a-city-s-visitors
+- Mixed methods | Ultra-luxury property in Saudi Arabia | Behavioural personas for the executive team | Property | {root}work/#ultra-luxury-property-buyers
+- AI assistants | Designing AI assistants | Chatbots and AI-driven search, with routes to human help | Digital | {root}work/#designing-ai-assistants
 
 +++
 layout: cards

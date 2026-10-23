@@ -600,6 +600,7 @@ def about_section(settings, text, root, image_sizes, index):
         for line in re.findall(r"^- (.+)$", text, re.M):
             bits = [b.strip() for b in line.split("|")]
             stat, title, desc, tag, link = (bits + ["", "", "", "", ""])[:5]
+            link = link.replace("{root}", root)
             title_html = f'<a href="{e(link)}">{e(title)}</a>' if link else e(title)
             tag_html = f'<p class="ticker-card__tag">{e(tag)}</p>' if tag else ""
             cards.append(
@@ -613,7 +614,7 @@ def about_section(settings, text, root, image_sizes, index):
         return (
             f'<section class="ticker" aria-labelledby="ticker-heading">'
             f'<div class="ticker__head"><h2 id="ticker-heading">{title}</h2>'
-            f'<button type="button" class="ticker__toggle" aria-label="Pause the moving project cards" hidden>'
+            f'<button type="button" class="ticker__toggle" aria-label="Pause projects" aria-pressed="false" hidden>'
             f'{icon("pause", 18)}{icon("play", 18)}</button></div>'
             f'<div class="ticker__viewport"><ul class="ticker__track">{track}</ul>'
             f'<ul class="ticker__track ticker__track--copy" aria-hidden="true">{copy}</ul></div></section>'
@@ -870,7 +871,7 @@ def work_index_page(meta, projects):
         else:
             action = '<p class="project__summary-only">Summary only</p>'
         items.append(
-            f'<li class="project" {" ".join(data)}>{year}<h2 class="project__title">{e(p["title"])}</h2>'
+            f'<li class="project" id="{slugify(p["title"])}" {" ".join(data)}>{year}<h2 class="project__title">{e(p["title"])}</h2>'
             f'<p class="project__summary">{e(p.get("summary", ""))}</p>'
             f'<ul class="project__tags" aria-label="Tags">{tag_html}</ul>{action}</li>'
         )

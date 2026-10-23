@@ -1211,3 +1211,29 @@ body { overflow-x: clip; }
 .map-list__how { color: var(--muted); }
 .map-key .m-remote { stroke-width: 3; }
 .research-map__map { background: var(--bg); border: 1px solid var(--rule); border-radius: 8px; padding: 0.5rem; }
+
+/* Banner: still grid when paused, or when motion is reduced (fully readable) */
+.ticker--paused .ticker__viewport,
+.ticker:not(.ticker--moving) .ticker__viewport {
+  overflow: visible;
+  max-width: calc(var(--wide) + 2 * var(--gutter));
+  margin: 0 auto;
+  padding: 0.5rem var(--gutter) 0;
+}
+.ticker--paused .ticker__track,
+.ticker:not(.ticker--moving) .ticker__track {
+  animation: none;
+  flex-wrap: wrap;
+  flex: 1 1 auto;
+  padding: 0;
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+}
+.ticker--paused .ticker-card,
+.ticker:not(.ticker--moving) .ticker-card { width: auto; }
+.ticker--paused .ticker__track--copy { display: none; }
+.ticker__toggle { min-width: 2.5rem; min-height: 2.5rem; }
+.ticker__toggle:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+/* A Work page entry someone has linked to */
+.project:target { outline: 3px solid var(--ochre); outline-offset: 3px; }

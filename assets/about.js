@@ -80,7 +80,8 @@
   ticker.classList.add("ticker--moving");
   toggle.hidden = false;
   toggle.addEventListener("click", function () {
+    // Paused: the cards settle into a still grid, so none are cut off at the edges.
     var paused = ticker.classList.toggle("ticker--paused");
-    toggle.setAttribute("aria-label", paused ? "Play the moving project cards" : "Pause the moving project cards");
+    toggle.setAttribute("aria-pressed", String(paused));
   });
 })();
