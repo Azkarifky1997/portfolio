@@ -304,6 +304,7 @@ ICONS = {
     "leaf": '<path d="M5 19c0-8 5-14 15-15-1 10-7 15-15 15z"/><path d="M5 19 13 11"/>',
     "pause": '<path d="M9 6v12M15 6v12"/>',
     "play": '<path d="M8 5.5v13l11-6.5z"/>',
+    "compass": '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',
     "linkedin": '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10.5V16M8 7.5v.01M12 16v-3.5a2 2 0 0 1 4 0V16M12 10.5V16"/>',
     "email": '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/>',
 }
@@ -317,9 +318,9 @@ def icon(name, size=24):
     )
 
 
-def load_skills():
-    """Read content/skills.md: each "## Heading" is one skill card."""
-    meta, body = read_page(CONTENT / "skills.md")
+def load_skills(filename="skills.md"):
+    """Read a cards file (skills.md, process.md): each "## Heading" is one card."""
+    meta, body = read_page(CONTENT / filename)
     skills = []
     for block in re.split(r"^## ", body, flags=re.M)[1:]:
         lines = block.strip().splitlines()
@@ -343,48 +344,64 @@ def hero_photo(home, image_sizes):
     return f'<div class="hero__photo"><div class="hero__blob">{inner}</div></div>'
 
 
-def home_page(home, home_body, studies, image_sizes):
+def work_card(s, root, image_sizes, featured=False, lazy=True):
+    """A case study card: picture, title, summary, role, result and a link."""
     e = html.escape
-    cards = []
-    for i, s in enumerate(studies):
-        if s.get("thumbnail") in image_sizes:
-            thumb = image_tag(
-                s["thumbnail"], "", "", "(min-width: 48rem) 24rem, 85vw", image_sizes, lazy=True,
-            )
-        else:
-            # No card picture: a plain panel with an icon (set card_icon: to choose it).
-            thumb = f'<div class="card__image-fallback">{icon(s.get("card_icon") or "leaf", 40)}</div>'
-        cards.append(f"""
-      <li class="card">
+    sizes = "(min-width: 64rem) 36rem, (min-width: 48rem) 45vw, 92vw" if featured else \
+        "(min-width: 48rem) 30rem, 92vw"
+    if s.get("thumbnail") in image_sizes:
+        thumb = image_tag(s["thumbnail"], "", root, sizes, image_sizes, lazy=lazy)
+    else:
+        thumb = f'<div class="card__image-fallback">{icon(s.get("card_icon") or "leaf", 40)}</div>'
+    return f"""
+      <li class="card{' card--featured' if featured else ''}">
         <div class="card__image">{thumb}</div>
         <div class="card__body">
-          <h3 class="card__title"><a href="work/{s['slug']}/">{e(s['title'])}</a></h3>
+          <h3 class="card__title">{e(s['title'])}</h3>
           <p class="card__summary">{e(s['summary'])}</p>
           <dl class="card__meta">
             <div><dt>Role</dt><dd>{e(s['card_role'])}</dd></div>
             <div><dt>Result</dt><dd>{e(s['card_result'])}</dd></div>
           </dl>
-          <p class="card__cta" aria-hidden="true">Read the case study <span>&rarr;</span></p>
+          <p class="card__cta"><a href="{root}work/{s['slug']}/">Read the case study<span class="visually-hidden"> about {e(s['title'])}</span> <span aria-hidden="true">&rarr;</span></a></p>
         </div>
-      </li>""")
+      </li>"""
 
+
+def home_page(home, home_body, studies, image_sizes):
+    e = html.escape
     first, _, last = home["name"].partition(" ")
+
+    # Proof numbers band
+    proof = []
+    for number, value in (home.get("proof") or {}).items():
+        label, _, link = (p.strip() for p in value.partition("|"))
+        num = f'<a href="{e(link)}">{e(number)}</a>' if link else e(number)
+        proof.append(f'<li><p class="proof__num">{num}</p><p class="proof__label">{e(label)}</p></li>')
+
     facts = "".join(
         f"<div><dt>{e(k)}</dt><dd>{e(v)}</dd></div>" for k, v in (home.get("facts") or {}).items()
     )
-    skills_meta, skills = load_skills()
+    cards = "".join(work_card(s, "", image_sizes, featured=(i == 0), lazy=i > 0)
+                    for i, s in enumerate(studies))
+
+    skills_meta, skills = load_skills("skills.md")
     skill_cards = "".join(
         f'<li class="skill"><span class="skill__icon">{icon(s["icon"])}</span>'
         f'<h3 class="skill__title">{e(s["title"])}</h3><p>{e(s["text"])}</p></li>'
         for s in skills
     )
-    tools = "".join(
-        f"<li>{e(t.strip())}</li>" for t in skills_meta.get("tools", "").split(",") if t.strip()
+    tools = "".join(f"<li>{e(t.strip())}</li>" for t in skills_meta.get("tools", "").split(",") if t.strip())
+    tools_html = (f'<div class="tools"><h3 class="tools__title">Tools I use</h3>'
+                  f'<ul class="tools__list">{tools}</ul></div>' if tools else "")
+
+    process_meta, steps = load_skills("process.md")
+    step_items = "".join(
+        f'<li class="step"><span class="step__icon">{icon(s["icon"])}</span>'
+        f'<h3 class="step__title">{e(s["title"])}</h3><p>{e(s["text"])}</p></li>'
+        for s in steps
     )
-    tools_html = (
-        f'<div class="tools"><h3 class="tools__title">Tools I use</h3><ul class="tools__list">{tools}</ul></div>'
-        if tools else ""
-    )
+
     return f"""
 <div class="wrap">
   <section class="hero">
@@ -393,8 +410,8 @@ def home_page(home, home_body, studies, image_sizes):
       <p class="hero__role">{e(home['role'])}</p>
       <p class="hero__intro">{e(home['intro'])}</p>
       <p class="hero__actions">
-        <a class="button" href="contact/">Get in touch</a>
-        <a class="button button--secondary" href="#work">See my work</a>
+        <a class="button" href="#work">See my work</a>
+        <a class="button button--secondary" href="contact/">Get in touch</a>
       </p>
       <ul class="hero__social">
         <li><a href="{e(home['linkedin'])}">{icon("linkedin")}<span class="visually-hidden">LinkedIn</span></a></li>
@@ -404,6 +421,13 @@ def home_page(home, home_body, studies, image_sizes):
     {hero_photo(home, image_sizes)}
   </section>
 </div>
+<section class="band band--teal proof" aria-labelledby="proof-heading">
+  <div class="wrap">
+    <h2 id="proof-heading" class="visually-hidden">Results at a glance</h2>
+    <ul class="proof__list">{''.join(proof)}</ul>
+    <p class="proof__note">{e(home.get('proof_note', ''))}</p>
+  </div>
+</section>
 <section class="intro-about" aria-labelledby="about-heading">
   <div class="wrap intro-about__inner">
     <div class="intro-about__text">
@@ -415,24 +439,33 @@ def home_page(home, home_body, studies, image_sizes):
   </div>
 </section>
 <div class="wrap">
-  <section class="skills" id="skills" aria-labelledby="skills-heading">
-    <h2 id="skills-heading" class="section-label">{e(skills_meta.get('title', 'Skills'))}</h2>
-    <ul class="skills__grid">{skill_cards}</ul>
-    {tools_html}
-  </section>
   <section class="work" id="work" aria-labelledby="work-heading">
-    <div class="work__header">
-      <h2 id="work-heading" class="section-label">Selected work</h2>
-      <div class="carousel__buttons" hidden>
-        <button type="button" class="carousel__btn" data-dir="-1" aria-controls="cards" aria-label="Previous case study">&larr;</button>
-        <button type="button" class="carousel__btn" data-dir="1" aria-controls="cards" aria-label="Next case study">&rarr;</button>
-      </div>
-    </div>
-    <ul class="carousel" id="cards">{''.join(cards)}
+    <h2 id="work-heading" class="section-label">Selected work</h2>
+    <ul class="work-grid">{cards}
     </ul>
+    <p class="work__all"><a class="button button--secondary" href="work/">See all work <span aria-hidden="true">&rarr;</span></a></p>
   </section>
 </div>
-<script src="assets/carousel.js" defer></script>"""
+<section class="band band--cream skills" id="skills" aria-labelledby="skills-heading">
+  <div class="wrap">
+    <h2 id="skills-heading" class="section-label">{e(skills_meta.get('title', 'What I do'))}</h2>
+    <ul class="skills__grid">{skill_cards}</ul>
+    {tools_html}
+  </div>
+</section>
+<div class="wrap">
+  <section class="process" aria-labelledby="process-heading">
+    <h2 id="process-heading" class="section-label">{e(process_meta.get('title', 'How I run research'))}</h2>
+    <ol class="process__steps">{step_items}</ol>
+  </section>
+</div>
+<section class="band band--teal talk" aria-labelledby="talk-heading">
+  <div class="wrap talk__inner">
+    <h2 id="talk-heading">{e(home.get('talk_title', "Let's talk"))}</h2>
+    <p>{e(home.get('talk_text', ''))}</p>
+    <p><a class="button button--light" href="contact/">Get in touch</a></p>
+  </div>
+</section>"""
 
 
 def case_study_page(study, next_study, image_sizes):

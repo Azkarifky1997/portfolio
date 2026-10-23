@@ -5,7 +5,7 @@ summary: Moving manual member services online so routine work runs itself and st
 intro: Redesigning how members join, progress and renew, so the website handles the routine work and staff can focus on the cases that need them.
 card_role: Service and UX design lead
 card_result: Routine checks automated, exceptions kept for staff
-card_icon: systems
+thumbnail: member-services-blueprint.svg
 snapshot:
   Client: A UK membership organisation (anonymised)
   My role: Service and UX design lead
@@ -33,6 +33,8 @@ I designed eligibility to be worked out from records the organisation already he
 ### Automate the routine, keep people for the exceptions
 
 Straightforward cases are handled automatically, while unusual ones still go to a staff member, so the service stays safe without staff reviewing everything.
+
+![A simple service blueprint with three lanes: member, system and staff. The member applies or renews online. The system checks eligibility from existing records; a straightforward case is approved automatically. An unusual case goes to staff, who review exceptions only.](member-services-blueprint.svg "Who does what in the redesigned service. Recreated and anonymised.")
 
 ## Reflection
 

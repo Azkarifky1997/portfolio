@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#1f4e5f"/>
+    </marker>
+  </defs>
+  <rect width="1600" height="900" fill="#ffffff"/>
+  <text x="100" y="120" font-size="56" font-weight="700" fill="#1f4e5f">Member services: who does what</text>
+
+  <!-- lanes -->
+  <g font-size="34" font-weight="700" fill="#1f4e5f">
+    <rect x="100" y="190" width="1400" height="190" fill="#f6f7f7"/>
+    <text x="130" y="296">Member</text>
+    <rect x="100" y="400" width="1400" height="190" fill="#ffffff" stroke="#e3e6e7" stroke-width="2"/>
+    <text x="130" y="506">System</text>
+    <rect x="100" y="610" width="1400" height="190" fill="#f6f7f7"/>
+    <text x="130" y="716">Staff</text>
+  </g>
+
+  <!-- step boxes -->
+  <g font-size="30">
+    <rect x="420" y="225" width="420" height="120" rx="14" fill="#1f4e5f"/>
+    <text x="630" y="296" fill="#ffffff" text-anchor="middle" font-weight="600">Applies or renews online</text>
+
+    <rect x="420" y="435" width="420" height="120" rx="14" fill="#f3e7cf"/>
+    <text x="630" y="485" fill="#1f4e5f" text-anchor="middle" font-weight="600">Checks eligibility from</text>
+    <text x="630" y="525" fill="#1f4e5f" text-anchor="middle" font-weight="600">existing records</text>
+
+    <rect x="1000" y="435" width="420" height="120" rx="14" fill="#f3e7cf"/>
+    <text x="1210" y="485" fill="#1f4e5f" text-anchor="middle" font-weight="600">Straightforward case:</text>
+    <text x="1210" y="525" fill="#1f4e5f" text-anchor="middle" font-weight="600">approved automatically</text>
+
+    <rect x="1000" y="645" width="420" height="120" rx="14" fill="#ffffff" stroke="#1f4e5f" stroke-width="3"/>
+    <text x="1210" y="716" fill="#1f4e5f" text-anchor="middle" font-weight="600">Reviews exceptions only</text>
+  </g>
+
+  <!-- arrows -->
+  <g stroke="#1f4e5f" stroke-width="4" fill="none" marker-end="url(#arrow)">
+    <path d="M630 345V430"/>
+    <path d="M840 495H995"/>
+    <path d="M760 555V705H995"/>
+  </g>
+  <text x="780" y="690" font-size="26" fill="#1f4e5f" font-weight="600">Unusual case</text>
+
+  <text x="1500" y="860" font-size="24" fill="#6b777b" text-anchor="end">Recreated and anonymised</text>
+</svg>

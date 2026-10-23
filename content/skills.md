@@ -1,33 +1,25 @@
 ---
 title: What I do
-tools: Figma, FigJam, Miro, Qualtrics, Power BI, Excel, Google Analytics 4, Notion
+tools: Figma, FigJam, Miro, Maze, UserTesting, Hotjar, Qualtrics, Power BI, Excel, Google Analytics 4, Notion, Otter.ai, SPSS and R (with analysts)
 ---
 
 <!--
-Each "## Heading" below is one card in the skills section on the home page.
+Each "## Heading" below is one card in the "What I do" section on the home page.
 The "icon:" line picks the picture. Choose from:
 journey, research, inclusive, wireframe, systems, measure, workshop
 -->
 
-## Service design
-icon: journey
-End-to-end journeys, service blueprints, journey maps and service roadmaps that connect what people see with the work behind it.
-
 ## User research
 icon: research
-Interviews, field research, surveys and usability testing, synthesised into clear insight teams can act on.
+Interviews, field research, workshops, surveys, usability and concept testing, remotely and in person, synthesised into clear insight teams can act on.
 
 ## Inclusive design
 icon: inclusive
-Designing for people with different levels of confidence, connectivity and digital skill, and spotting who a service might leave out.
+Designing research and services for people with different levels of confidence, connectivity and digital skill, and spotting who might be left out.
 
-## Product and UX design
-icon: wireframe
-User flows, wireframes, prototypes and functional specifications that developers can build from.
-
-## Systems and process mapping
-icon: systems
-Business rules, back-stage processes and data flows, so automation handles the routine and people handle the exceptions.
+## Service design
+icon: journey
+End-to-end journeys, service blueprints, user flows, wireframes and functional specifications that connect what people see with the work behind it.
 
 ## Test and learn
 icon: measure
