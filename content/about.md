@@ -1,6 +1,6 @@
 ---
 title: About
-description: Azka Rifky is a CX research and service designer based in the UK, who started out in finance and design thinking in Sri Lanka.
+description: Azka Rifky is a UX researcher, specialising in inclusive research and service design, based in the UK. She started out in finance and design thinking in Sri Lanka.
 ---
 
 <!--
@@ -38,7 +38,7 @@ width: full
 
 # Hello, it's lovely to meet you!
 
-I'm Azka, a CX research and service designer based in the UK. I'm curious by nature, I love a good plan, and my favourite thing is helping people understand people, whether they're vanilla farmers getting their first loan or ultra-wealthy property buyers in Saudi Arabia.
+I'm Azka, a UX researcher based in the UK. I'm curious by nature, I love a good plan, and my favourite thing is helping people understand people, whether they're vanilla farmers getting their first loan or ultra-wealthy property buyers in Saudi Arabia.
 
 +++
 layout: stop
@@ -90,7 +90,7 @@ today: This is where I am today: still curious, still asking "why?"
 
 From 2023 to 2026 I worked at a research-led design and digital agency, growing from Product Marketing Consultant to Lead CX Research Consultant, across financial services, local government, transport, tourism, property and the public sector.
 
-Highlights included redesigning member services for two membership organisations, running test-and-learn campaigns that lifted rural bus passenger numbers by up to around 40%, and research with thousands of people, from around 700 on wellbeing in Wales to around 3,000 on attitudes to AI. I also led a study of ultra-wealthy property buyers in Saudi Arabia that led to a framework agreement, and ran the agency's internal sessions on using AI well in research and design.
+Highlights included redesigning member services for two membership organisations, running test-and-learn studies that grew rural bus passengers year on year by 38% and 23% on two routes, and research with thousands of people, from around 700 on wellbeing in Wales to around 3,000 on attitudes to AI. I also led a study of ultra-wealthy property buyers in Saudi Arabia that led to a framework agreement, and ran the agency's internal sessions on using AI well in research and design.
 
 The people could hardly be more different, from vanilla farmers to ultra-wealthy buyers. But the job is always the same: listen with empathy, find what really drives people's decisions, and turn it into something an organisation can act on.
 
@@ -101,7 +101,7 @@ layout: ticker
 ## Projects at a glance
 
 - 2 organisations | Member services | Service design: join, progress and renew | Membership | {root}work/membership-journeys/
-- 3 routes | Rural bus test-and-learn | Passenger numbers up on every route, by up to around 40% | Public transport | {root}work/rural-bus/
+- +38% | Rural bus test-and-learn | Year-on-year passenger growth on one route, 23% on another | Public transport | {root}work/rural-bus/
 - 355 loans | Rural Loan, Papua New Guinea | Pilot loans to 330 farmers, 35% of them women | Financial inclusion | {root}work/rural-loan/
 - In Sinhala | Tea, weather and trust | Field research with tea farmers and leaf collectors | Agriculture | {root}work/tea-sri-lanka/
 - ~3,000 people | How people feel about AI | Attitudes survey and AI-readiness tool | Technology

@@ -1,15 +1,15 @@
 ---
 title: Testing and learning our way to more bus passengers
 slug: rural-bus
-summary: Three short test-and-learn studies on three rural bus routes lifted passenger numbers on every route, by up to around 40%.
+summary: Three short test-and-learn studies on three rural bus routes, with year-on-year passenger growth of 38% and 23% on two routes.
 card_role: Co-led all three studies, from fieldwork to evaluation
-card_result: Passenger numbers rose on all three routes, by up to around 40% on the strongest, after adjusting for other causes
+card_result: Year-on-year passenger growth of 38% and 23% on two routes
 thumbnail: bus-card.jpg
 snapshot:
   Client: A rural county council in England (anonymised)
   My role: Co-led all three studies with the CEO of the company I worked at, from fieldwork to evaluation. A designer created the campaign materials.
   Methods: On-bus fieldwork and passenger conversations, surveys, campaign design, ticket data analysis
-  Result: Passenger numbers rose on all three routes, by up to around 40% on the strongest, after adjusting for other causes
+  Result: Year-on-year passenger growth of 38% and 23% on two routes, and 13% at weekends on the third
 ---
 
 ## The challenge
@@ -58,9 +58,9 @@ The council received three recommendation reports, one per route.
 
 ## Results
 
-Passenger numbers rose on all three routes after the campaigns, by up to around 40% on the strongest route. We measured this from ticket data and adjusted for other factors that could have explained a rise, so the result reflects the campaigns as closely as we could tell.
+Passenger numbers grew year on year on all three routes: by 38% on one route and 23% on another, where the figure was corrected for seasonality. On the third, weekend journeys rose 13%, steadying a route that had been declining. We measured this from ticket data, comparing the same months a year apart, so the results weren't just seasonal.
 
-![Headline graphic: passenger numbers rose on all three routes, up to around 40% on the strongest route. Footnote: measured from ticket data, adjusted for other causes.](bus-result.png "The result: passenger numbers rose on all three routes. Recreated and anonymised.")
+![Headline graphic: passenger numbers, year on year. Route A up 38%. Route B up 23%, seasonality corrected. Route C up 13% in weekend journeys. Footnote: measured from ticket data, comparing the same months a year apart.](bus-result-yoy.svg "The result: passenger numbers, year on year. Recreated and anonymised.")
 
 The studies have just closed, so it is too early to say which longer-term recommendations the council has acted on.
 
@@ -72,4 +72,4 @@ The studies have just closed, so it is too early to say which longer-term recomm
 
 **Fit the recommendation to the client's capacity.** The most useful advice is advice the client can act on. Keeping recommendations cheap and quick gave them a real chance of happening.
 
-**Measure honestly.** Adjusting the ticket data for other causes meant the council could trust that the uplift came from the campaigns.
+**Measure honestly.** Comparing ticket data year on year, and correcting for seasonality where we could, meant the council could trust the results.

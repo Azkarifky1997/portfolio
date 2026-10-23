@@ -101,6 +101,12 @@ def optimise_images():
     CACHE.mkdir(parents=True, exist_ok=True)
     sizes = {}
     for src in sorted(IMAGES.iterdir()):
+        if src.suffix.lower() == ".svg":
+            # Drawn diagrams: copied as they are (they stay sharp at any size).
+            m = re.search(r'viewBox="[\d.]+ [\d.]+ ([\d.]+) ([\d.]+)"', src.read_text(encoding="utf-8"))
+            sizes[src.name] = (round(float(m.group(1))), round(float(m.group(2)))) if m else (1600, 900)
+            shutil.copyfile(src, CACHE / f"{web_name(src.name)}.svg")
+            continue
         if src.suffix.lower() not in (".png", ".jpg", ".jpeg", ".webp"):
             continue
         with Image.open(src) as im:
@@ -125,6 +131,12 @@ def image_tag(name, alt, root, sizes_attr, image_sizes, lazy=True):
     if name not in image_sizes:
         sys.exit(f"Missing picture: images/{name} (check the file name)")
     w, h = image_sizes[name]
+    loading = ' loading="lazy"' if lazy else ""
+    if name.lower().endswith(".svg"):
+        return (
+            f'<img src="{root}images/{stem}.svg" width="{IMAGE_WIDTHS[0]}" '
+            f'height="{round(IMAGE_WIDTHS[0] * h / w)}" alt="{html.escape(alt)}"{loading} decoding="async">'
+        )
     small = min(IMAGE_WIDTHS[0], w)
     srcset = ", ".join(
         f"{root}images/{stem}-{width}.webp {min(width, w)}w" for width in IMAGE_WIDTHS
@@ -161,7 +173,8 @@ def render_markdown(text, root, image_sizes):
         img = image_tag(
             name, alt, root, "(min-width: 72rem) 64rem, calc(100vw - 2rem)", image_sizes
         )
-        full = f"{root}images/{web_name(name)}-full.webp"
+        full = (f"{root}images/{web_name(name)}.svg" if name.lower().endswith(".svg")
+                else f"{root}images/{web_name(name)}-full.webp")
         w, h = image_sizes[name]
         shape = " figure--portrait" if h > w else ""
         # Photos (JPEGs) are shown smaller than diagrams, which need room for their text.

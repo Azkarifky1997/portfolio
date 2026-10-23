@@ -1,6 +1,6 @@
 ---
 name: Azka Rifky
-role: UX research and service designer
+role: UX researcher, specialising in inclusive research and service design
 intro: I’ve always been a creative person in a very analytical world. Today I use both to help people understand people, from vanilla farmers in Papua New Guinea to ultra-wealthy property buyers in Saudi Arabia.
 photo: 1684752387570.jpeg
 photo_alt: Portrait of Azka Rifky
