@@ -220,7 +220,7 @@ def layout(*, title, description, body, root, path, current="", home=None):
     e = html.escape
     page_title = e(title) if path == "" else f"{e(title)} · {e(home['name'])}"
     nav = [
-        ("Work", "", "work"),
+        ("Work", "work/", "work"),
         ("Skills", "#skills", "skills"),
         ("About", "about/", "about"),
         ("Contact", "contact/", "contact"),
@@ -489,7 +489,7 @@ def case_study_page(study, next_study, image_sizes):
     return f"""
 <article class="case">
   <div class="wrap">
-    <p class="back-link"><a href="{root}">&larr; All work</a></p>
+    <p class="back-link"><a href="{root}work/">&larr; All work</a></p>
     <header class="case__header">
       <p class="eyebrow">Case study</p>
       <h1>{e(study['title'])}</h1>
@@ -510,7 +510,7 @@ def case_study_page(study, next_study, image_sizes):
     <p class="section-label">Next case study</p>
     <a class="next-case__link" href="{root}work/{next_study['slug']}/">{e(next_study['title'])} <span aria-hidden="true">&rarr;</span></a>
     <p class="next-case__summary">{e(next_study['summary'])}</p>
-    <p><a href="{root}">Back to all work</a></p>
+    <p><a href="{root}work/">Back to all work</a></p>
   </div>
 </nav>"""
 
@@ -720,6 +720,86 @@ def about_page(meta, body, image_sizes):
 <script src="{root}assets/about.js" defer></script>"""
 
 
+FILTERS = [
+    ("type", "Type", ["Research", "Service design", "UX design"]),
+    ("sector", "Sector", ["Education and membership", "Financial inclusion", "Public sector and transport",
+                          "Tourism and culture", "Property", "AI and technology"]),
+    ("region", "Region", ["UK", "Sri Lanka", "Asia Pacific", "Middle East", "Multi-country"]),
+]
+
+
+def slugify(text):
+    return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
+
+
+def load_projects():
+    """Read content/projects.md: each "## Heading" is one project on the Work page."""
+    meta, body = read_page(CONTENT / "projects.md")
+    projects = []
+    for block in re.split(r"^## ", body, flags=re.M)[1:]:
+        lines = block.strip().splitlines()
+        p = {"title": lines[0].strip()}
+        for line in lines[1:]:
+            key, _, value = line.partition(":")
+            if key.strip():
+                p[key.strip()] = value.strip()
+        projects.append(p)
+    return meta, projects
+
+
+def work_index_page(meta, projects):
+    e = html.escape
+    root = "../"
+    items = []
+    for p in projects:
+        data, tags = [], []
+        for key, _, _ in FILTERS:
+            values = [v.strip() for v in p.get(key, "").split(",") if v.strip()]
+            data.append(f'data-{key}="{" ".join(slugify(v) for v in values)}"')
+            tags += values
+        year = f'<p class="project__year">{e(p["year"])}</p>' if p.get("year") else ""
+        tag_html = "".join(f"<li>{e(t)}</li>" for t in tags)
+        if p.get("link"):
+            action = (f'<p class="project__cta"><a href="{root}work/{e(p["link"])}/">Read the case study'
+                      f'<span class="visually-hidden"> about {e(p["title"])}</span> <span aria-hidden="true">&rarr;</span></a></p>')
+        else:
+            action = '<p class="project__summary-only">Summary only</p>'
+        items.append(
+            f'<li class="project" {" ".join(data)}>{year}<h2 class="project__title">{e(p["title"])}</h2>'
+            f'<p class="project__summary">{e(p.get("summary", ""))}</p>'
+            f'<ul class="project__tags" aria-label="Tags">{tag_html}</ul>{action}</li>'
+        )
+    groups = []
+    for key, label, options in FILTERS:
+        buttons = "".join(
+            f'<button type="button" class="filter" aria-pressed="false" data-group="{key}" '
+            f'data-value="{slugify(o)}">{e(o)}</button>'
+            for o in options
+        )
+        groups.append(
+            f'<div class="filters__group" role="group" aria-labelledby="filter-{key}">'
+            f'<p class="filters__label" id="filter-{key}">{label}</p>{buttons}</div>'
+        )
+    return f"""
+<div class="wrap">
+  <div class="work-index">
+    <h1>{e(meta['title'])}</h1>
+    <p class="standfirst">{e(meta.get('intro', ''))}</p>
+    <div class="filters" hidden>
+      <h2 class="visually-hidden">Filter projects</h2>
+      {''.join(groups)}
+      <div class="filters__footer">
+        <p class="filters__count" aria-live="polite"></p>
+        <button type="button" class="filters__clear">Clear filters</button>
+      </div>
+    </div>
+    <ul class="projects">{''.join(items)}</ul>
+    <p class="projects__empty" hidden>No projects match these filters. Try clearing one.</p>
+  </div>
+</div>
+<script src="{root}assets/work.js" defer></script>"""
+
+
 def contact_page(meta, body):
     e = html.escape
     phone = ""
@@ -775,7 +855,7 @@ def build():
 
     write("", layout(
         title=f"{home['name']}, {home['role']}", description=home["intro"],
-        body=home_page(home, home_body, studies, image_sizes), root="", path="", current="work", home=home,
+        body=home_page(home, home_body, studies, image_sizes), root="", path="", current="home", home=home,
     ))
     for i, study in enumerate(studies):
         next_study = studies[(i + 1) % len(studies)]
@@ -784,6 +864,12 @@ def build():
             body=case_study_page(study, next_study, image_sizes),
             root="../../", path=f"work/{study['slug']}/", current="work", home=home,
         ))
+    projects_meta, projects = load_projects()
+    write("work", layout(
+        title=projects_meta["title"], description=projects_meta["description"],
+        body=work_index_page(projects_meta, projects),
+        root="../", path="work/", current="work", home=home,
+    ))
     write("about", layout(
         title=about["title"], description=about["description"],
         body=about_page(about, about_body, image_sizes),
