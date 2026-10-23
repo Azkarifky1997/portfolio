@@ -56,11 +56,11 @@ region: Multi-country
 link:
 
 ## Need states for a global membership body
-summary: Research with members over several waves, turned into a need-state tool the client uses to plan
-year:
+summary: Later waves of a four-wave study with around 200 members per wave in 5 countries, plus longitudinal analysis across all four waves
+year: 2023
 type: Research
 sector: Education and membership
-region:
+region: Multi-country
 link:
 
 ## Digital experience for a global professional body

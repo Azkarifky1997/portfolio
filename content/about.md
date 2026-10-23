@@ -211,6 +211,16 @@ Reviewing members' experience across the member portal, learning platform, websi
 
 +++
 layout: stop
+year: 2023
+icon: chart
++++
+
+### Members’ needs across five countries
+
+Later waves of a four-wave need-state study with around 200 members per wave in the UK, India, Singapore, Malaysia and China. I wrote the surveys, analysed the results, wrote the reports and presented to the client, then ran longitudinal analysis across all four waves.
+
++++
+layout: stop
 icon: systems
 link: membership-journeys
 +++
@@ -292,11 +302,12 @@ layout: map
 
 - Sri Lanka | in person | 80.7, 7.9 | Tea farmers, bank app research, co-design workshops
 - Papua New Guinea | remote | 145, -6.3 | Rural Loan, through local field researchers
-- United Kingdom | in person, survey | -2, 53 | Wales, rural England, a city destination, membership bodies
+- United Kingdom | in person, survey | -2, 53 | Wales, rural England, a city destination, membership bodies, member need-state research
 - Saudi Arabia | remote, survey | 45, 24 | Property buyers through moderators; future members survey
-- India | survey | 78, 22 | Future members survey
-- Singapore | survey | 103.8, 1.35 | Future members survey
-- China | survey | 104, 35 | Future members survey
+- India | survey | 78, 22 | Future members survey; member need-state research
+- Singapore | survey | 103.8, 1.35 | Future members survey; member need-state research
+- Malaysia | survey | 101, 6.5 | Member need-state research
+- China | survey | 104, 35 | Future members survey; member need-state research
 - Middle East | in person | 61, 16 | Research for a cultural institution | region
 
 +++
@@ -311,7 +322,7 @@ layout: ticker
 - In Sinhala | Tea, weather and trust | Field research with tea farmers and leaf collectors | Agriculture | {root}work/tea-sri-lanka/
 - 654 students | What future members want | Survey across 5 countries | Education | {root}work/#what-future-members-want
 - ~3,000 people | How people feel about AI | Attitudes survey and AI-readiness tool | Technology | {root}work/#how-people-feel-about-ai
-- Longitudinal | Need states for a global membership body | Research with members over several waves | Membership | {root}work/#need-states-for-a-global-membership-body
+- 5 countries | Need states for a global membership body | Multi-wave member research | Membership | {root}work/#need-states-for-a-global-membership-body
 - ~700 respondents | Wellbeing economy in Wales | What wellbeing means to people and communities | Public sector | {root}work/#wellbeing-economy-in-wales
 - 1,000+ respondents | Understanding a city's visitors | Brand perception study and customer intelligence portal | Tourism | {root}work/#understanding-a-city-s-visitors
 - Mixed methods | Ultra-luxury property in Saudi Arabia | Behavioural personas for the executive team | Property | {root}work/#ultra-luxury-property-buyers
