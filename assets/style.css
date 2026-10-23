@@ -1237,3 +1237,12 @@ body { overflow-x: clip; }
 .ticker__toggle:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
 /* A Work page entry someone has linked to */
 .project:target { outline: 3px solid var(--ochre); outline-offset: 3px; }
+
+/* ---------- Readability: body text at 16px minimum, regular weight, stronger grey ---------- */
+:root { --muted: #4a4a4a; }            /* 8.9:1 on white, 8.1:1 on cream */
+.facts dd, .skill p, .back-link, .snapshot dl, .next-case p:last-child, .fact-cards p,
+.ticker-card__desc, .edu__where, .project__summary-only, .stop__chips li, .map-list,
+.map-legend, .filters__label, .filter, .tools__title, .intro-about__more, .card__cta,
+.contact-list dd { font-size: 1rem; }
+.ticker-card__desc, .facts dd, .skill p, .edu__where { color: var(--text); }
+.proof__note { font-size: 0.9375rem; opacity: 1; }

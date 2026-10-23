@@ -32,7 +32,16 @@ this file records how we have worked together so far.
 - WCAG 2.2 AA: keep heading order, visible focus, alt text on every image.
 - Mobile first: check there is no sideways scrolling at 375px.
 - Case study photos (JPEG) show small; diagrams (PNG) show wide.
-- The About page opens with full-width text, then a "journey" timeline: stops (layout: stop) along a winding line, with round photos or icons and a year on each.
+- Home: hero, teal proof band, about me, selected work grid (Rural Loan featured),
+  cream "What I do", "How I run research", teal "Let's talk". Gold is for lines only.
+- About: intro, "My journey" (layout: journey/chapter/period/stop, chalk line drawn
+  by assets/about.js), research map (layout: map, assets/world-land.svg),
+  "Projects at a glance" banner (must stay pausable, WCAG 2.2.2), principles, education.
+- Work page /work/ from content/projects.md with accessible filters (assets/work.js).
+- Job title everywhere: "UX researcher, specialising in inclusive research and service design".
+- Bus results: 38% and 23% year on year on two routes, 13% weekends on the third.
+  Never "40%".
+- No em dashes in site copy.
 
 ## Rules for content
 

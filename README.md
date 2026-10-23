@@ -10,7 +10,9 @@ site rebuilds and goes live by itself, usually within two minutes.
 
 | Folder or file | What it is |
 | --- | --- |
-| `content/home.md` | Your name, role line, intro, photo, the "About me" text and the three quick facts on the home page |
+| `content/home.md` | Your name, role line, intro, photo, the proof numbers band, the "About me" text, the three quick facts and the Let's talk band |
+| `content/projects.md` | Every project on the Work page (/work/), with its filters (type, sector, region) |
+| `content/process.md` | The "How I run research" steps on the home page |
 | `content/skills.md` | The "What I do" skill cards and the "Tools I use" list on the home page |
 | `content/about.md` | The About page: story sections with photos, principles, fun facts, education and closing |
 | `content/contact.md` | Your email, phone and LinkedIn link |
@@ -157,3 +159,20 @@ git add -A && git commit -m "Update case study" && git push
 - Write alt text for every picture, and keep "Recreated" notes in captions.
 - Keep client names out of anonymised case studies.
 - Don't add your home address: the site is public.
+
+## Add a project to the Work page
+
+Open `content/projects.md` and copy one of the `## Project` blocks. Fill in
+the summary, year (or leave it blank), type, sector and region using the
+options listed at the top of the file. Put a case study address after
+`link:` (for example `rural-loan`), or leave it blank for "Summary only".
+
+## Edit the journey and the map (About page)
+
+Both live in `content/about.md`. Each journey stop is a `layout: stop` block
+with a year, an icon or photo, and text. `layout: chapter` and
+`layout: period` add the labels on the line. The map is the `layout: map`
+block: one line per place, with how the research was done
+(in person, remote, survey) and the place's longitude and latitude.
+
+The world map outline comes from Natural Earth (public domain).
