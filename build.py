@@ -619,6 +619,9 @@ def about_section(settings, text, root, image_sizes, index):
             f'<ul class="ticker__track ticker__track--copy" aria-hidden="true">{copy}</ul></div></section>'
         )
 
+    if layout_name == "map":
+        return research_map(text)
+
     if layout_name == "education":
         # Each bullet: year | qualification | where
         heading = re.search(r"^## (.+)$", text, re.M)
@@ -660,6 +663,61 @@ CHALK_STAR = (
     '<path d="M39 6 L42.5 2.5 M41 10.5 L45.5 9.5 M35.5 4 L36 0.5"/>'
     '</g></svg>'
 )
+
+
+MAP_W, MAP_TOP, MAP_BOTTOM = 1000, 84, -58
+
+
+def map_marker(kind, x, y):
+    """Map markers differ by shape as well as colour: in person ●, remote ○, survey ■."""
+    if kind == "in person":
+        return f'<circle cx="{x:.0f}" cy="{y:.0f}" r="7" class="m-person"/>'
+    if kind == "remote":
+        return f'<circle cx="{x:.0f}" cy="{y:.0f}" r="6" class="m-remote"/>'
+    return f'<rect x="{x - 6:.0f}" y="{y - 6:.0f}" width="12" height="12" class="m-survey"/>'
+
+
+def research_map(text):
+    e = html.escape
+    heading = re.search(r"^## (.+)$", text, re.M)
+    title = e(heading.group(1)) if heading else "Where my research has taken me"
+    land = re.search(r'<path d="([^"]+)"', (ASSETS / "world-land.svg").read_text()).group(1)
+    h = MAP_W * (MAP_TOP - MAP_BOTTOM) / 360
+    marks, rows, summary = [], [], []
+    for line in re.findall(r"^- (.+)$", text, re.M):
+        bits = [b.strip() for b in line.split("|")]
+        place, kinds, coords, label = bits[:4]
+        region = len(bits) > 4 and bits[4] == "region"
+        kinds = [k.strip() for k in kinds.split(",") if k.strip()]
+        lon, lat = (float(v) for v in coords.split(","))
+        x, y = (lon + 180) / 360 * MAP_W, (MAP_TOP - lat) / (MAP_TOP - MAP_BOTTOM) * h
+        if region:
+            # A general area, deliberately not pinned to any one country.
+            marks.append(f'<circle cx="{x - 18:.0f}" cy="{y - 6:.0f}" r="30" class="m-region"/>')
+        for i, k in enumerate(kinds):
+            marks.append(map_marker(k, x + (i - (len(kinds) - 1) / 2) * 16, y))
+        icons = "".join(f'<svg class="map-key" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'
+                        f'{map_marker(k, 12, 12)}</svg>' for k in kinds)
+        how = " and ".join(kinds)
+        rows.append(f'<li><span class="map-list__keys">{icons}</span><span><strong>{e(place)}</strong> '
+                    f'<span class="map-list__how">({e(how)})</span><br>{e(label)}</span></li>')
+        summary.append(f"{place} ({how})")
+    legend = "".join(
+        f'<li><svg class="map-key" viewBox="0 0 24 24" aria-hidden="true" focusable="false">{map_marker(k, 12, 12)}</svg>{e(t)}</li>'
+        for k, t in [("in person", "In person"), ("remote", "Remote, through local researchers or moderators"),
+                     ("survey", "Survey")]
+    )
+    aria = f"World map of where my research has taken place: {'; '.join(summary)}."
+    return (
+        f'<section class="about-section research-map" aria-labelledby="map-heading">'
+        f'<h2 id="map-heading">{title}</h2>'
+        f'<ul class="map-legend" aria-label="Key">{legend}</ul>'
+        f'<div class="research-map__inner"><div class="research-map__map">'
+        # Framed from Europe to the Pacific, where all the places are.
+        f'<svg viewBox="430 45 530 250" role="img" aria-label="{e(aria)}">'
+        f'<path d="{land}" class="m-land"/>{"".join(marks)}</svg></div>'
+        f'<ul class="map-list">{"".join(rows)}</ul></div></section>'
+    )
 
 
 def journey_stop(settings, text, root, image_sizes, index, is_last):

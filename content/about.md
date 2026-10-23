@@ -31,6 +31,8 @@ layout: stop     one stop on the journey timeline. Optional: link: (a case study
 layout: ticker   a moving banner of project cards on an ochre band. Each bullet:
                  big number | title | one line | tag | optional link (use {root}).
 layout: education  each bullet: year | qualification | where.
+layout: map      each bullet: place | in person / remote / survey (comma-separated) |
+                 longitude, latitude | what I did | add "region" for a general area.
 layout: closing  centred block. Links in the last line become buttons.
                  Write {root} at the start of links to other pages.
 -->
@@ -281,6 +283,21 @@ today: This is where I am today: still curious, still asking 'why?'
 
 ### Today
 
+
++++
+layout: map
++++
+
+## Where my research has taken me
+
+- Sri Lanka | in person | 80.7, 7.9 | Tea farmers, bank app research, co-design workshops
+- Papua New Guinea | remote | 145, -6.3 | Rural Loan, through local field researchers
+- United Kingdom | in person, survey | -2, 53 | Wales, rural England, a city destination, membership bodies
+- Saudi Arabia | remote, survey | 45, 24 | Property buyers through moderators; future members survey
+- India | survey | 78, 22 | Future members survey
+- Singapore | survey | 103.8, 1.35 | Future members survey
+- China | survey | 104, 35 | Future members survey
+- Middle East | in person | 61, 16 | Research for a cultural institution | region
 
 +++
 layout: ticker
