@@ -316,6 +316,11 @@ ICONS = {
     "sparkle": '<path d="M12 3c.6 4.2 2.8 6.4 7 7-4.2.6-6.4 2.8-7 7-.6-4.2-2.8-6.4-7-7 4.2-.6 6.4-2.8 7-7z"/><path d="M19 15v4M17 17h4"/>',
     "books": '<path d="M4 4h4v16H4zM10 4h4v16h-4z"/><path d="m16 5 3.8-1 3 15.5-3.8 1z"/>',
     "star": '<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
+    "phone": '<rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18h2"/>',
+    "alert": '<path d="M12 3 2.5 20h19z"/><path d="M12 10v4.5M12 17.5v.01"/>',
+    "calendar": '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+    "heart": '<path d="M12 20s-7-4.4-9-9a4.6 4.6 0 0 1 9-2.2A4.6 4.6 0 0 1 21 11c-2 4.6-9 9-9 9z"/>',
+    "target": '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
     "linkedin": '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10.5V16M8 7.5v.01M12 16v-3.5a2 2 0 0 1 4 0V16M12 10.5V16"/>',
     "email": '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/>',
 }
@@ -548,51 +553,203 @@ def home_page(home, home_body, studies, image_sizes):
 </section>"""
 
 
+CASE_NAV = [("about", "About"), ("challenge", "Challenge"), ("process", "Process"), ("insights", "Insights"),
+            ("solution", "Solution"), ("impact", "Impact"), ("reflection", "Reflection")]
+
+
+def split_sections(body):
+    """Split a case study into its +++ sections: [(settings, text), ...]."""
+    parts = re.split(r"^\+\+\+\n(.*?)\n\+\+\+\n", body, flags=re.M | re.S)
+    return [(parse_settings(parts[i]), parts[i + 1]) for i in range(1, len(parts), 2)]
+
+
+def take_heading(text):
+    """Pull the "## Heading" out of a section's text, returning (heading HTML, rest)."""
+    m = re.search(r"^## (.+)$", text, re.M)
+    if not m:
+        return "", text
+    return heading_md(m.group(1)), text[:m.start()] + text[m.end():]
+
+
+def chips_html(text, cls="chips"):
+    items = [c.strip() for c in text.split(",") if c.strip()]
+    return f'<ul class="{cls}">' + "".join(f'<li class="chip">{html.escape(c)}</li>' for c in items) + "</ul>"
+
+
+def case_figure(name, alt, caption, root, image_sizes):
+    if name not in image_sizes:
+        return ""
+    if not alt:
+        sys.exit(f"The picture {name} needs alt text.")
+    img = image_tag(name, alt, root, "(min-width: 60rem) 34rem, 92vw", image_sizes)
+    cap = f"<figcaption>{html.escape(caption)}</figcaption>" if caption else ""
+    return f'<figure class="cs-figure">{img}{cap}</figure>'
+
+
+def list_rows(text):
+    """Bullet lines split on "|": [[a, b, c], ...]."""
+    return [[x.strip() for x in line.split("|")] for line in re.findall(r"^- (.+)$", text, re.M)]
+
+
+def strip_lists(text):
+    return re.sub(r"^- .+\n?", "", text, flags=re.M)
+
+
+def cs_section(kind, settings, text, root, image_sizes):
+    """One section of a case study, following the v3 template."""
+    e = html.escape
+    heading, rest = take_heading(text)
+    eyebrow = e(settings.get("eyebrow", ""))
+    head = (f'<p class="eyebrow">{eyebrow}</p>' if eyebrow else "") + (f'<h2>{heading}</h2>' if heading else "")
+    sid = kind if kind in dict(CASE_NAV) else ""
+    id_attr = f' id="{sid}"' if sid else ""
+    fig = case_figure(settings.get("image", ""), settings.get("image_alt", ""), settings.get("caption", ""),
+                      root, image_sizes) if settings.get("image") else ""
+
+    if kind == "about":
+        body = render_markdown(rest, root, image_sizes)
+        cls = "cs-split" if fig else "cs-text"
+        return (f'<section class="wrap cs-section {cls}"{id_attr}><div class="cs-split__text">{head}{body}</div>'
+                f'{fig}</section>')
+
+    if kind == "challenge":
+        hyps = list_rows(rest)
+        body = render_markdown(strip_lists(rest), root, image_sizes)
+        q = settings.get("question", "")
+        question = (f'<div class="cs-question"><p class="cs-question__label">Research question</p>'
+                    f'<p class="cs-question__text">{e(q)}</p></div>') if q else ""
+        cards = "".join(
+            f'<li class="hyp"><p class="hyp__label">Hypothesis {i + 1}</p><p>{e(h[0])}</p>'
+            + (f'<span class="chip">{e(h[1])}</span>' if len(h) > 1 else "") + "</li>"
+            for i, h in enumerate(hyps)
+        )
+        hyp_html = f'<ul class="hyps">{cards}</ul>' if cards else ""
+        return f'<section class="wrap cs-section"{id_attr}>{head}<div class="cs-text">{body}</div>{question}{hyp_html}</section>'
+
+    if kind == "process":
+        stages = [s.strip() for s in settings.get("stages", "").split(";") if s.strip()]
+        stage_html = ""
+        for i, st in enumerate(stages):
+            name, _, methods = st.partition(":")
+            last = i == len(stages) - 1
+            stage_html += (f'<li class="stage{" stage--last" if last else ""}"><p class="stage__num">{i + 1:02d}'
+                           f'{"" if last else " <span aria-hidden=&quot;true&quot;>&rarr;</span>"}</p>'
+                           f'<h3 class="stage__name">{e(name.strip())}</h3>{chips_html(methods)}</li>')
+        stage_html = stage_html.replace("&quot;", '"')
+        # Method highlights: each "### Title" with optional "image: file | alt | caption" line, then text
+        highs = []
+        for block in re.split(r"^### ", rest, flags=re.M)[1:]:
+            lines = block.strip().splitlines()
+            title, img = lines[0].strip(), ""
+            body_lines = []
+            for line in lines[1:]:
+                if line.startswith("image:"):
+                    name, alt, cap = ([x.strip() for x in line[6:].split("|")] + ["", ""])[:3]
+                    img = case_figure(name, alt, cap, root, image_sizes)
+                else:
+                    body_lines.append(line)
+            highs.append(f'<li class="highlight">{img}<div class="highlight__body"><h3>{e(title)}</h3>'
+                         f'{render_markdown(chr(10).join(body_lines), root, image_sizes)}</div></li>')
+        intro = render_markdown(re.split(r"^### ", rest, flags=re.M)[0], root, image_sizes)
+        hl = (f'<p class="eyebrow cs-highlights__label">Method highlights</p><ul class="highlights">{"".join(highs)}</ul>'
+              if highs else "")
+        return (f'<section class="band band--grey cs-process"{id_attr}><div class="wrap">{head}{intro}'
+                f'<ol class="stages">{stage_html}</ol>{hl}</div></section>')
+
+    if kind == "insights":
+        rows = list_rows(rest)
+        cards = "".join(
+            f'<li class="insight"><span class="insight__icon" aria-hidden="true">{icon(r[0], 26)}</span>'
+            f'<h3>{e(r[1])}</h3><p>{inline_md(r[2]) if len(r) > 2 else ""}</p></li>'
+            for r in rows
+        )
+        extra = render_markdown(strip_lists(rest), root, image_sizes)
+        return f'<section class="wrap cs-section"{id_attr}>{head}<ul class="insights">{cards}</ul>{extra}</section>'
+
+    if kind == "thinking":
+        body = render_markdown(rest, root, image_sizes)
+        return (f'<aside class="wrap cs-section" aria-labelledby="thinking-h"><div class="cs-callout">'
+                f'<h2 id="thinking-h" class="cs-callout__title">How our thinking <em>changed</em></h2>{body}</div></aside>')
+
+    if kind == "solution":
+        rows = list_rows(rest)
+        table = ""
+        if rows:
+            trs = "".join(f'<tr><td>{inline_md(r[0])}</td><td>{inline_md(r[1]) if len(r) > 1 else ""}</td></tr>'
+                          for r in rows)
+            table = (f'<div class="cs-table"><table><thead><tr><th scope="col">We heard</th>'
+                     f'<th scope="col">So we designed</th></tr></thead><tbody>{trs}</tbody></table></div>')
+        body = render_markdown(strip_lists(rest), root, image_sizes)
+        return f'<section class="wrap cs-section"{id_attr}>{head}{table}<div class="cs-text">{body}</div></section>'
+
+    if kind == "impact":
+        nums = []
+        for pair in [p for p in settings.get("numbers", "").split(";") if p.strip()]:
+            n, _, label = (x.strip() for x in pair.partition("|"))
+            nums.append(f'<li><p class="impact__num">{e(n)}</p><p class="impact__label">{e(label)}</p></li>')
+        nums_html = f'<ul class="impact__nums">{"".join(nums)}</ul>' if nums else ""
+        body = render_markdown(rest, root, image_sizes)
+        note = f'<p class="impact__note">{e(settings["note"])}</p>' if settings.get("note") else ""
+        title = heading or "Impact"
+        return (f'<section class="band band--teal on-blue cs-impact"{id_attr}><div class="wrap">'
+                f'<h2 class="cs-impact__title">{title}</h2>{nums_html}<div class="impact__text">{body}</div>{note}</div></section>')
+
+    if kind == "reflection":
+        cards = []
+        for line in re.findall(r"^- (.+)$", rest, re.M):
+            m = re.match(r"\*\*(.+?)\*\*\s*(.*)", line)
+            t, d = (m.group(1), m.group(2)) if m else ("", line)
+            cards.append(f'<li class="refl"><h3>{e(t.rstrip("."))}</h3><p>{inline_md(d)}</p></li>')
+        intro = render_markdown(strip_lists(rest), root, image_sizes)
+        return f'<section class="wrap cs-section"{id_attr}>{head}{intro}<ul class="refls">{"".join(cards)}</ul></section>'
+
+    if kind == "sources":
+        items = "".join(f"<li>{inline_md(l)}</li>" for l in re.findall(r"^- (.+)$", rest, re.M))
+        return f'<section class="wrap cs-sources" aria-label="Sources"><p><strong>Sources:</strong></p><ul>{items}</ul></section>'
+
+    # anything else: plain text section
+    return f'<section class="wrap cs-section"{id_attr}>{head}{render_markdown(rest, root, image_sizes)}</section>'
+
+
 def case_study_page(study, next_study, image_sizes):
     e = html.escape
     root = "../../"
-    snapshot = "".join(
-        f"<div><dt>{e(label)}</dt><dd>{e(value)}</dd></div>"
-        for label, value in study["snapshot"].items()
-    )
-    if study.get("hero_image"):
-        hero = (
-            '<figure class="figure case__hero">'
-            + image_tag(study["hero_image"], study.get("hero_alt", ""), root,
-                        "(min-width: 72rem) 64rem, calc(100vw - 2rem)", image_sizes, lazy=False)
-            + (f"<figcaption>{e(study['hero_caption'])}</figcaption>" if study.get("hero_caption") else "")
-            + "</figure>"
-        )
-    else:
-        hero = ""
-    body = render_markdown(study["body"], root, image_sizes)
+    sections = split_sections(study["body"])
+    present = {s.get("section") for s, _ in sections}
+    toc = "".join(f'<li><a href="#{sid}">{label}</a></li>' for sid, label in CASE_NAV if sid in present)
+    snapshot = "".join(f'<div><dt>{e(k)}</dt><dd>{e(v)}</dd></div>' for k, v in study["snapshot"].items())
+    hero_img = ""
+    if study.get("header_image") in image_sizes:
+        hero_img = (f'<div class="cs-hero__visual"><span class="cs-hero__shape" aria-hidden="true"></span>'
+                    f'<div class="cs-hero__circle">'
+                    + image_tag(study["header_image"], study.get("header_image_alt", ""), root, "22rem", image_sizes, lazy=False)
+                    + "</div></div>")
+    body = "".join(cs_section(s.get("section", ""), s, t, root, image_sizes) for s, t in sections)
+    nxt = ""
+    if next_study:
+        nxt = (f'<nav class="wrap cs-next" aria-label="Next case study"><a href="{root}work/{next_study["slug"]}/">'
+               f'<span><span class="cs-next__label">Next case study</span>'
+               f'<span class="cs-next__title">{e(next_study["title"])}</span></span>'
+               f'<span aria-hidden="true" class="cs-next__arrow">&rarr;</span></a></nav>')
     return f"""
-<article class="case">
-  <div class="wrap">
-    <p class="back-link"><a href="{root}work/">&larr; All work</a></p>
-    <header class="case__header">
-      <p class="eyebrow">Case study</p>
-      <h1>{e(study['title'])}</h1>
-      <p class="standfirst">{e(study.get('intro') or study['summary'])}</p>
-    </header>
-    {hero}
-    <section class="snapshot" aria-labelledby="snapshot-heading">
-      <h2 id="snapshot-heading" class="section-label">Snapshot</h2>
-      <dl>{snapshot}</dl>
-    </section>
-    <div class="prose">
-{body}
+<article class="cs">
+  <header class="band band--teal on-blue cs-hero">
+    <div class="wrap cs-hero__inner{' cs-hero__inner--image' if hero_img else ''}">
+      <div class="cs-hero__text">
+        <p class="cs-hero__back"><a href="{root}work/">&larr; All work</a></p>
+        <p class="eyebrow">{e(study.get('label', 'Case study'))}</p>
+        <h1>{heading_md(study.get('title_html', study['title']))}</h1>
+        <p class="cs-hero__summary">{e(study.get('intro') or study['summary'])}</p>
+        {chips_html(study.get('chips', ''))}
+      </div>
+      {hero_img}
     </div>
-  </div>
-</article>
-<nav class="next-case" aria-label="More case studies">
-  <div class="wrap">
-    <p class="section-label">Next case study</p>
-    <a class="next-case__link" href="{root}work/{next_study['slug']}/">{e(next_study['title'])} <span aria-hidden="true">&rarr;</span></a>
-    <p class="next-case__summary">{e(next_study['summary'])}</p>
-    <p><a href="{root}work/">Back to all work</a></p>
-  </div>
-</nav>"""
+  </header>
+  <nav class="cs-toc" aria-label="On this page"><ul class="wrap">{toc}</ul></nav>
+  <section class="wrap cs-snapshot" aria-label="Snapshot"><dl>{snapshot}</dl></section>
+  {body}
+  {nxt}
+</article>"""
 
 
 def parse_settings(text):
@@ -1049,8 +1206,10 @@ def build():
         title=f"{home['name']}, {home['role']}", description=home["intro"],
         body=home_page(home, home_body, studies, image_sizes), root="", path="", current="home", home=home,
     ))
-    for i, study in enumerate(studies):
-        next_study = studies[(i + 1) % len(studies)]
+    # Drafts (draft: true) show in the preview only: never published or linked live.
+    published = [st for st in studies if PREVIEW or not st.get("draft")]
+    for i, study in enumerate(published):
+        next_study = published[(i + 1) % len(published)] if len(published) > 1 else None
         write(f"work/{study['slug']}", layout(
             title=study["title"], description=study["summary"],
             body=case_study_page(study, next_study, image_sizes),
