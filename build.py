@@ -216,6 +216,12 @@ def label_tables(body):
 # -------------------------------------------------------------- templates
 
 
+def asset(root, name):
+    """Address of a file in assets/, with a fingerprint so browsers fetch new versions straight away."""
+    digest = hashlib.sha1((ASSETS / name).read_bytes()).hexdigest()[:8]
+    return f"{root}assets/{name}?v={digest}"
+
+
 def layout(*, title, description, body, root, path, current="", home=None, scripts=""):
     e = html.escape
     page_title = e(title) if path == "" else f"{e(title)} · {e(home['name'])}"
@@ -241,7 +247,7 @@ def layout(*, title, description, body, root, path, current="", home=None, scrip
 <meta name="theme-color" content="#1B3A6B">
 <link rel="icon" href="{root}assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="{root}assets/fonts/jakarta-latin-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="{root}assets/style.css">
+<link rel="stylesheet" href="{asset(root, 'style.css')}">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -269,7 +275,7 @@ def layout(*, title, description, body, root, path, current="", home=None, scrip
     </ul>
   </div>
 </footer>
-<script src="{root}assets/site.js" defer></script>
+<script src="{asset(root, 'site.js')}" defer></script>
 {scripts}
 </body>
 </html>
@@ -391,7 +397,7 @@ def project_card(p, root, image_sizes, studies, featured=False, lazy=True, home=
         if p["image"].lower().endswith((".png", ".svg")):
             img = f'<div class="pcard__diagram">{img}</div>'  # diagrams show whole, not cropped
     else:
-        img = f'<div class="pcard__fallback" aria-hidden="true">{icon("leaf", 40)}</div>'
+        img = ""  # no picture: the card is text only
     chips = "".join(f'<li class="chip">{e(c.strip())}</li>' for c in p.get("chips", "").split(",") if c.strip())
     year = f'<span>{e(p["year"])}</span>' if p.get("year") else ""
     if featured and p.get("numbers"):
@@ -418,7 +424,7 @@ def project_card(p, root, image_sizes, studies, featured=False, lazy=True, home=
     tag = "h3" if home else "h2"
     return f"""
       <li class="pcard{' pcard--featured' if featured else ''}{' pcard--linked' if href else ''}" id="{slugify(p['title'])}" {data}>
-        <div class="pcard__image">{img}</div>
+        {f'<div class="pcard__image">{img}</div>' if img else ""}
         <div class="pcard__body">
           <p class="pcard__meta"><span>{e(p.get('meta', ''))}</span>{year}</p>
           <{tag} class="pcard__title">{title}</{tag}>
@@ -1050,7 +1056,7 @@ def about_page(meta, body, image_sizes):
 <div class="wrap about-page">
 {''.join(sections)}
 </div>
-<script src="{root}assets/about.js" defer></script>"""
+<script src="{asset(root, 'about.js')}" defer></script>"""
 
 
 FILTER_TYPES = ["Research", "Service design", "Strategy", "Research operations"]
@@ -1220,7 +1226,7 @@ def build():
         title=projects_meta["title"], description=projects_meta["description"],
         body=work_index_page(projects_meta, projects, studies, image_sizes),
         root="../", path="work/", current="work", home=home,
-        scripts='<script src="../assets/work.js" defer></script>',
+        scripts=f'<script src="{asset("../", "work.js")}" defer></script>',
     ))
     write("about", layout(
         title=about["title"], description=about["description"],
