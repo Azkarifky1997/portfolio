@@ -25,23 +25,24 @@ this file records how we have worked together so far.
 - Explain things in plain English, without jargon.
 - She often edits on github.com, so `git pull --rebase` before making changes.
 
-## Design rules
+## Design rules (brief v3: docs/portfolio-brief-v3.md)
 
-- Montserrat (self-hosted in assets/fonts), teal #1F4E5F for text and links,
-  ochre #C8962E for decoration only (it fails contrast as text).
-- WCAG 2.2 AA: keep heading order, visible focus, alt text on every image.
-- Mobile first: check there is no sideways scrolling at 375px.
-- Case study photos (JPEG) show small; diagrams (PNG) show wide.
-- Home: hero, teal proof band, about me, selected work grid (Rural Loan featured),
-  cream "What I do", "How I run research", teal "Let's talk". Gold is for lines only.
-- About: intro, "My journey" (layout: journey/chapter/period/stop, chalk line drawn
-  by assets/about.js), research map (layout: map, assets/world-land.svg),
-  "Projects at a glance" banner (must stay pausable, WCAG 2.2.2), principles, education.
-- Work page /work/ from content/projects.md with accessible filters (assets/work.js).
-- Job title everywhere: "UX researcher, specialising in inclusive research and service design".
-- Bus results: 38% and 23% year on year on two routes, 13% weekends on the third.
-  Never "40%".
-- No em dashes in site copy.
+- Plus Jakarta Sans (self-hosted in assets/fonts). Tokens in assets/style.css:
+  blue #1B3A6B, amber #F2A900 (text on blue only), gold text #9A6500 (accent words
+  on white), chalk #F3EBD3, grey #F4F4F2. One italic accent word per main heading:
+  write it as *word* in headings.
+- WCAG 2.2 AA: heading order, visible focus, alt text, 44px targets, 320px with no
+  sideways scroll, reduced motion respected. The project banner must stay pausable.
+- Case studies are content/work/NN-slug.md, written as +++ sections
+  (about, challenge, process, insights, thinking, solution, impact, reflection, sources).
+  draft: true shows a case study in the preview only (Wales is a draft until Azka
+  approves its reflection and image).
+- Project cards on Home and Work come from content/projects.md. Testimonials appear
+  only when content/testimonials.md has a real quote.
+- About page: intro, chalk journey (layout: chapter / stop / today, line drawn by
+  assets/about.js), research map with pin bubbles, banner, principles, education.
+- Private facts (client names etc.) live outside the repo in ../private-docs/.
+  Never copy them into the repo.
 
 ## Rules for content
 

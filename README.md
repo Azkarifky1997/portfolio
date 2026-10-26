@@ -176,3 +176,17 @@ block: one line per place, with how the research was done
 (in person, remote, survey) and the place's longitude and latitude.
 
 The world map outline comes from Natural Earth (public domain).
+
+## The v3 structure (October 2026)
+
+- **Project cards** on the home page and the Work page all come from
+  `content/projects.md`. To change a card's title, chips or result, edit it there.
+  The home page shows the projects listed after `selected:` in `content/home.md`.
+- **Case studies** (`content/work/`) are written in sections, each starting with a
+  small `+++` block, for example `section: challenge` with a `question:` line. Copy an
+  existing case study to see the pattern. Put `draft: true` at the top to keep a case
+  study visible only in your preview.
+- **Testimonials:** add real quotes to `content/testimonials.md`; the section appears
+  on the home page once there is at least one.
+- **About page:** the journey stops, map pins and banner are all in
+  `content/about.md`. The notes at the top of that file explain each part.
