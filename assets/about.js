@@ -1,78 +1,125 @@
-// About page: draws the winding journey line and runs the project banner.
+// About page: draws the chalk journey line, runs the map pins and the project banner.
 (function () {
-  // ---- Journey line: one smooth curve through every circle ----
-  var journey = document.querySelector(".journey");
   var NS = "http://www.w3.org/2000/svg";
 
-  // A cubic curve that leaves and arrives travelling straight down, so every join is smooth.
-  function down(x1, y1, x2, y2, pull) {
-    var k = (y2 - y1) * (pull || 0.5);
-    return " C" + x1 + " " + (y1 + k) + " " + x2 + " " + (y2 - k) + " " + x2 + " " + y2;
-  }
+  // ---- Chalk line ----
+  // Wide screens: down one side through each bubble, along the empty gap between stops,
+  // then down the other side, with rounded corners. It never crosses text.
+  // Below 900px: one straight line down the left through every bubble.
+  var chalk = document.querySelector(".chalk");
 
-  function drawJourney() {
-    if (!journey) return;
-    var stops = journey.querySelectorAll(".stop");
-    if (!stops.length) return;
-    var box = journey.getBoundingClientRect();
-    var wide = window.matchMedia("(min-width: 52rem)").matches;
-    var bow = wide ? 36 : 0; // swing beside each stop on wide screens; straight on phones
-    var marker = function (stop) { return stop.querySelector(".stop__circle, .stop__dot"); };
-    var d = "";
-    stops.forEach(function (stop, i) {
-      var m = marker(stop);
-      var c = m.getBoundingClientRect();
-      var x = c.left + c.width / 2 - box.left;
-      var top = c.top - box.top;
-      if (m.classList.contains("stop__dot")) {
-        // The star at the end: the line stops at its top point.
-        if (i === 0) d += "M" + x + " " + top;
-        return;
-      }
-      var bottom = c.bottom - box.top;
-      var pad = parseFloat(getComputedStyle(stop).paddingBottom) || 0;
-      var end = stop.getBoundingClientRect().bottom - box.top - pad;
-      var dir = stop.classList.contains("stop--right") && wide ? 1 : -1;
-      // Through the circle (hidden behind it)
-      d += (i === 0 ? "M" : " L") + x + " " + top + " L" + x + " " + bottom;
-      if (i === stops.length - 1) return;
-      // Swing gently out beside the text and back...
-      var bx = x + dir * bow;
-      var by = bottom + (end - bottom) * 0.5;
-      d += down(x, bottom, bx, by) + down(bx, by, x, end);
-      // ...then sweep across the gap to the next stop.
-      var n = marker(stops[i + 1]).getBoundingClientRect();
-      var ny = n.top - box.top + (stops[i + 1].classList.contains("stop--today") ? n.height * 0.18 : 0);
-      d += down(x, end, n.left + n.width / 2 - box.left, ny, 0.6);
-    });
-    var svg = journey.querySelector(".journey__line");
+  function drawChalk() {
+    if (!chalk) return;
+    var bubbles = Array.prototype.slice.call(chalk.querySelectorAll(".cstop__bubble"));
+    if (!bubbles.length) return;
+    var box = chalk.getBoundingClientRect();
+    var wide = window.matchMedia("(min-width: 56.25rem)").matches;
+    var r = 40;
+    var pt = function (el) {
+      var b = el.getBoundingClientRect();
+      return { x: b.left + b.width / 2 - box.left, top: b.top - box.top, mid: b.top + b.height / 2 - box.top, bottom: b.bottom - box.top };
+    };
+    var first = pt(bubbles[0]);
+    var firstChapter = chalk.querySelector(".chalk__chapter--first");
+    var startY = firstChapter ? pt(firstChapter).mid : first.top;
+    var today = chalk.querySelector(".chalk__star");
+    var d = "M" + first.x + " " + startY;
+
+    if (!wide) {
+      var end = today ? pt(today).top : pt(bubbles[bubbles.length - 1]).mid;
+      d += " L" + first.x + " " + end;
+    } else {
+      var stops = Array.prototype.slice.call(chalk.querySelectorAll(".cstop"));
+      stops.forEach(function (stop, i) {
+        var a = pt(stop.querySelector(".cstop__bubble"));
+        d += " L" + a.x + " " + a.mid;
+        // the gap below this stop: where the line turns
+        var stopBottom = stop.getBoundingClientRect().bottom - box.top;
+        var next = stops[i + 1];
+        var nextTop, nx;
+        if (next) {
+          var nb = pt(next.querySelector(".cstop__bubble"));
+          nextTop = next.getBoundingClientRect().top - box.top;
+          nx = nb.x;
+        } else if (today) {
+          var t = pt(today);
+          nextTop = t.top;
+          nx = t.x;
+        } else {
+          return;
+        }
+        var gy = (stopBottom + nextTop) / 2;
+        var mid = stop.parentNode !== (next && next.parentNode) && next ? chalk.querySelector(".chalk__chapter:not(.chalk__chapter--first)") : null;
+        if (mid) gy = pt(mid).mid;
+        var dir = nx > a.x ? 1 : -1;
+        d += " L" + a.x + " " + (gy - r) + " Q" + a.x + " " + gy + " " + (a.x + dir * r) + " " + gy;
+        d += " L" + (nx - dir * r) + " " + gy + " Q" + nx + " " + gy + " " + nx + " " + (gy + r);
+        if (next) {
+          d += " L" + nx + " " + pt(next.querySelector(".cstop__bubble")).mid;
+        } else {
+          d += " L" + nx + " " + pt(today).top;
+        }
+      });
+    }
+
+    var svg = chalk.querySelector(".chalk__line");
     if (!svg) {
       svg = document.createElementNS(NS, "svg");
-      svg.setAttribute("class", "journey__line");
+      svg.setAttribute("class", "chalk__line");
       svg.setAttribute("aria-hidden", "true");
       svg.setAttribute("focusable", "false");
-      // A rough, grainy "chalk" look: wobble the edges, then speckle the stroke.
       svg.innerHTML =
         '<defs><filter id="chalk" filterUnits="userSpaceOnUse" x="-5%" y="-1%" width="110%" height="102%">' +
-        '<feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="7" result="noise"/>' +
-        '<feDisplacementMap in="SourceGraphic" in2="noise" scale="3.5" xChannelSelector="R" yChannelSelector="G" result="rough"/>' +
-        '<feColorMatrix in="noise" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  2.6 0 0 0 -0.55" result="grain"/>' +
-        '<feComposite in="rough" in2="grain" operator="in"/>' +
-        '</filter></defs><path filter="url(#chalk)"/>';
-      journey.insertBefore(svg, journey.firstChild);
-      journey.classList.add("journey--curved");
+        '<feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="3" seed="7" result="noise"/>' +
+        '<feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G"/>' +
+        '</filter></defs><g filter="url(#chalk)"><path class="chalk__stroke"/><path class="chalk__texture"/></g>';
+      chalk.insertBefore(svg, chalk.firstChild);
+      chalk.classList.add("chalk--drawn");
     }
     svg.setAttribute("width", box.width);
     svg.setAttribute("height", box.height);
-    svg.querySelector("path").setAttribute("d", d);
+    svg.querySelectorAll("path").forEach(function (p) { p.setAttribute("d", d); });
   }
 
-  drawJourney();
-  window.addEventListener("resize", drawJourney);
-  window.addEventListener("load", drawJourney);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawJourney);
+  drawChalk();
+  window.addEventListener("resize", drawChalk);
+  window.addEventListener("load", drawChalk);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawChalk);
 
-  // ---- Project banner: moves slowly; pause button, and pauses on hover or focus ----
+  // ---- Map pins: a bubble opens on hover, keyboard focus or tap; Esc or tapping elsewhere closes ----
+  var map = document.querySelector(".rmap__map");
+  if (map) {
+    document.querySelector(".rmap").classList.add("rmap--enhanced");
+    var pins = Array.prototype.slice.call(map.querySelectorAll(".pin"));
+    var open = null;
+    var show = function (pin) {
+      if (open && open !== pin) hide(open);
+      pin.querySelector(".pin__bubble").hidden = false;
+      pin.querySelector(".pin__btn").setAttribute("aria-expanded", "true");
+      pin.classList.add("pin--open");
+      open = pin;
+    };
+    var hide = function (pin) {
+      pin.querySelector(".pin__bubble").hidden = true;
+      pin.querySelector(".pin__btn").setAttribute("aria-expanded", "false");
+      pin.classList.remove("pin--open");
+      if (open === pin) open = null;
+    };
+    pins.forEach(function (pin) {
+      var btn = pin.querySelector(".pin__btn");
+      btn.addEventListener("click", function () { open === pin ? hide(pin) : show(pin); });
+      btn.addEventListener("focus", function () { show(pin); });
+      pin.addEventListener("mouseenter", function () { show(pin); });
+      pin.addEventListener("mouseleave", function () { if (!pin.contains(document.activeElement)) hide(pin); });
+      pin.addEventListener("focusout", function (e) { if (!pin.contains(e.relatedTarget)) hide(pin); });
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && open) { var b = open.querySelector(".pin__btn"); hide(open); b.focus(); }
+    });
+    document.addEventListener("click", function (e) { if (open && !open.contains(e.target)) hide(open); });
+  }
+
+  // ---- Project banner: moves slowly; pause button; pauses on hover or focus; still with reduced motion ----
   var ticker = document.querySelector(".ticker");
   if (!ticker) return;
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;

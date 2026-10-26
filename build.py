@@ -832,7 +832,7 @@ def about_section(settings, text, root, image_sizes, index):
         for line in re.findall(r"^- (.+)$", text, re.M):
             bits = [b.strip() for b in line.split("|")]
             stat, title, desc, tag, link = (bits + ["", "", "", "", ""])[:5]
-            link = link.replace("{root}", root)
+            link = live_link(link.replace("{root}", root))
             title_html = f'<a href="{e(link)}">{e(title)}</a>' if link else e(title)
             tag_html = f'<p class="ticker-card__tag">{e(tag)}</p>' if tag else ""
             cards.append(
@@ -842,7 +842,7 @@ def about_section(settings, text, root, image_sizes, index):
         track = "".join(cards)
         # The second copy makes the loop seamless; it is hidden from screen readers and keyboards.
         copy = re.sub(r'<a href=', '<a tabindex="-1" href=', track)
-        title = e(heading.group(1)) if heading else "Projects"
+        title = heading_md(heading.group(1)) if heading else "Projects"
         return (
             f'<section class="ticker" aria-labelledby="ticker-heading">'
             f'<div class="ticker__head"><h2 id="ticker-heading">{title}</h2>'
@@ -851,9 +851,6 @@ def about_section(settings, text, root, image_sizes, index):
             f'<div class="ticker__viewport"><ul class="ticker__track">{track}</ul>'
             f'<ul class="ticker__track ticker__track--copy" aria-hidden="true">{copy}</ul></div></section>'
         )
-
-    if layout_name == "map":
-        return research_map(text)
 
     if layout_name == "education":
         # Each bullet: year | qualification | where
@@ -865,7 +862,7 @@ def about_section(settings, text, root, image_sizes, index):
                 f'<li class="edu__row"><p class="edu__year">{e(year)}</p>'
                 f'<div><p class="edu__what">{e(what)}</p><p class="edu__where">{e(where)}</p></div></li>'
             )
-        title = e(heading.group(1)) if heading else "Education"
+        title = heading_md(heading.group(1)) if heading else "Education"
         return f'<section class="about-section edu"><h2>{title}</h2><ul class="edu__list">{"".join(rows)}</ul></section>'
 
     if layout_name == "closing":
@@ -900,163 +897,160 @@ CHALK_STAR = (
 
 
 MAP_W, MAP_TOP, MAP_BOTTOM = 1000, 84, -58
+MAP_VIEW = (430, 45, 530, 250)  # framed from Europe to the Pacific, where all the places are
+
+DRAFTS = set()  # slugs of draft case studies, filled in by build()
 
 
-def map_marker(kind, x, y):
-    """Map markers differ by shape as well as colour: in person ●, remote ○, survey ■."""
-    if kind == "in person":
-        return f'<circle cx="{x:.0f}" cy="{y:.0f}" r="7" class="m-person"/>'
-    if kind == "remote":
-        return f'<circle cx="{x:.0f}" cy="{y:.0f}" r="6" class="m-remote"/>'
-    return f'<rect x="{x - 6:.0f}" y="{y - 6:.0f}" width="12" height="12" class="m-survey"/>'
+def live_link(link):
+    """Drop links to draft case studies on the live site (they show in the preview)."""
+    if not PREVIEW and any(f"work/{d}/" in link or link.strip("/") == d for d in DRAFTS):
+        return ""
+    return link
 
 
-def research_map(text):
+def research_map(settings, text, root):
+    """The research map: flat world map with pins that open a bubble, plus a text list."""
     e = html.escape
-    heading = re.search(r"^## (.+)$", text, re.M)
-    title = e(heading.group(1)) if heading else "Where my research has taken me"
+    heading, rest = take_heading(text)
     land = re.search(r'<path d="([^"]+)"', (ASSETS / "world-land.svg").read_text()).group(1)
     h = MAP_W * (MAP_TOP - MAP_BOTTOM) / 360
-    marks, rows, summary = [], [], []
-    for line in re.findall(r"^- (.+)$", text, re.M):
-        bits = [b.strip() for b in line.split("|")]
-        place, kinds, coords, label = bits[:4]
-        region = len(bits) > 4 and bits[4] == "region"
-        kinds = [k.strip() for k in kinds.split(",") if k.strip()]
+    vx, vy, vw, vh = MAP_VIEW
+    shapes = {"in person": "pin--person", "remote": "pin--remote", "survey": "pin--survey"}
+    pins, rows = [], []
+    for i, line in enumerate(re.findall(r"^- (.+)$", rest, re.M)):
+        bits = [b.strip() for b in line.split("|")] + ["", "", "", "", "", ""]
+        place, kind, coords, bubble, links, extra = bits[:6]
         lon, lat = (float(v) for v in coords.split(","))
         x, y = (lon + 180) / 360 * MAP_W, (MAP_TOP - lat) / (MAP_TOP - MAP_BOTTOM) * h
-        if region:
-            # A general area, deliberately not pinned to any one country.
-            marks.append(f'<circle cx="{x - 18:.0f}" cy="{y - 6:.0f}" r="30" class="m-region"/>')
-        for i, k in enumerate(kinds):
-            marks.append(map_marker(k, x + (i - (len(kinds) - 1) / 2) * 16, y))
-        icons = "".join(f'<svg class="map-key" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'
-                        f'{map_marker(k, 12, 12)}</svg>' for k in kinds)
-        how = " and ".join(kinds)
-        rows.append(f'<li><span class="map-list__keys">{icons}</span><span><strong>{e(place)}</strong> '
-                    f'<span class="map-list__how">({e(how)})</span><br>{e(label)}</span></li>')
-        summary.append(f"{place} ({how})")
-    legend = "".join(
-        f'<li><svg class="map-key" viewBox="0 0 24 24" aria-hidden="true" focusable="false">{map_marker(k, 12, 12)}</svg>{e(t)}</li>'
-        for k, t in [("in person", "In person"), ("remote", "Remote, through local researchers or moderators"),
-                     ("survey", "Survey")]
-    )
-    aria = f"World map of where my research has taken place: {'; '.join(summary)}."
-    return (
-        f'<section class="about-section research-map" aria-labelledby="map-heading">'
-        f'<h2 id="map-heading">{title}</h2>'
-        f'<ul class="map-legend" aria-label="Key">{legend}</ul>'
-        f'<div class="research-map__inner"><div class="research-map__map">'
-        # Framed from Europe to the Pacific, where all the places are.
-        f'<svg viewBox="430 45 530 250" role="img" aria-label="{e(aria)}">'
-        f'<path d="{land}" class="m-land"/>{"".join(marks)}</svg></div>'
-        f'<ul class="map-list">{"".join(rows)}</ul></div></section>'
-    )
+        left, top = (x - vx) / vw * 100, (y - vy) / vh * 100
+        link_html = ""
+        for item in [l for l in links.split(";") if l.strip()]:
+            name, _, slug = (p.strip() for p in item.rpartition(":"))
+            if live_link(slug):
+                link_html += f'<a href="{root}work/{e(slug)}/">{e(name)} <span aria-hidden="true">&rarr;</span></a>'
+        region = " pin--region" if extra == "region" else ""
+        pid = f"pin-{slugify(place)}"
+        pins.append(
+            f'<div class="pin {shapes.get(kind, "pin--person")}{region}" style="left:{left:.2f}%;top:{top:.2f}%">'
+            f'<button type="button" class="pin__btn" aria-expanded="false" aria-controls="{pid}">'
+            f'<span class="pin__shape" aria-hidden="true"></span><span class="visually-hidden">{e(place)}</span></button>'
+            f'<div class="pin__bubble" id="{pid}" hidden><p class="pin__place">{e(place)}</p><p>{e(bubble)}</p>'
+            f'{f"<p class=pin__links>{link_html}</p>" if link_html else ""}</div></div>'
+        )
+        rows.append(f'<li><span class="map-key map-key--{shapes.get(kind, "pin--person")[5:]}" aria-hidden="true"></span>'
+                    f'<span><strong>{e(place)}.</strong> {e(bubble)}'
+                    f'{f" <span class=map-list__links>{link_html}</span>" if link_html else ""}</span></li>')
+    legend = "".join(f'<li><span class="map-key map-key--{k}" aria-hidden="true"></span>{t}</li>' for k, t in [
+        ("person", "In person"), ("remote", "Remote, through local researchers or moderators"), ("survey", "Survey")])
+    eyebrow = e(settings.get("eyebrow", ""))
+    return f"""
+<section class="band band--grey rmap" aria-labelledby="map-heading">
+  <div class="wrap">
+    {f'<p class="eyebrow rmap__eyebrow">{eyebrow}</p>' if eyebrow else ''}
+    <h2 id="map-heading">{heading}</h2>
+    <div class="rmap__map">
+      <svg viewBox="{vx} {vy} {vw} {vh}" aria-hidden="true" focusable="false"><path d="{land}" class="m-land"/></svg>
+      {''.join(pins)}
+    </div>
+    <ul class="rmap__legend" aria-label="Key">{legend}</ul>
+    <ul class="rmap__list">{''.join(rows)}</ul>
+  </div>
+</section>"""
 
 
-def journey_stop(settings, text, root, image_sizes, index, is_last):
-    """One stop on the About page journey: a year, a round photo or icon, and text."""
+def chalk_stop(settings, text, root, image_sizes, index):
+    """One stop on the chalk journey: a bubble (photo or year), a label, a title, text and chips."""
     e = html.escape
     side = "left" if index % 2 == 0 else "right"
-    name = settings.get("photo", "")
-    today_line = settings.get("today", "")
-    if today_line:
-        # The final "Today" stop: the hand-drawn chalk star instead of a circle.
-        media = f'<span class="stop__dot" aria-hidden="true">{CHALK_STAR}</span>'
+    if settings.get("photo") in image_sizes:
+        alt = settings.get("photo_alt", "")
+        if not alt:
+            sys.exit(f"content/about.md: the photo {settings['photo']} needs alt text.")
+        focus = " cstop__bubble--top" if settings.get("focus") == "top" else ""
+        bubble = f'<div class="cstop__bubble cstop__bubble--photo{focus}">{image_tag(settings["photo"], alt, root, "96px", image_sizes)}</div>'
     else:
-        if name and name in image_sizes:
-            alt = settings.get("photo_alt", "")
-            if not alt:
-                sys.exit(f"content/about.md: the photo {name} needs alt text. Add a description after photo_alt:")
-            circle = image_tag(name, alt, root, "8rem", image_sizes)
-            focus = " stop__circle--top" if settings.get("focus") == "top" else ""
+        bubble = f'<div class="cstop__bubble"><span>{e(settings.get("bubble", ""))}</span></div>'
+    title = re.search(r"^### (.+)$", text, re.M)
+    paras = [l.strip() for l in re.sub(r"^### .+$", "", text, flags=re.M).splitlines()
+             if l.strip() and not l.startswith("- ")]
+    chips = ""
+    for line in re.findall(r"^- (.+)$", text, re.M):
+        name, _, slug = (p.strip() for p in line.partition("|"))
+        if slug and live_link(slug):
+            chips += f'<li><a class="chip" href="{root}work/{e(slug)}/">{e(name)} <span aria-hidden="true">&rarr;</span></a></li>'
         else:
-            circle = icon(settings.get("icon") or "journey", 30)
-            focus = " stop__circle--icon"
-        media = f'<div class="stop__circle{focus}">{circle}</div>'
-    year = f'<p class="stop__year eyebrow">{e(settings["year"])}</p>' if settings.get("year") else ""
-    body = render_markdown(text.replace("{root}", root), root, image_sizes)
-    # Stop titles sit under the chapter headings (h3), so they are h4.
-    body = re.sub(r"<(/?)h3>", r"<\1h4>", body)
-    body = body.replace("<ul>", '<ul class="stop__chips">', 1)
-    if today_line:
-        body += f'<p class="stop__today-line">{e(today_line)}</p>'
-    link = ""
-    if settings.get("link"):
-        title = re.search(r"<h4>(.*?)</h4>", body)
-        about = f'<span class="visually-hidden"> about {title.group(1)}</span>' if title else ""
-        link = (f'<p class="stop__link"><a href="{root}work/{e(settings["link"])}/">Read the case study'
-                f'{about} <span aria-hidden="true">&rarr;</span></a></p>')
-    classes = f"stop stop--{side}" + (" stop--last" if is_last else "") + \
-        (" stop--featured" if settings.get("highlight") else "") + (" stop--today" if today_line else "")
+            chips += f'<li class="chip">{e(name)}</li>'
     return (
-        f'<li class="{classes}"><div class="stop__media">{media}</div>'
-        f'<div class="stop__text prose">{year}{body}{link}</div></li>'
+        f'<li class="cstop cstop--{side}">{bubble}<div class="cstop__text">'
+        f'<p class="cstop__label">{e(settings.get("label", ""))}</p>'
+        f'<h3 class="cstop__title">{e(title.group(1)) if title else ""}</h3>'
+        + "".join(f"<p>{inline_md(p)}</p>" for p in paras)
+        + (f'<ul class="chips cstop__chips">{chips}</ul>' if chips else "")
+        + "</div></li>"
     )
 
 
-def journey_section(items, root, image_sizes):
-    """The winding "My journey" path: a heading, chapter markers, period labels and stops."""
+def chalk_journey(items, root, image_sizes):
+    """The chalk line journey on a blue band: chapters, stops and the closing line."""
     e = html.escape
-    out, open_list = [], False
-    stops_total = sum(1 for s, _ in items if s.get("layout") == "stop")
-    n = 0
-    heading = ""
+    out, open_list, n = [], False, 0
     for settings, text in items:
         kind = settings.get("layout")
-        if kind == "journey":
-            m = re.search(r"^## (.+)$", text, re.M)
-            heading = e(m.group(1)) if m else "My journey"
-            continue
         if kind == "stop":
             if not open_list:
-                out.append('<ol class="journey__list">')
+                out.append(f'<ol class="chalk__stops" start="{n + 1}">')
                 open_list = True
-            out.append(journey_stop(settings, text, root, image_sizes, n, n == stops_total - 1))
+            out.append(chalk_stop(settings, text, root, image_sizes, n))
             n += 1
             continue
         if open_list:
             out.append("</ol>")
             open_list = False
-        label = e(text.strip())
         if kind == "chapter":
-            out.append(f'<h3 class="journey__chapter"><span>{label}</span></h3>')
-        else:
-            out.append(f'<p class="journey__period"><span>{label}</span></p>')
+            out.append(f'<h2 class="chalk__chapter{" chalk__chapter--first" if n == 0 else ""}"><span>{e(text.strip())}</span></h2>')
+        elif kind == "today":
+            out.append(f'<p class="chalk__today"><span class="chalk__star" aria-hidden="true">✦</span>'
+                       f'<span>{e(text.strip())}</span></p>')
     if open_list:
         out.append("</ol>")
-    return (
-        f'<section class="journey-band" aria-labelledby="journey">'
-        f'<h2 id="journey">{heading or "My journey"}</h2>'
-        f'<div class="journey">{"".join(out)}</div></section>'
-    )
+    return (f'<section class="band band--teal on-blue chalk-band" aria-label="My journey timeline">'
+            f'<div class="chalk">{"".join(out)}</div></section>')
 
 
 def about_page(meta, body, image_sizes):
     root = "../"
-    parts = re.split(r"^\+\+\+\n(.*?)\n\+\+\+\n", body, flags=re.M | re.S)
-    # parts = [text before first section, settings, text, settings, text, ...]
-    blocks = [(parse_settings(parts[i]), parts[i + 1]) for i in range(1, len(parts), 2)]
+    e = html.escape
+    blocks = split_sections(body)
     sections, journey = [], []
 
-    def flush_journey():
-        # Consecutive journey, chapter, period and stop sections become one winding path.
+    def flush():
         if journey:
-            sections.append(journey_section(journey, root, image_sizes))
+            sections.append(chalk_journey(journey, root, image_sizes))
             journey.clear()
 
     for settings, text in blocks:
-        if settings.get("layout") in ("journey", "chapter", "period", "stop"):
+        kind = settings.get("layout")
+        if kind in ("chapter", "stop", "today"):
             journey.append((settings, text))
             continue
-        flush_journey()
-        sections.append(about_section(settings, text, root, image_sizes, len(sections)))
-    flush_journey()
+        flush()
+        if kind == "intro":
+            m = re.search(r"^# (.+)$", text, re.M)
+            line = re.sub(r"^# .+$", "", text, flags=re.M).strip()
+            sections.append(
+                f'<header class="wrap about-intro"><p class="eyebrow">{e(settings.get("eyebrow", ""))}</p>'
+                f'<h1>{heading_md(m.group(1)) if m else "About"}</h1><p class="about-intro__line">{e(line)}</p></header>'
+            )
+        elif kind == "map":
+            sections.append(research_map(settings, text, root))
+        else:
+            sections.append(f'<div class="wrap">{about_section(settings, text, root, image_sizes, len(sections))}</div>')
+    flush()
     return f"""
-<div class="wrap about-page">
+<div class="about-page">
 {''.join(sections)}
-</div>
-<script src="{asset(root, 'about.js')}" defer></script>"""
+</div>"""
 
 
 FILTER_TYPES = ["Research", "Service design", "Strategy", "Research operations"]
@@ -1207,6 +1201,7 @@ def build():
     about, about_body = read_page(CONTENT / "about.md")
     home["email"], home["linkedin"] = contact["email"], contact["linkedin"]
     studies = load_case_studies()
+    DRAFTS.update(st["slug"] for st in studies if st.get("draft"))
 
     write("", layout(
         title=f"{home['name']}, {home['role']}", description=home["intro"],
@@ -1229,6 +1224,7 @@ def build():
         scripts=f'<script src="{asset("../", "work.js")}" defer></script>',
     ))
     write("about", layout(
+        scripts=f'<script src="{asset("../", "about.js")}" defer></script>',
         title=about["title"], description=about["description"],
         body=about_page(about, about_body, image_sizes),
         root="../", path="about/", current="about", home=home,
