@@ -1250,7 +1250,13 @@ def serve(port=8000):
     import functools
     import http.server
 
-    handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(OUT))
+    class NoCacheHandler(http.server.SimpleHTTPRequestHandler):
+        # The preview must always show the latest build, never a copy the browser kept.
+        def end_headers(self):
+            self.send_header("Cache-Control", "no-store, max-age=0")
+            super().end_headers()
+
+    handler = functools.partial(NoCacheHandler, directory=str(OUT))
     print(f"Preview: http://localhost:{port}/  (press Ctrl+C to stop)")
     http.server.ThreadingHTTPServer(("127.0.0.1", port), handler).serve_forever()
 
