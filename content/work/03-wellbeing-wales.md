@@ -2,7 +2,6 @@
 title: Is Wales ready for a wellbeing economy?
 title_html: *Is Wales ready* for a wellbeing economy?
 slug: wellbeing-wales
-draft: true
 label: Case study · Public policy · 2024
 summary: A nationally representative survey and community dialogues across Wales, for WE Cymru.
 intro: A nationally representative survey and community dialogues across Wales, to find out whether people, not just activists, are ready for a different kind of economy.
@@ -12,14 +11,6 @@ snapshot:
   Client: Wellbeing Economy Cymru (WE Cymru)
   Timeline: Fieldwork October to November 2024; interim findings April 2025
 ---
-
-<!--
-DRAFT: this page is only shown in the preview. Before publishing, Azka to:
-1. confirm or rewrite the reflection, and
-2. supply a photo from the dialogues (no children's faces), or leave the header text full width.
-Keep the focus on the process: no percentages or detailed findings from the client's reports.
-Then remove "draft: true" above.
--->
 
 +++
 section: about
@@ -54,9 +45,6 @@ Roundtables in communities, and one-to-one interviews in rural Wales, filmed wit
 
 ### Including the youngest voice
 One dialogue included a seven-year-old, with a parent alongside. We had consent from both the child and the parent, including for recording.
-
-### Three kinds of awareness
-We segmented awareness into "I've heard of it", "I'm familiar with it" and "I believe in it". The 2,000 written responses were analysed by hand and with AI, and checked against the raw data.
 
 +++
 section: insights
