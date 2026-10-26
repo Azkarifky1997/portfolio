@@ -1597,3 +1597,6 @@ main:has(> .talk:last-child), main:has(> .band:last-child) { padding-bottom: 0; 
 .cs-sources { padding-top: 2rem; font-size: 0.9375rem; color: var(--muted); }
 .cs-sources ul { margin: 0.25rem 0 0; padding-left: 1.2rem; }
 .cs-sources p { margin: 0; }
+.highlight .cs-figure img { height: 15rem; object-fit: cover; }
+.cs-impact .cs-figure img, .cs-impact .figure img { background: var(--white); }
+.cs-impact .figure figcaption, .cs-impact .figure figcaption a { color: var(--white); }

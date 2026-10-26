@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif">
   <rect width="1600" height="900" fill="#ffffff"/>
   <!-- three up-arrows -->
-  <g fill="#1f4e5f">
+  <g fill="#1b3a6b">
     <circle cx="152" cy="150" r="30"/><circle cx="232" cy="150" r="30"/><circle cx="312" cy="150" r="30"/>
   </g>
   <g stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none">
@@ -9,25 +9,25 @@
     <path d="M232 166V136M220 147l12-12 12 12"/>
     <path d="M312 166V136M300 147l12-12 12 12"/>
   </g>
-  <text x="120" y="290" font-size="72" font-weight="700" fill="#1f4e5f">Passenger numbers,</text>
-  <text x="120" y="372" font-size="72" font-weight="700" fill="#1f4e5f">year on year</text>
+  <text x="120" y="290" font-size="72" font-weight="700" fill="#1b3a6b">Passenger numbers,</text>
+  <text x="120" y="372" font-size="72" font-weight="700" fill="#1b3a6b">year on year</text>
   <line x1="120" y1="440" x2="1480" y2="440" stroke="#e3e6e7" stroke-width="3"/>
 
   <!-- Route A -->
-  <text x="120" y="600" font-size="150" font-weight="800" fill="#1f4e5f" letter-spacing="-4">+38%</text>
+  <text x="120" y="600" font-size="150" font-weight="800" fill="#1b3a6b" letter-spacing="-4">+38%</text>
   <rect x="120" y="636" width="200" height="54" rx="8" fill="#d9e9e5"/>
-  <text x="140" y="673" font-size="30" fill="#1f4e5f">Route A</text>
+  <text x="140" y="673" font-size="30" fill="#1b3a6b">Route B</text>
 
   <!-- Route B -->
-  <text x="590" y="600" font-size="150" font-weight="800" fill="#1f4e5f" letter-spacing="-4">+23%</text>
+  <text x="590" y="600" font-size="150" font-weight="800" fill="#1b3a6b" letter-spacing="-4">+23%</text>
   <rect x="590" y="636" width="200" height="54" rx="8" fill="#d9e9e5"/>
-  <text x="610" y="673" font-size="30" fill="#1f4e5f">Route B</text>
+  <text x="610" y="673" font-size="30" fill="#1b3a6b">Route C</text>
   <text x="590" y="730" font-size="26" fill="#4a5a60">seasonality corrected</text>
 
   <!-- Route C -->
-  <text x="1060" y="600" font-size="150" font-weight="800" fill="#1f4e5f" letter-spacing="-4">+13%</text>
+  <text x="1060" y="600" font-size="150" font-weight="800" fill="#1b3a6b" letter-spacing="-4">+13%</text>
   <rect x="1060" y="636" width="200" height="54" rx="8" fill="#d9e9e5"/>
-  <text x="1080" y="673" font-size="30" fill="#1f4e5f">Route C</text>
+  <text x="1080" y="673" font-size="30" fill="#1b3a6b">Route A</text>
   <text x="1060" y="730" font-size="26" fill="#4a5a60">weekend journeys</text>
 
   <text x="120" y="840" font-size="26" fill="#4a5a60">Measured from ticket data, comparing the same months a year apart</text>

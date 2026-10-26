@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#1b3a6b"/>
+    </marker>
+  </defs>
+  <rect width="1600" height="900" fill="#ffffff"/>
+  <text x="120" y="125" font-size="60" font-weight="700" fill="#1b3a6b">The test-and-learn cycle</text>
+
+  <!-- centre -->
+  <circle cx="800" cy="500" r="150" fill="#fff1cc"/>
+  <text x="800" y="490" font-size="40" font-weight="700" fill="#1b3a6b" text-anchor="middle">Repeated on</text>
+  <text x="800" y="540" font-size="40" font-weight="700" fill="#1b3a6b" text-anchor="middle">three routes</text>
+
+  <!-- arcs between steps -->
+  <g fill="none" stroke="#1b3a6b" stroke-width="7" stroke-linecap="round" marker-end="url(#a)">
+    <path d="M700 300 Q800 255 895 295"/>
+    <path d="M1000 400 Q1045 500 1005 595"/>
+    <path d="M900 700 Q800 745 705 705"/>
+    <path d="M600 600 Q555 500 595 405"/>
+  </g>
+
+  <!-- step circles -->
+  <g fill="#1b3a6b">
+    <circle cx="640" cy="340" r="52"/><circle cx="960" cy="340" r="52"/>
+    <circle cx="960" cy="660" r="52"/><circle cx="640" cy="660" r="52"/>
+  </g>
+  <g fill="#ffffff" font-size="44" font-weight="700" text-anchor="middle">
+    <text x="640" y="356">1</text><text x="960" y="356">2</text><text x="960" y="676">3</text><text x="640" y="676">4</text>
+  </g>
+
+  <!-- labels -->
+  <g fill="#1b3a6b">
+    <text x="560" y="315" font-size="46" font-weight="700" text-anchor="end">Understand</text>
+    <text x="560" y="362" font-size="30" text-anchor="end" fill="#3a4654">On-bus fieldwork, passenger</text>
+    <text x="560" y="400" font-size="30" text-anchor="end" fill="#3a4654">conversations, survey</text>
+
+    <text x="1040" y="315" font-size="46" font-weight="700">Design</text>
+    <text x="1040" y="362" font-size="30" fill="#3a4654">Route campaign based</text>
+    <text x="1040" y="400" font-size="30" fill="#3a4654">on research</text>
+
+    <text x="1040" y="645" font-size="46" font-weight="700">Launch</text>
+    <text x="1040" y="692" font-size="30" fill="#3a4654">Campaign distributed on</text>
+    <text x="1040" y="730" font-size="30" fill="#3a4654">the route</text>
+
+    <text x="560" y="645" font-size="46" font-weight="700" text-anchor="end">Evaluate</text>
+    <text x="560" y="692" font-size="30" text-anchor="end" fill="#3a4654">Ticket data compared</text>
+    <text x="560" y="730" font-size="30" text-anchor="end" fill="#3a4654">year on year</text>
+  </g>
+  <text x="1480" y="850" font-size="24" fill="#6b777b" text-anchor="end">Recreated and anonymised</text>
+</svg>

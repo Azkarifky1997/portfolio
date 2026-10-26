@@ -1,75 +1,106 @@
 ---
 title: Testing and learning our way to more bus passengers
+title_html: Testing and learning our way to more *bus passengers*
 slug: rural-bus
+label: Case study · Public transport · 2025
 summary: Three short test-and-learn studies on three rural bus routes, with year-on-year passenger growth of 38% and 23% on two routes.
-card_role: Co-led all three studies, from fieldwork to evaluation
-card_result: Year-on-year passenger growth of 38% and 23% on two routes
-thumbnail: bus-card.jpg
+intro: Three short test-and-learn studies on three rural bus routes, each with its own reason to travel.
+chips: Field research, Roundtables, Surveys, Thematic analysis, Campaign design, Test and learn
+header_image: bus-card.jpg
+header_image_alt: A rural bus at a stop, with identifying details blurred
 snapshot:
-  Client: A rural county council in England (anonymised)
-  My role: Co-led all three studies with the CEO of the company I worked at, from fieldwork to evaluation. A designer created the campaign materials.
-  Methods: On-bus fieldwork and passenger conversations, surveys, campaign design, ticket data analysis
-  Result: Year-on-year passenger growth of 38% and 23% on two routes, and 13% at weekends on the third
+  My role: Co-led all three studies with the agency's CEO, as the programme's lead researcher, from fieldwork to evaluation. A designer created the campaign materials.
+  Client: A rural county council in England
+  Timeline: 2025; each route ran seven two-week sprints, then a six-month evaluation
 ---
 
-## The challenge
++++
+section: about
+eyebrow: About the project
++++
+
+## More people on rural *buses*
 
 The council wanted more people using its rural buses, as part of a wider rural bus strategy. The county has many routes run by many different bus operators, each serving different places and people.
 
++++
+section: challenge
+eyebrow: The challenge
+question: What would get more people on each rural route, without new buses or timetables?
++++
+
+## One plan wouldn't fit *every route*
+
 A single county-wide plan would have been slow and expensive, and would have treated very different routes the same. We needed a way to learn what worked quickly, route by route, before the council committed money.
 
-## Approach: test and learn, one route at a time
++++
+section: process
+eyebrow: Research process
+stages: Empathise: Rode the routes, Conversations at stops and on buses, Roundtables at local lunch clubs, Surveys; Define: Thematic analysis of 1,700+ comments, A proposition for each route; Ideate: Campaign concepts with each operator; Prototype: Route campaigns, QR codes on posters; Test: Six-month evaluation, Year-on-year ticket data, Campaign recall surveys
++++
 
-We proposed short sprints instead of one big plan. Each sprint focused on one route, one operator and one proposition, and ran a full cycle from research to measured results.
+## *Test and learn*, one route at a time
 
-![A four-step cycle, repeated on three routes. 1, Understand: on-bus fieldwork, passenger conversations and a survey. 2, Design: a route campaign based on the research. 3, Launch: the campaign is distributed on the route. 4, Evaluate: ticket data is analysed and adjusted for other causes.](bus-cycle.png "The test-and-learn cycle, run on three routes. Recreated and anonymised.")
+### The test-and-learn cycle
+image: bus-cycle.svg | A four-step cycle, repeated on three routes. 1, Understand: on-bus fieldwork, passenger conversations and a survey. 2, Design: a route campaign based on the research. 3, Launch: the campaign is distributed on the route. 4, Evaluate: ticket data compared year on year. | The test-and-learn cycle. Recreated and anonymised.
+Each sprint focused on one route, one operator and one proposition, and ran a full cycle from research to measured results. I rode the buses on each route myself to talk to passengers.
 
-I rode the buses on each route myself to talk to passengers, and every campaign was built on what they told us.
+### Three routes, three propositions
+image: bus-routes.png | Three stylised route lines across a rural landscape, each with an icon and label: social and community trips, connecting journeys to trains and buses, and exploring heritage and nature. | Three routes, three propositions. Recreated and anonymised.
+Route A is very rural, used by local residents including many school children: the bus for social and community life. Route B links two market towns, for onward journeys: the bus as a connection. Route C runs through visitor destinations, busiest in spring: the bus as a way to explore heritage and nature.
 
-## Three routes, three reasons to travel
+### Listening at scale
+Six surveys in total, with more than 1,700 written comments, alongside conversations on the buses and roundtables at local lunch clubs.
 
-Each study focused on a different route, a different operator and a different reason someone might choose the bus.
++++
+section: insights
+eyebrow: Key insights
++++
 
-| Route | Who uses it | Proposition we tested |
-| --- | --- | --- |
-| A very rural route | Local residents, including many school children | The bus for social and community life: evening trips, events, meeting friends and family without driving |
-| A rural route linking two market towns | Passengers making onward journeys | The bus as a connection: research showed people used it to reach trains and other buses, so we focused on joined-up journeys |
-| A route through visitor destinations | Visitors, especially in spring | The bus as a way to explore the area's heritage and nature |
+## What we heard from *passengers*
 
-On the second route, research shaped the proposition itself: passengers showed us the route mattered most as a link to the wider transport network.
+- workshop | Community beats online | Campaign recall was **60%** and **56%** where community organisations were involved, against **35%** where the campaign ran online only.
+- calendar | People want to know when the bus is coming | On the first route, reliable timetables and bus tracking were what passengers valued most.
+- journey | One route was really a connection | Passengers used it to reach trains and other buses, so its proposition changed to joined-up journeys.
+- target | Campaigns were remembered | Recognition lasted three to four months after launch.
 
-![Three stylised route lines across a rural landscape, each with an icon and label: social and community trips, connecting journeys to trains and buses, and exploring heritage and nature.](bus-routes.png "Three routes, three propositions. Recreated and anonymised.")
-
-## How our thinking changed
++++
+section: thinking
++++
 
 Each route started with a proposition we wanted to test, but riding the buses changed one of them entirely. On the route linking two market towns, passengers were using the bus mainly to connect to trains and other buses, so the campaign focused on joined-up journeys rather than the towns themselves. We also chose early not to recommend new buses or timetables, and to look for low-cost changes the council could deliver quickly.
 
-## Recommendations: quick, cheap and doable
++++
+section: solution
+eyebrow: The solution
++++
 
-We deliberately avoided recommendations that needed more buses or new timetables. Those take time, money and a lot of processing. Instead, each report set out changes the council could make quickly and at low cost:
+## Quick, cheap and *doable*
 
-- **Live bus times in Google Maps,** so people can see when the next bus is coming where they already plan journeys
-- **QR codes at stops** linking to live bus times
-- **Targeted marketing campaigns** built around each route's proposition, to tell people what the bus could do for them
+- People want to know when the bus is coming | Live bus times in Google Maps (feasibility mapped, not yet rolled out), and QR codes at stops linking to bus times (on the campaign posters)
+- Each route had its own reason to travel | Targeted route campaigns built on each proposition (delivered)
 
 The council received three recommendation reports, one per route.
 
 ![Three recommendation cards: live bus times in Google Maps, QR codes at stops, and targeted route campaigns. Beside them, crossed out: more buses and new timetables, labelled slower and costlier, so not recommended.](bus-recommendations.png "Quick, low-cost recommendations. Recreated and anonymised.")
 
-## Results
++++
+section: impact
+numbers: +38% | passengers on route B, September 2025 against September 2024, with every day of the week up; +23% | on route C, September against September, after correcting for seasonality; +13% | weekend journeys on route A, May against May, steadying a declining route
+note: Measured from ticket data, comparing the same month a year apart. Results belong to the council, the operators and the team.
++++
 
-Passenger numbers grew year on year on all three routes: by 38% on one route and 23% on another, where the figure was corrected for seasonality. On the third, weekend journeys rose 13%, steadying a route that had been declining. We measured this from ticket data, comparing the same months a year apart, so the results weren't just seasonal.
+![Headline graphic: passenger numbers, year on year. Route B up 38%. Route C up 23%, seasonality corrected. Route A up 13% in weekend journeys. Footnote: measured from ticket data, comparing the same months a year apart.](bus-result-yoy.svg "Passenger numbers, year on year. Recreated and anonymised.")
 
-![Headline graphic: passenger numbers, year on year. Route A up 38%. Route B up 23%, seasonality corrected. Route C up 13% in weekend journeys. Footnote: measured from ticket data, comparing the same months a year apart.](bus-result-yoy.svg "The result: passenger numbers, year on year. Recreated and anonymised.")
++++
+section: reflection
+eyebrow: Reflection
++++
 
-The studies have just closed, so it is too early to say which longer-term recommendations the council has acted on.
+## What I'd do *differently*
 
-## Reflection
+Small tests beat big plans. Going where the users are surfaced things a desk survey would have missed. And fitting the recommendations to the council's capacity gave them a real chance of happening.
 
-**Small tests beat big plans.** Short sprints on one route at a time let the council learn what worked before spending heavily.
-
-**Go where the users are.** Riding the routes and talking to passengers on the bus surfaced things a desk survey would have missed, such as how people used one route to connect to trains.
-
-**Fit the recommendation to the client's capacity.** The most useful advice is advice the client can act on. Keeping recommendations cheap and quick gave them a real chance of happening.
-
-**Measure honestly.** Comparing ticket data year on year, and correcting for seasonality where we could, meant the council could trust the results.
+- **Bigger evaluation samples.** Some evaluation surveys had few responses. Incentives helped, so I'd plan them in from the start.
+- **A comparison route from the start.** Comparing year on year helped, but a route with no campaign would have made the results even clearer.
+- **Push harder for the digital change.** Live bus times in Google Maps were mapped but not rolled out. I'd push to get them in place.
