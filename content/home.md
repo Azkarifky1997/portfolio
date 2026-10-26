@@ -8,7 +8,7 @@ pills: UX researcher | Service designer
 skills_band: User research | Service design | Inclusive design | Test and learn
 proof:
   355: first-time loans for farmers in Papua New Guinea | work/rural-loan/
-  +38%: bus passengers year on year, from a test-and-learn study | work/rural-bus/
+  Up to 38%: more bus passengers year on year, from test-and-learn studies | work/rural-bus/
   654: students surveyed in 5 countries
   750: Wales residents in a nationally representative survey
 proof_note: Results belong to the teams and partners I worked with.

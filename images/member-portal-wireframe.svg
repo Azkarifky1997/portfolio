@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif">
+  <rect width="1600" height="900" fill="#ffffff"/>
+  <!-- browser frame -->
+  <rect x="80" y="60" width="1440" height="760" rx="18" fill="#ffffff" stroke="#c9ccd1" stroke-width="3"/>
+  <rect x="80" y="60" width="1440" height="64" rx="18" fill="#eef0f2"/>
+  <rect x="80" y="100" width="1440" height="24" fill="#eef0f2"/>
+  <circle cx="122" cy="92" r="9" fill="#c9ccd1"/><circle cx="152" cy="92" r="9" fill="#c9ccd1"/><circle cx="182" cy="92" r="9" fill="#c9ccd1"/>
+  <rect x="240" y="78" width="520" height="28" rx="14" fill="#ffffff" stroke="#d8dbe0" stroke-width="2"/>
+
+  <!-- site header -->
+  <rect x="80" y="124" width="1440" height="80" fill="#1b3a6b"/>
+  <text x="120" y="174" font-size="30" font-weight="700" fill="#ffffff">Member portal</text>
+  <rect x="1300" y="146" width="180" height="38" rx="19" fill="#ffffff"/>
+  <text x="1390" y="172" font-size="20" fill="#1b3a6b" text-anchor="middle" font-weight="600">My account</text>
+
+  <!-- side navigation -->
+  <rect x="80" y="204" width="300" height="616" fill="#f4f4f2"/>
+  <g font-size="24" fill="#1c1c1c">
+    <rect x="100" y="232" width="260" height="52" rx="8" fill="#fff1cc"/>
+    <text x="124" y="266" font-weight="700">Dashboard</text>
+    <text x="124" y="336">My CPD</text>
+    <text x="124" y="396">My qualifications</text>
+    <text x="124" y="456">My studies</text>
+    <text x="124" y="516">Membership and renewal</text>
+    <text x="124" y="576">Get help</text>
+  </g>
+
+  <!-- main area -->
+  <text x="430" y="270" font-size="38" font-weight="700" fill="#1c1c1c">Welcome back</text>
+  <text x="430" y="310" font-size="22" fill="#555555">Everything in one place: where you are and what comes next</text>
+
+  <!-- next step card -->
+  <rect x="430" y="340" width="1050" height="120" rx="12" fill="#1b3a6b"/>
+  <text x="465" y="390" font-size="20" fill="#f2a900" font-weight="700" letter-spacing="2">YOUR NEXT STEP</text>
+  <text x="465" y="430" font-size="28" fill="#ffffff" font-weight="600">Complete your next module to progress</text>
+  <rect x="1270" y="378" width="180" height="48" rx="24" fill="#f2a900"/>
+  <text x="1360" y="410" font-size="20" fill="#1c1c1c" text-anchor="middle" font-weight="700">Continue</text>
+
+  <!-- three tiles -->
+  <g>
+    <rect x="430" y="490" width="330" height="230" rx="12" fill="#ffffff" stroke="#d8d8d4" stroke-width="2"/>
+    <text x="460" y="540" font-size="26" font-weight="700" fill="#1c1c1c">CPD</text>
+    <text x="460" y="574" font-size="20" fill="#555555">Progress this year</text>
+    <rect x="460" y="610" width="270" height="18" rx="9" fill="#eef0f2"/>
+    <rect x="460" y="610" width="170" height="18" rx="9" fill="#1b3a6b"/>
+    <rect x="460" y="660" width="140" height="34" rx="17" fill="#ffffff" stroke="#1c1c1c" stroke-width="2"/>
+    <text x="530" y="683" font-size="18" text-anchor="middle" fill="#1c1c1c">Log CPD</text>
+
+    <rect x="790" y="490" width="330" height="230" rx="12" fill="#ffffff" stroke="#d8d8d4" stroke-width="2"/>
+    <text x="820" y="540" font-size="26" font-weight="700" fill="#1c1c1c">Qualifications</text>
+    <text x="820" y="574" font-size="20" fill="#555555">Held and in progress</text>
+    <rect x="820" y="600" width="230" height="16" rx="8" fill="#e3e6e7"/>
+    <rect x="820" y="628" width="190" height="16" rx="8" fill="#e3e6e7"/>
+    <rect x="820" y="660" width="170" height="34" rx="17" fill="#ffffff" stroke="#1c1c1c" stroke-width="2"/>
+    <text x="905" y="683" font-size="18" text-anchor="middle" fill="#1c1c1c">See what's next</text>
+
+    <rect x="1150" y="490" width="330" height="230" rx="12" fill="#ffffff" stroke="#d8d8d4" stroke-width="2"/>
+    <text x="1180" y="540" font-size="26" font-weight="700" fill="#1c1c1c">Membership</text>
+    <text x="1180" y="574" font-size="20" fill="#555555">Renewal reminder</text>
+    <rect x="1180" y="600" width="270" height="44" rx="8" fill="#fff1cc"/>
+    <text x="1196" y="629" font-size="18" fill="#1c1c1c">Your renewal is coming up</text>
+    <rect x="1180" y="660" width="120" height="34" rx="17" fill="#ffffff" stroke="#1c1c1c" stroke-width="2"/>
+    <text x="1240" y="683" font-size="18" text-anchor="middle" fill="#1c1c1c">Renew</text>
+  </g>
+
+  <text x="1520" y="868" font-size="24" fill="#6b777b" text-anchor="end">Recreated and anonymised</text>
+</svg>

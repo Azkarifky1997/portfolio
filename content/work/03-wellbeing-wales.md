@@ -17,6 +17,7 @@ snapshot:
 DRAFT: this page is only shown in the preview. Before publishing, Azka to:
 1. confirm or rewrite the reflection, and
 2. supply a photo from the dialogues (no children's faces), or leave the header text full width.
+Keep the focus on the process: no percentages or detailed findings from the client's reports.
 Then remove "draft: true" above.
 -->
 
@@ -64,11 +65,9 @@ eyebrow: Key insights
 
 ## What we heard from *Wales*
 
-- workshop | Awareness changes with age | Almost **twice as many** 18 to 34-year-olds were aware of the wellbeing economy as people aged 65 and over.
-- heart | People expect it to be better for them | Asked about 15 areas of daily life, people most often expected things to get better.
-- research | Healthcare, housing and education | In unprompted written answers, these were the three most important areas a wellbeing economy would improve.
-- book | Education shapes the choice | **4 in 10** people educated to GCSE level or below said they needed more support and information to choose.
-- globe | Local reasons differ | In the Vale of Glamorgan, people chose it for wellbeing and quality of life (**25%**), fairness and social justice (**20%**), economic sustainability (**14%**) and ethical and political reasons (**9%**).
+- workshop | Awareness isn't even | How much people knew about a wellbeing economy varied with age and education.
+- heart | People could see what it might change | Given space to answer in their own words, they talked about everyday services such as healthcare, housing and education.
+- globe | Place matters | Different communities had different reasons for wanting change, so one national message wouldn't fit everywhere.
 
 +++
 section: impact
@@ -76,7 +75,7 @@ numbers: 750 | residents in a nationally representative survey; 2,000 | written 
 note: Results belong to WE Cymru and the team.
 +++
 
-The findings fed into WE Cymru's first Wellbeing Economy Cymru conference (November 2024, over 500 delegates), were shared at Davos by the agency's CEO, and became the evidence for a pilot proposal in the Vale of Glamorgan. WE Cymru describes its research as reaching over 800 people across Wales.
+The research fed into WE Cymru's first Wellbeing Economy Cymru conference (November 2024), was shared at Davos by the agency's CEO, and became the evidence for a pilot proposal in the Vale of Glamorgan.
 
 +++
 section: reflection

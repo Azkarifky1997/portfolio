@@ -119,7 +119,7 @@ In this order:
 3. **Skills band** (2.3).
 4. **Proof strip** (blue band, amber numbers, white labels):
    - **355** first-time loans for farmers in Papua New Guinea
-   - **+38%** bus passengers year on year, from a test-and-learn study
+   - **Up to 38%** more bus passengers year on year, from test-and-learn studies
    - **654** students surveyed in 5 countries
    - **750** Wales residents in a nationally representative survey
    - Under it: "Results belong to the teams and partners I worked with."
@@ -127,9 +127,9 @@ In this order:
 6. **Selected work:** label "My portfolio", h2 "Selected *work*", link "See all work →".
    - **Featured card** (Rural Loan): image left, text right. Meta "Financial inclusion · Papua New Guinea" and "2021". Title "A first loan for farmers with no ID, bank account or credit history". Chips: In-language field research, Affinity mapping, Journey mapping, Service blueprint, Wireframes. Numbers: **355** loans to 330 farmers; **35%** of borrowers were women; **99%** first-time access to a loan. Link "Read the case study →".
    - **Three cards** below (image, meta and year, title, 3 chips, one-line result, link):
-     - Rural bus: "Public transport", 2025, "Testing and learning our way to more bus passengers", chips Field research, Surveys, Test and learn; "**+38%** and **+23%** passengers year on year on two routes".
+     - Rural bus: "Public transport", 2025, "Testing and learning our way to more bus passengers", chips Field research, Surveys, Test and learn; "Passengers rose on all three routes, by **up to 38%** year on year".
      - Wales: "Public policy · Wales", 2024, "Is Wales ready for a wellbeing economy?", chips National survey, Community dialogues, Thematic analysis; "**750** residents surveyed, **6** community dialogues".
-     - Member services: "Membership", no year (`[GAP]`), "Simplifying member services for a UK membership organisation", chips Workshops, Process mapping, Service blueprints; "Routine checks automated, exceptions kept for staff. Live in phases."
+     - Member services: "Membership", no year (`[GAP]`), "Bringing member services into one place", chips Process mapping, Service blueprints, Member portal; "One place for members to manage their learning, qualifications and CPD. Live in phases."
    - The tea case study appears on the Work page, not here.
 7. **How I run research** (grey band, keep current four steps and text): 01 Start with the decision; 02 Go to where people are; 03 Find the pattern; 04 Make it land. Below: "Tools I use" as white chips or small logo tiles (Figma, Miro, Maze, Qualtrics, Power BI, Notion, Otter.ai). **No percentages.**
 8. **Testimonials:** label "Testimonials", h2 "What people *say*", a simple carousel with previous and next buttons and real, attributed quotes. **Azka has no quotes yet: build the component but hide the section until `content/testimonials.md` has at least one entry.** No star ratings.
@@ -149,9 +149,9 @@ Remove from the homepage: the six "What I do" cards, the long About text and the
 | Project (card title) | Meta | Year | Chips | One-line result | Link |
 |---|---|---|---|---|---|
 | A first loan for farmers with no ID, bank account or credit history | Financial inclusion · Papua New Guinea | 2021 | In-language field research, Journey mapping, Service blueprint | 355 loans to 330 farmers, 35% women | rural-loan |
-| Testing and learning our way to more bus passengers | Public transport · England | 2025 | Field research, Surveys, Test and learn | +38% and +23% passengers year on year | rural-bus |
+| Testing and learning our way to more bus passengers | Public transport · England | 2025 | Field research, Surveys, Test and learn | Passengers up on all three routes, by up to 38% | rural-bus |
 | Is Wales ready for a wellbeing economy? | Public policy · Wales | 2024 | National survey, Community dialogues, Thematic analysis | 750 residents surveyed, 6 dialogues | wellbeing-wales |
-| Simplifying member services for a UK membership organisation | Membership · UK | (omit) | Workshops, Process mapping, Service blueprints | Live in phases | membership-journeys |
+| Bringing member services into one place | Membership · UK | (omit) | Process mapping, Service blueprints, Member portal | One place for learning, qualifications and CPD; live in phases | membership-journeys |
 | Tea, weather and trust in rural Sri Lanka | Agriculture · Sri Lanka | 2020 | Interviews in Sinhala, Ride-alongs, Journey maps | Research report, journey maps and recommendations | tea-sri-lanka |
 | Members' needs across five countries | Professional body · UK, India, Singapore, Malaysia, China | 2023 | Longitudinal surveys, Choice grids, Need states | Around 200 members per wave; a need-state tool the client uses to plan services | none |
 | What future members want | Education · UK, India, Singapore, Saudi Arabia, China | 2024 | Interviews, Survey, LLM-assisted analysis | 654 students surveyed in 5 countries | none |
@@ -258,25 +258,24 @@ Target reading time about five minutes. Keep paragraphs short.
 
 ### 8.2 Rural bus test-and-learn (`rural-bus`)
 
-**Correct every figure on this page.** Remove "up to around 40%" and "adjusting for other causes" everywhere on the site.
+**Keep the client's data private.** This page shows the process and a headline result only. Do not publish per-route figures, survey response counts, comment counts, campaign recall percentages or any other numbers from the client's reports. Remove "up to around 40%" and "adjusting for other causes" everywhere on the site.
 
 - **Header:** "Case study · Public transport · 2025". h1 "Testing and learning our way to more *bus passengers*". Summary: "Three short test-and-learn studies on three rural bus routes, each with its own reason to travel." Chips: Field research, Roundtables, Surveys, Thematic analysis, Campaign design, Test and learn. Image: `bus-card.jpg`.
-- **Snapshot:** My role: Co-led all three studies with the agency's CEO, as the programme's lead researcher, from fieldwork to evaluation. A designer created the campaign materials. Client: a rural county council in England. Timeline: 2025; each route ran seven two-week sprints, then a six-month evaluation.
+- **Snapshot:** My role: Co-led all three studies with the agency's CEO, as the programme's lead researcher, from fieldwork to evaluation. A designer created the campaign materials. Client: a rural county council in England. Timeline: 2025; each route ran a series of two-week sprints, then a six-month evaluation.
 - **Challenge:** keep the current text (many routes and operators; a county-wide plan would be slow and expensive). Research question callout: "What would get more people on each rural route, without new buses or timetables?"
 - **Research process:**
   - Empathise: Rode the routes, Conversations at stops and on buses, Roundtables at local lunch clubs, Surveys
-  - Define: Thematic analysis of 1,700+ comments, A proposition for each route
+  - Define: Thematic analysis of passengers' comments, A proposition for each route
   - Ideate: Campaign concepts with each operator
   - Prototype: Route campaigns, QR codes on posters
   - Test: Six-month evaluation, Year-on-year ticket data, Campaign recall surveys
-  - Highlights: the test-and-learn cycle (`bus-cycle.png`); three routes, three propositions (`bus-routes.png`, with the table of routes A, B and C: users and proposition); "six surveys in total, with more than 1,700 written comments".
-- **Key insights:**
-  - Community beats online: campaign recall was 60% and 56% where community organisations were involved, against 35% where the campaign ran online only.
-  - People want to know when the bus is coming: on the first route, reliable timetables and bus tracking were what passengers valued most.
+  - Highlights: the test-and-learn cycle (`bus-cycle.png`); three routes, three propositions (`bus-routes.png`, with the table of routes A, B and C: who uses each one and the proposition tested); "riding the routes" (why on-bus conversations found things a desk survey would miss).
+- **Key insights** (no figures):
+  - Community beats online: campaigns were remembered far better where local community groups helped spread the word than where they ran online only.
+  - People want to know when the bus is coming: reliable times and live tracking mattered more to passengers than anything else.
   - One route was really a connection: passengers used it to reach trains and other buses, so its proposition changed to joined-up journeys.
-  - Campaigns were remembered: recognition lasted three to four months after launch.
-- **Solution:** "Quick, cheap and doable" recommendations (keep `bus-recommendations.png`): live bus times in Google Maps (feasibility mapped, not yet rolled out), QR codes at stops (on the campaign posters), targeted route campaigns (delivered). Three recommendation reports, one per route.
-- **Impact:** **+38%** passengers on route B (September 2025 against September 2024, every day of the week rose) · **+23%** on route C (September against September, after correcting for seasonality) · **+13%** weekend journeys on route A (May against May), which steadied a declining route. Redraw `bus-result.png` with these figures. Attribution: "Measured from ticket data, comparing the same month a year apart. Results belong to the council, the operators and the team."
+- **Solution:** "Quick, cheap and doable" recommendations (keep `bus-recommendations.png`): live bus times in Google Maps, QR codes at stops linking to bus times, and targeted route campaigns. Three recommendation reports, one per route.
+- **Impact:** one headline only: "Passenger numbers rose year on year on all three routes, by **up to 38%**." Redraw `bus-result.png` to show just that line. Attribution: "Measured from ticket data, comparing the same month a year apart. Results belong to the council, the operators and the team."
 - **Reflection:** Small tests beat big plans. Go where the users are. Fit the recommendation to the client's capacity. What I'd do differently: bigger evaluation samples (incentives helped), a comparison route from the start, and pushing harder for the digital change.
 
 ### 8.3 Is Wales ready for a wellbeing economy? (`wellbeing-wales`, new)
@@ -293,13 +292,13 @@ Client WE Cymru is public and may be named.
   - Ideate: Six persona stories of people and place (draft)
   - Deliver: Interim findings, A pilot proposal for the Vale of Glamorgan
   - Highlights: (1) "Choice grids": people pinned themselves on a grid to show which statement they were closest to, then added a note saying why, giving numbers and reasons in one question. (2) "Going to where people are": roundtables in communities, and one-to-one interviews in rural Wales, filmed with a filmmaker. (3) "Including the youngest voice": one dialogue included a seven-year-old, with a parent alongside; consent from both the child and the parent, including for recording. (4) "Three kinds of awareness": "I've heard of it", "I'm familiar with it", "I believe in it".
-- **Key insights** (no solution section; use insight cards):
-  - Awareness changes with age: almost twice as many 18 to 34-year-olds were aware of the wellbeing economy as people aged 65 and over.
-  - People expect it to be better for them: asked about 15 areas of daily life, people most often expected things to get better.
-  - Healthcare, housing and education: in unprompted written answers, these were the three most important areas a wellbeing economy would improve.
-  - Education shapes the choice: 4 in 10 people educated to GCSE level or below said they needed more support and information to choose.
-  - Local reasons differ: in the Vale of Glamorgan, people chose it for wellbeing and quality of life (25%), fairness and social justice (20%), economic sustainability (14%) and ethical and political reasons (9%).
-- **Impact** (blue band): **750** residents in a nationally representative survey · **2,000** written responses · **6** community dialogues · **20** people filmed. Then: "The findings fed into WE Cymru's first Wellbeing Economy Cymru conference (November 2024, over 500 delegates), were shared at Davos by the agency's CEO, and became the evidence for a pilot proposal in the Vale of Glamorgan. WE Cymru describes its research as reaching over 800 people across Wales." Attribution: "Results belong to WE Cymru and the team."
+**Keep the focus on the process, not the findings.** The numbers on this page describe the research (how many people, which methods), not the results. Do not publish percentages or detailed findings from the client's reports.
+
+- **Key insights** (no solution section; three short cards, no figures):
+  - Awareness isn't even: how much people knew about a wellbeing economy varied with age and education.
+  - People could see what it might change: given space to answer in their own words, they talked about everyday services such as healthcare, housing and education.
+  - Place matters: different communities had different reasons for wanting change, so one national message wouldn't fit everywhere.
+- **Impact** (blue band): **750** residents in a nationally representative survey · **2,000** written responses · **6** community dialogues · **20** people filmed. Then: "The research fed into WE Cymru's first Wellbeing Economy Cymru conference (November 2024), was shared at Davos by the agency's CEO, and became the evidence for a pilot proposal in the Vale of Glamorgan." Attribution: "Results belong to WE Cymru and the team."
 - **Reflection:** `[GAP: Azka to approve]`. Suggested, for Azka to confirm or rewrite before publishing:
   1. "Pick the method for the person": a survey reached the whole country, but the dialogues reached people a survey would miss.
   2. "Plan for the youngest and oldest voices from the start."
@@ -307,21 +306,32 @@ Client WE Cymru is public and may be named.
   **Do not publish this page until Azka confirms the reflection and the image.** Build it, but leave it unlinked (no nav, Work page or homepage link) until then, or put it behind a `draft: true` flag if the site supports one.
 - **Sources:** WE Cymru, "Is Wales Ready? For a transition to a wellbeing economy", interim extract, April 2025.
 
-### 8.4 Simplifying member services (`membership-journeys`)
+### 8.4 Bringing member services into one place (`membership-journeys`)
 
-- **Header:** "Case study · Membership". h1 "Simplifying *member services* for a UK membership organisation". Summary: keep the current intro. Chips: Workshops, Interviews, Process mapping, Personas, Service blueprints, Wireframes, Functional specifications, Usability testing. Image: a new recreated, anonymised blueprint image (as in brief v2).
+**Rewrite this case study.** The story is now about joining up scattered platforms into one service with a member portal, not only about automating eligibility. Keep the URL.
+
+- **Header:** "Case study · Membership". h1 "Bringing member services into *one place*". Summary: "Joining up a website, a member area, a learning platform and a qualifications shop, so members can see where they are and what comes next." Chips: Workshops, Interviews, Process mapping, Personas, Service blueprints, Member portal, Wireframes, Functional specifications, Usability testing. Image: a new recreated, anonymised blueprint or portal image.
 - **Snapshot:** My role: Service and UX design lead. Client: a UK membership organisation. Timeline: `[GAP]`, omit.
-- **Challenge:** keep the current text. Research question callout: "How might members join, progress and renew without staff checking every case by hand?"
+- **About the project** (h2 "Four places to go, *one member*"): The organisation's services were spread across several places: a public website, a separate logged-in member area, a separate learning platform for studies, and a separate place to buy qualifications. It wanted to bring them together into one space, so members weren't confused moving between platforms.
+- **Challenge** (h2 "Members didn't know *what came next*"): members weren't sure how to progress as a member, how to qualify, how to buy qualifications or how to keep learning. A lot of guidance happened by hand, with members having to contact staff. Staff were also checking eligibility by hand, even though most of the information was already in the CRM. Research question callout: "How might we give members one place to see where they are, what comes next and how to get there?"
 - **Research process:**
   - Empathise: Workshops and interviews with every department, Conversations with staff and members
-  - Define: Process mapping, Business rules, Personas (member types, staff who are also members, staff who process cases)
+  - Define: Process mapping for the business and the member, Manual versus digital, Business rules, Personas (member types, staff who are also members, staff who process cases)
   - Ideate: Future-state journeys, Client review groups
-  - Prototype: Service blueprints, Wireframes, Functional specifications
+  - Prototype: Service blueprints, Member portal wireframes, Functional specifications
   - Test: Usability testing, User acceptance testing
-- **Key insights:** Every department did things differently and nobody had the whole picture; staff were checking eligibility by hand even though most of the information was already in the CRM; members weren't always sure which level was right for them; some work was repetitive or duplicated. Do not add research numbers (`[GAP]`).
-- **Solution:** We heard → So we designed: eligibility checked by hand → worked out from records already held; every case reviewed by staff → routine cases automatic, unusual ones kept for staff; members lapsing → renewal and lapse reminders; too much for one release → phased delivery, with automated exemptions fully designed for a later phase. Keep "How our thinking changed" as a short callout.
+  - Highlights: (1) "Mapping both sides": we mapped every process from the business side and the member's side, to see which steps were manual and which could be digital. (2) "One portal": wireframes of the member portal (recreated, anonymised).
+- **Key insights:** Services were scattered, so members had to work out which platform to use; members couldn't see their own progress; guidance relied on staff; staff checked eligibility by hand despite the data being in the CRM; some work was repeated across departments. Do not add research numbers (`[GAP]`).
+- **Solution** (h2 "From scattered platforms to *one service*"): We heard → So we designed:
+  - Services spread across several platforms → one joined-up site with a single member portal
+  - Members unsure how to progress → a portal where members track their CPD, qualifications and studies in one place, personalised to them
+  - Guidance given by hand → routine guidance and eligibility checks built into the service, with staff kept for unusual cases
+  - Members lapsing → renewal and lapse reminders
+  - No clear view of how the service performs → the portal lets the organisation track its KPIs
+  - Too much for one release → phased delivery, with automated exemptions fully designed for a later phase
+  - Keep "How our thinking changed" as a short callout.
 - **Impact:** "Now live in phases." No numbers.
-- **Reflection:** keep the current reflection (journeys take the shape of the business; keep bringing the conversation back to the member), as three short cards.
+- **Reflection:** keep the current reflection (journeys take the shape of the business; keep bringing the conversation back to the member), as three short cards, adding: "One place is only better if it's simpler. Joining platforms together meant designing the paths between them, not just moving pages."
 
 ### 8.5 Tea, weather and trust (`tea-sri-lanka`)
 
@@ -337,7 +347,7 @@ Client WE Cymru is public and may be named.
 
 ## 9. Site-wide fixes
 
-- Bus figures: everywhere, as in 8.2.
+- Bus figures: everywhere, only "up to 38%" (passengers rose on all three routes, by up to 38% year on year). No per-route figures anywhere, including the About carousel (use "Up to 38%").
 - Wales: "750 Wales residents in a nationally representative survey". **Remove "aged 7 to over 90" and "~700" everywhere.** Remove Davos years; say "shared at Davos by the agency's CEO".
 - About page: the agency in the past tense.
 - The need-states project: "around 200 members per wave in the UK, India, Singapore, Malaysia and China", Azka worked on waves 3 and 4 and the longitudinal analysis across all four.

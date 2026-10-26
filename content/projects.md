@@ -42,7 +42,8 @@ image_alt: A rural bus at a stop, with identifying details blurred
 meta: Public transport · England
 year: 2025
 chips: Field research, Surveys, Test and learn
-result: **+38%** and **+23%** passengers year on year on two routes
+result: Passengers up on all three routes, by **up to 38%**
+home_result: Passengers rose on all three routes, by **up to 38%** year on year
 type: Research
 sector: Public transport
 region: UK
@@ -57,15 +58,15 @@ type: Research
 sector: Public policy
 region: UK
 
-## Simplifying member services for a UK membership organisation
+## Bringing member services into one place
 link: membership-journeys
-image: member-services-blueprint.svg
-image_alt: A simple service blueprint with member, system and staff lanes
+image: member-portal-wireframe.svg
+image_alt: Wireframe of a member portal dashboard with a next step, CPD progress, qualifications and a renewal reminder
 meta: Membership · UK
 year:
-chips: Workshops, Process mapping, Service blueprints
-result: Live in phases
-home_result: Routine checks automated, exceptions kept for staff. Live in phases.
+chips: Process mapping, Service blueprints, Member portal
+result: One place for learning, qualifications and CPD; live in phases
+home_result: One place for members to manage their learning, qualifications and CPD. Live in phases.
 type: Service design
 sector: Membership
 region: UK

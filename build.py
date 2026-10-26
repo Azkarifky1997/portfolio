@@ -578,7 +578,8 @@ def take_heading(text):
 
 
 def chips_html(text, cls="chips"):
-    items = [c.strip() for c in text.split(",") if c.strip()]
+    # split on commas, but not commas inside brackets
+    items = [c.strip() for c in re.split(r",(?![^()]*\))", text) if c.strip()]
     return f'<ul class="{cls}">' + "".join(f'<li class="chip">{html.escape(c)}</li>' for c in items) + "</ul>"
 
 

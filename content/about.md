@@ -175,8 +175,8 @@ layout: ticker
 
 ## Projects at a *glance*
 
-- 2 organisations | Member services | Service design: join, progress and renew | Membership | {root}work/membership-journeys/
-- +38% | Rural bus test-and-learn | Year-on-year passenger growth on one route, 23% on another | Public transport | {root}work/rural-bus/
+- One place | Bringing member services into one place | A member portal for learning, qualifications and CPD | Membership | {root}work/membership-journeys/
+- Up to 38% | Rural bus test-and-learn | More passengers year on year, on all three routes | Public transport | {root}work/rural-bus/
 - 355 loans | Rural Loan, Papua New Guinea | Pilot loans to 330 farmers, 35% of them women | Financial inclusion | {root}work/rural-loan/
 - In Sinhala | Tea, weather and trust | Field research with tea farmers and leaf collectors | Agriculture | {root}work/tea-sri-lanka/
 - 750 residents | Is Wales ready for a wellbeing economy? | A nationally representative survey and community dialogues | Public policy | {root}work/wellbeing-wales/
