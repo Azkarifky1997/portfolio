@@ -216,21 +216,15 @@ def label_tables(body):
 # -------------------------------------------------------------- templates
 
 
-def layout(*, title, description, body, root, path, current="", home=None):
+def layout(*, title, description, body, root, path, current="", home=None, scripts=""):
     e = html.escape
     page_title = e(title) if path == "" else f"{e(title)} · {e(home['name'])}"
-    nav = [
-        ("Work", "work/", "work"),
-        ("Skills", "#skills", "skills"),
-        ("About", "about/", "about"),
-        ("Contact", "contact/", "contact"),
-    ]
+    nav = [("Home", "", "home"), ("Work", "work/", "work"), ("About", "about/", "about")]
     nav_html = "".join(
-        f'<li><a href="{root}{href}"'
-        + (' aria-current="page"' if key == current else "")
-        + f">{label}</a></li>"
+        f'<li><a href="{root}{href}"' + (' aria-current="page"' if key == current else "") + f">{label}</a></li>"
         for label, href, key in nav
     )
+    contact_current = ' aria-current="page"' if current == "contact" else ""
     year = datetime.date.today().year
     return f"""<!doctype html>
 <html lang="en-GB">
@@ -244,18 +238,22 @@ def layout(*, title, description, body, root, path, current="", home=None):
 <meta property="og:title" content="{page_title}">
 <meta property="og:description" content="{e(description)}">
 <meta property="og:url" content="{SITE_URL}{path}">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#1B3A6B">
 <link rel="icon" href="{root}assets/favicon.svg" type="image/svg+xml">
-<link rel="preload" href="{root}assets/fonts/montserrat-latin-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{root}assets/fonts/jakarta-latin-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{root}assets/style.css">
 </head>
 <body>
-<a class="skip-link" href="#main">Skip to main content</a>
+<a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
-  <div class="site-header__inner">
-    <a class="site-name" href="{root}">{e(home['name'])}</a>
-    <nav aria-label="Main">
-      <ul class="site-nav">{nav_html}</ul>
+  <div class="nav-pill">
+    <a class="brand" href="{root}"><span class="brand__mark" aria-hidden="true">A</span>{e(home['name'])}</a>
+    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav" hidden>
+      <span class="nav-toggle__bars" aria-hidden="true"></span>Menu
+    </button>
+    <nav id="site-nav" class="site-nav" aria-label="Main">
+      <ul>{nav_html}</ul>
+      <a class="nav-contact" href="{root}contact/"{contact_current}>Contact me</a>
     </nav>
   </div>
 </header>
@@ -271,6 +269,8 @@ def layout(*, title, description, body, root, path, current="", home=None):
     </ul>
   </div>
 </footer>
+<script src="{root}assets/site.js" defer></script>
+{scripts}
 </body>
 </html>
 """
@@ -421,7 +421,7 @@ def home_page(home, home_body, studies, image_sizes):
       <p class="hero__role">{e(home['role'])}</p>
       <p class="hero__intro">{e(home['intro'])}</p>
       <p class="hero__actions">
-        <a class="button" href="#work">See my work</a>
+        <a class="button" href="work/">See my work<span class="button__arrow" aria-hidden="true">&rarr;</span></a>
         <a class="button button--secondary" href="contact/">Get in touch</a>
       </p>
       <ul class="hero__social">
@@ -642,7 +642,8 @@ def about_section(settings, text, root, image_sizes, index):
         if len(paragraphs) == 2 and "<a " in paragraphs[1]:
             links = re.findall(r'<a href="([^"]+)">(.*?)</a>', paragraphs[1])
             buttons = "".join(
-                f'<a class="button{" button--secondary" if i else ""}" href="{href}">{label}</a>'
+                (f'<a class="button button--secondary" href="{href}">{label}</a>' if i else
+                 f'<a class="button" href="{href}">{label}<span class="button__arrow" aria-hidden="true">&rarr;</span></a>')
                 for i, (href, label) in enumerate(links)
             )
             body = paragraphs[0] + f'<p class="closing__actions">{buttons}</p>'
@@ -906,6 +907,37 @@ def work_index_page(meta, projects):
 <script src="{root}assets/work.js" defer></script>"""
 
 
+def styleguide_page():
+    """Preview only: the v3 building blocks on one page, for review."""
+    chips = "".join(f'<li class="chip">{c}</li>' for c in ["In-language field research", "Affinity mapping", "Journey mapping", "Service blueprint"])
+    return f"""
+<div class="wrap" style="padding-top:3rem">
+  <p class="eyebrow">Design system</p>
+  <h1>Building <em>blocks</em></h1>
+  <p>Preview-only page showing the v3 tokens and components. It is never published.</p>
+  <h2>Selected <em>work</em></h2>
+  <h3>Buttons</h3>
+  <p style="display:flex;gap:0.75rem;flex-wrap:wrap"><a class="button" href="#">See my work<span class="button__arrow" aria-hidden="true">&rarr;</span></a><a class="button button--secondary" href="#">Get in touch</a></p>
+  <h3>Method chips</h3>
+  <ul class="chips">{chips}</ul>
+  <h3>Colours</h3>
+  <ul class="chips">
+    <li class="chip" style="background:var(--blue);color:#fff">Blue #1B3A6B</li>
+    <li class="chip">Amber #F2A900</li>
+    <li class="chip" style="background:var(--white);color:var(--gold-text);border:1px solid var(--line)">Gold text #9A6500</li>
+    <li class="chip" style="background:var(--chalk)">Chalk #F3EBD3</li>
+    <li class="chip" style="background:var(--grey-bg);border:1px solid var(--line)">Grey #F4F4F2</li>
+  </ul>
+</div>
+<section class="band band--teal on-blue" style="margin-top:3rem">
+  <div class="wrap">
+    <p class="eyebrow">On a blue band</p>
+    <h2 style="color:#fff;margin-top:0">Let's <em>talk</em></h2>
+    <p><a class="button button--light" href="#">Get in touch</a></p>
+  </div>
+</section>"""
+
+
 def contact_page(meta, body):
     e = html.escape
     phone = ""
@@ -981,6 +1013,11 @@ def build():
         body=about_page(about, about_body, image_sizes),
         root="../", path="about/", current="about", home=home,
     ))
+    if PREVIEW:
+        write("styleguide", layout(
+            title="Style guide", description="Preview only", body=styleguide_page(),
+            root="../", path="styleguide/", home=home,
+        ))
     write("contact", layout(
         title=contact["title"], description=contact["description"],
         body=contact_page(contact, contact_body),
