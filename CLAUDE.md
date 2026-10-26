@@ -57,4 +57,6 @@ this file records how we have worked together so far.
 - Don't add links to GSMA articles unless Azka gives them.
 - Her email and phone are on the Contact page by her choice. Never add a home
   address, visa status, or anything about her employer's business situation.
+- Testimonials (content/testimonials.md) are copied word for word from what Azka
+  sends, typos and all. Never shorten, correct or anonymise them.
 - The repo is public and keeps its history, so don't commit anything private.
