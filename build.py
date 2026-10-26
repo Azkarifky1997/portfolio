@@ -344,137 +344,206 @@ def load_skills(filename="skills.md"):
 
 
 def hero_photo(home, image_sizes):
-    if home.get("photo"):
-        inner = image_tag(home["photo"], home.get("photo_alt", ""), "", "(min-width: 48rem) 26rem, 18rem",
+    """Portrait in front of a large amber shape, with two floating pills."""
+    e = html.escape
+    if home.get("photo") in image_sizes:
+        inner = image_tag(home["photo"], home.get("photo_alt", ""), "", "(min-width: 60rem) 24rem, 80vw",
                           image_sizes, lazy=False)
-    elif PREVIEW:
-        inner = ('<p class="hero__photo-note"><strong>Space for your photo</strong><br>'
-                 "Add it in <code>content/home.md</code> (photo:)</p>")
     else:
         inner = '<span class="hero__initials" aria-hidden="true">AR</span>'
-    return f'<div class="hero__photo"><div class="hero__blob">{inner}</div></div>'
+    pills = [p.strip() for p in home.get("pills", "").split("|") if p.strip()]
+    pill_html = "".join(f'<span class="hero__pill hero__pill--{i + 1}">{e(p)}</span>' for i, p in enumerate(pills[:2]))
+    return (f'<div class="hero__visual"><span class="hero__shape" aria-hidden="true"></span>'
+            f'<div class="hero__portrait">{inner}</div>{pill_html}</div>')
 
 
-def work_card(s, root, image_sizes, featured=False, lazy=True):
-    """A case study card: picture, title, summary, role, result and a link."""
+def inline_md(text):
+    """Small bits of Markdown inside a line, such as **bold** numbers."""
+    return re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", html.escape(text))
+
+
+def heading_md(text):
+    """Headings with one *accent* word in italics."""
+    return re.sub(r"\*(.+?)\*", r"<em>\1</em>", html.escape(text))
+
+
+def is_published(slug, studies):
+    """A case study exists and is not a draft (drafts only show in the preview)."""
+    for s in studies:
+        if s["slug"] == slug:
+            return PREVIEW or not s.get("draft")
+    return False
+
+
+def project_card(p, root, image_sizes, studies, featured=False, lazy=True, home=False):
+    """One project card, shared by the home page and the Work page."""
     e = html.escape
-    sizes = "(min-width: 64rem) 36rem, (min-width: 48rem) 45vw, 92vw" if featured else \
-        "(min-width: 48rem) 30rem, 92vw"
-    if s.get("thumbnail") in image_sizes:
-        thumb = image_tag(s["thumbnail"], "", root, sizes, image_sizes, lazy=lazy)
+    link = p.get("link", "")
+    href = f"{root}work/{link}/" if link and is_published(link, studies) else ""
+    if p.get("image") in image_sizes:
+        sizes = "(min-width: 60rem) 34rem, 92vw" if featured else "(min-width: 60rem) 22rem, 92vw"
+        img = image_tag(p["image"], p.get("image_alt", ""), root, sizes, image_sizes, lazy=lazy)
+        if p["image"].lower().endswith((".png", ".svg")):
+            img = f'<div class="pcard__diagram">{img}</div>'  # diagrams show whole, not cropped
     else:
-        thumb = f'<div class="card__image-fallback">{icon(s.get("card_icon") or "leaf", 40)}</div>'
+        img = f'<div class="pcard__fallback" aria-hidden="true">{icon("leaf", 40)}</div>'
+    chips = "".join(f'<li class="chip">{e(c.strip())}</li>' for c in p.get("chips", "").split(",") if c.strip())
+    year = f'<span>{e(p["year"])}</span>' if p.get("year") else ""
+    if featured and p.get("numbers"):
+        rows = []
+        for pair in p["numbers"].split(";"):
+            num, _, label = (x.strip() for x in pair.partition("|"))
+            rows.append(f'<li><strong>{e(num)}</strong> {e(label)}</li>')
+        result = f'<ul class="pcard__numbers">{"".join(rows)}</ul>'
+    else:
+        text = p.get("home_result") if home and p.get("home_result") else p.get("result", "")
+        result = f'<p class="pcard__result">{inline_md(text)}</p>' if text else ""
+    title = e(p["title"])
+    if href:
+        action = (f'<p class="pcard__cta"><a href="{href}">Read the case study'
+                  f'<span class="visually-hidden">: {title}</span> <span aria-hidden="true">&rarr;</span></a></p>')
+    else:
+        action = ""
+    data = ""
+    if not home:
+        data = " ".join(
+            f'data-{k}="{" ".join(slugify(v) for v in p.get(k, "").split(",") if v.strip())}"'
+            for k in ("type", "sector", "region")
+        )
+    tag = "h3" if home else "h2"
     return f"""
-      <li class="card{' card--featured' if featured else ''}">
-        <div class="card__image">{thumb}</div>
-        <div class="card__body">
-          <h3 class="card__title">{e(s['title'])}</h3>
-          <p class="card__summary">{e(s['summary'])}</p>
-          <dl class="card__meta">
-            <div><dt>Role</dt><dd>{e(s['card_role'])}</dd></div>
-            <div><dt>Result</dt><dd>{e(s['card_result'])}</dd></div>
-          </dl>
-          <p class="card__cta"><a href="{root}work/{s['slug']}/">Read the case study<span class="visually-hidden"> about {e(s['title'])}</span> <span aria-hidden="true">&rarr;</span></a></p>
+      <li class="pcard{' pcard--featured' if featured else ''}{' pcard--linked' if href else ''}" id="{slugify(p['title'])}" {data}>
+        <div class="pcard__image">{img}</div>
+        <div class="pcard__body">
+          <p class="pcard__meta"><span>{e(p.get('meta', ''))}</span>{year}</p>
+          <{tag} class="pcard__title">{title}</{tag}>
+          <ul class="chips" aria-label="Methods">{chips}</ul>
+          {result}
+          {action}
         </div>
       </li>"""
+
+
+def load_testimonials():
+    _, body = read_page(CONTENT / "testimonials.md")
+    body = re.sub(r"<!--.*?-->", "", body, flags=re.S)
+    items = []
+    for block in re.split(r"^## ", body, flags=re.M)[1:]:
+        lines = block.strip().splitlines()
+        t = {"name": lines[0].strip()}
+        for line in lines[1:]:
+            k, _, v = line.partition(":")
+            if k.strip():
+                t[k.strip()] = v.strip()
+        if t.get("quote"):
+            items.append(t)
+    return items
 
 
 def home_page(home, home_body, studies, image_sizes):
     e = html.escape
     first, _, last = home["name"].partition(" ")
+    name = f"{e(first)} {e(last)}".strip()
 
-    # Proof numbers band
+    band = [w.strip() for w in home.get("skills_band", "").split("|") if w.strip()]
+    band_html = '<span class="skills-band__mark" aria-hidden="true">✳</span>'.join(f"<span>{e(w)}</span>" for w in band)
+
     proof = []
     for number, value in (home.get("proof") or {}).items():
         label, _, link = (p.strip() for p in value.partition("|"))
         num = f'<a href="{e(link)}">{e(number)}</a>' if link else e(number)
         proof.append(f'<li><p class="proof__num">{num}</p><p class="proof__label">{e(label)}</p></li>')
 
-    facts = "".join(
-        f"<div><dt>{e(k)}</dt><dd>{e(v)}</dd></div>" for k, v in (home.get("facts") or {}).items()
-    )
-    cards = "".join(work_card(s, "", image_sizes, featured=(i == 0), lazy=i > 0)
-                    for i, s in enumerate(studies))
+    _, projects = load_projects()
+    by_link = {p.get("link"): p for p in projects if p.get("link")}
+    chosen = [by_link[s.strip()] for s in home.get("selected", "").split("|") if s.strip() in by_link]
+    featured = project_card(chosen[0], "", image_sizes, studies, featured=True, lazy=False, home=True) if chosen else ""
+    others = "".join(project_card(p, "", image_sizes, studies, home=True) for p in chosen[1:])
 
-    skills_meta, skills = load_skills("skills.md")
-    skill_cards = "".join(
-        f'<li class="skill"><span class="skill__icon">{icon(s["icon"])}</span>'
-        f'<h3 class="skill__title">{e(s["title"])}</h3><p>{e(s["text"])}</p></li>'
-        for s in skills
-    )
-    tools = "".join(f"<li>{e(t.strip())}</li>" for t in skills_meta.get("tools", "").split(",") if t.strip())
-    tools_html = (f'<div class="tools"><h3 class="tools__title">Tools I use</h3>'
-                  f'<ul class="tools__list">{tools}</ul></div>' if tools else "")
-
-    process_meta, steps = load_skills("process.md")
+    _, steps = load_skills("process.md")
     step_items = "".join(
-        f'<li class="step"><span class="step__icon">{icon(s["icon"])}</span>'
+        f'<li class="step"><span class="step__num" aria-hidden="true">{i + 1:02d}</span>'
         f'<h3 class="step__title">{e(s["title"])}</h3><p>{e(s["text"])}</p></li>'
-        for s in steps
+        for i, s in enumerate(steps)
     )
+    tools = "".join(f'<li class="chip chip--light">{e(t.strip())}</li>' for t in home.get("tools", "").split(",") if t.strip())
 
+    quotes = load_testimonials()
+    testimonials = ""
+    if quotes:
+        slides = "".join(
+            f'<figure class="quote"{" hidden" if i else ""}><blockquote><p>{e(q["quote"])}</p></blockquote>'
+            f'<figcaption><strong>{e(q["name"])}</strong> · {e(q.get("role", ""))}</figcaption></figure>'
+            for i, q in enumerate(quotes)
+        )
+        controls = ('<button type="button" class="quotes__btn" data-dir="-1" aria-label="Previous testimonial">&larr;</button>'
+                    '<button type="button" class="quotes__btn" data-dir="1" aria-label="Next testimonial">&rarr;</button>'
+                    ) if len(quotes) > 1 else ""
+        testimonials = f"""
+<section class="wrap quotes" aria-labelledby="quotes-heading">
+  <p class="eyebrow quotes__eyebrow">Testimonials</p>
+  <h2 id="quotes-heading">What people <em>say</em></h2>
+  <div class="quotes__inner">{controls}<div class="quotes__slides" aria-live="polite">{slides}</div></div>
+</section>"""
+
+    email = e(home["email"])
     return f"""
 <div class="wrap">
-  <section class="hero">
+  <section class="hero" aria-labelledby="hero-heading">
     <div class="hero__text">
-      <h1 class="hero__heading"><span class="hero__hi">Hi,</span> I&rsquo;m <span class="hero__name">{e(first)}</span>{(" " + e(last)) if last else ""}</h1>
+      <p class="hero__hello">Hello there!</p>
+      <h1 id="hero-heading" class="hero__heading">I&rsquo;m <em class="hero__name">{name}</em>,</h1>
       <p class="hero__role">{e(home['role'])}</p>
       <p class="hero__intro">{e(home['intro'])}</p>
       <p class="hero__actions">
         <a class="button" href="work/">See my work<span class="button__arrow" aria-hidden="true">&rarr;</span></a>
         <a class="button button--secondary" href="contact/">Get in touch</a>
       </p>
-      <ul class="hero__social">
-        <li><a href="{e(home['linkedin'])}">{icon("linkedin")}<span class="visually-hidden">LinkedIn</span></a></li>
-        <li><a href="mailto:{e(home['email'])}">{icon("email")}<span class="visually-hidden">Email {e(home['email'])}</span></a></li>
-      </ul>
     </div>
     {hero_photo(home, image_sizes)}
   </section>
 </div>
-<section class="band band--teal proof" aria-labelledby="proof-heading">
+<div class="skills-band"><p class="wrap skills-band__inner">{band_html}</p></div>
+<section class="band band--teal on-blue proof" aria-labelledby="proof-heading">
   <div class="wrap">
     <h2 id="proof-heading" class="visually-hidden">Results at a glance</h2>
     <ul class="proof__list">{''.join(proof)}</ul>
     <p class="proof__note">{e(home.get('proof_note', ''))}</p>
   </div>
 </section>
-<section class="intro-about" aria-labelledby="about-heading">
-  <div class="wrap intro-about__inner">
-    <div class="intro-about__text">
-      <h2 id="about-heading" class="section-label">About me</h2>
-      {markdown.markdown(home_body)}
-      <p class="intro-about__more"><a href="about/">More about me <span aria-hidden="true">&rarr;</span></a></p>
-    </div>
-    <dl class="facts">{facts}</dl>
-  </div>
+<section class="wrap about-short" aria-labelledby="about-heading">
+  <h2 id="about-heading" class="eyebrow">About me</h2>
+  {markdown.markdown(home_body)}
+  <p class="about-short__more"><a href="about/">More about me <span aria-hidden="true">&rarr;</span></a></p>
 </section>
-<div class="wrap">
-  <section class="work" id="work" aria-labelledby="work-heading">
-    <h2 id="work-heading" class="section-label">Selected work</h2>
-    <ul class="work-grid">{cards}
-    </ul>
-    <p class="work__all"><a class="button button--secondary" href="work/">See all work <span aria-hidden="true">&rarr;</span></a></p>
-  </section>
-</div>
-<section class="band band--cream skills" id="skills" aria-labelledby="skills-heading">
+<section class="wrap selected" id="work" aria-labelledby="work-heading">
+  <div class="selected__head">
+    <div><p class="eyebrow">My portfolio</p><h2 id="work-heading">Selected <em>work</em></h2></div>
+    <p><a class="selected__all" href="work/">See all work <span aria-hidden="true">&rarr;</span></a></p>
+  </div>
+  <ul class="pcards pcards--home">{featured}{others}
+  </ul>
+</section>
+<section class="band band--grey process" aria-labelledby="process-heading">
   <div class="wrap">
-    <h2 id="skills-heading" class="section-label">{e(skills_meta.get('title', 'What I do'))}</h2>
-    <ul class="skills__grid">{skill_cards}</ul>
-    {tools_html}
+    <h2 id="process-heading" class="eyebrow">How I run research</h2>
+    <ol class="process__steps">{step_items}</ol>
+    <div class="tools"><h3 class="tools__title">Tools I use</h3><ul class="chips">{tools}</ul></div>
   </div>
 </section>
-<div class="wrap">
-  <section class="process" aria-labelledby="process-heading">
-    <h2 id="process-heading" class="section-label">{e(process_meta.get('title', 'How I run research'))}</h2>
-    <ol class="process__steps">{step_items}</ol>
-  </section>
-</div>
-<section class="band band--teal talk" aria-labelledby="talk-heading">
+{testimonials}
+<section class="band band--teal on-blue talk" aria-labelledby="talk-heading">
   <div class="wrap talk__inner">
-    <h2 id="talk-heading">{e(home.get('talk_title', "Let's talk"))}</h2>
-    <p>{e(home.get('talk_text', ''))}</p>
-    <p><a class="button button--light" href="contact/">Get in touch</a></p>
+    <div>
+      <h2 id="talk-heading">Let&rsquo;s <em>talk</em></h2>
+      <p>{e(home.get('talk_text', ''))}</p>
+    </div>
+    <div class="talk__actions">
+      <button type="button" class="talk__copy" data-email="{email}" hidden><span>{email}</span><span class="talk__copy-label">Copy email</span></button>
+      <a class="talk__link talk__mail" href="mailto:{email}"><span>{email}</span><span aria-hidden="true">&rarr;</span></a>
+      <a class="talk__link" href="{e(home['linkedin'])}"><span>LinkedIn</span><span aria-hidden="true">&rarr;</span></a>
+      <p class="visually-hidden" aria-live="polite" data-copy-status></p>
+    </div>
   </div>
 </section>"""
 
@@ -827,12 +896,7 @@ def about_page(meta, body, image_sizes):
 <script src="{root}assets/about.js" defer></script>"""
 
 
-FILTERS = [
-    ("type", "Type", ["Research", "Service design", "UX design"]),
-    ("sector", "Sector", ["Education and membership", "Financial inclusion", "Public sector and transport",
-                          "Tourism and culture", "Property", "AI and technology"]),
-    ("region", "Region", ["UK", "Sri Lanka", "Asia Pacific", "Middle East", "Multi-country"]),
-]
+FILTER_TYPES = ["Research", "Service design", "Strategy", "Research operations"]
 
 
 def slugify(text):
@@ -840,8 +904,9 @@ def slugify(text):
 
 
 def load_projects():
-    """Read content/projects.md: each "## Heading" is one project on the Work page."""
+    """Read content/projects.md: each "## Heading" is one project card."""
     meta, body = read_page(CONTENT / "projects.md")
+    body = re.sub(r"<!--.*?-->", "", body, flags=re.S)
     projects = []
     for block in re.split(r"^## ", body, flags=re.M)[1:]:
         lines = block.strip().splitlines()
@@ -854,57 +919,46 @@ def load_projects():
     return meta, projects
 
 
-def work_index_page(meta, projects):
+def work_index_page(meta, projects, studies, image_sizes):
     e = html.escape
     root = "../"
-    items = []
-    for p in projects:
-        data, tags = [], []
-        for key, _, _ in FILTERS:
-            values = [v.strip() for v in p.get(key, "").split(",") if v.strip()]
-            data.append(f'data-{key}="{" ".join(slugify(v) for v in values)}"')
-            tags += values
-        year = f'<p class="project__year">{e(p["year"])}</p>' if p.get("year") else ""
-        tag_html = "".join(f"<li>{e(t)}</li>" for t in tags)
-        if p.get("link"):
-            action = (f'<p class="project__cta"><a href="{root}work/{e(p["link"])}/">Read the case study'
-                      f'<span class="visually-hidden"> about {e(p["title"])}</span> <span aria-hidden="true">&rarr;</span></a></p>')
-        else:
-            action = '<p class="project__summary-only">Summary only</p>'
-        items.append(
-            f'<li class="project" id="{slugify(p["title"])}" {" ".join(data)}>{year}<h2 class="project__title">{e(p["title"])}</h2>'
-            f'<p class="project__summary">{e(p.get("summary", ""))}</p>'
-            f'<ul class="project__tags" aria-label="Tags">{tag_html}</ul>{action}</li>'
-        )
+    cards = "".join(project_card(p, root, image_sizes, studies, lazy=i > 1) for i, p in enumerate(projects))
+
+    def values(key):
+        seen = []
+        for p in projects:
+            for v in p.get(key, "").split(","):
+                if v.strip() and v.strip() not in seen:
+                    seen.append(v.strip())
+        return seen
+
     groups = []
-    for key, label, options in FILTERS:
+    for key, label, options in [("type", "Type", FILTER_TYPES), ("sector", "Sector", values("sector")),
+                                ("region", "Region", values("region"))]:
         buttons = "".join(
             f'<button type="button" class="filter" aria-pressed="false" data-group="{key}" '
             f'data-value="{slugify(o)}">{e(o)}</button>'
             for o in options
         )
-        groups.append(
-            f'<div class="filters__group" role="group" aria-labelledby="filter-{key}">'
-            f'<p class="filters__label" id="filter-{key}">{label}</p>{buttons}</div>'
-        )
+        groups.append(f'<div class="filters__group" role="group" aria-labelledby="filter-{key}">'
+                      f'<p class="filters__label" id="filter-{key}">{label}</p>{buttons}</div>')
     return f"""
-<div class="wrap">
-  <div class="work-index">
-    <h1>{e(meta['title'])}</h1>
+<div class="wrap work-index">
+  <header class="work-index__head">
+    <h1>{heading_md(meta.get('title_html', meta['title']))}</h1>
     <p class="standfirst">{e(meta.get('intro', ''))}</p>
-    <div class="filters" hidden>
-      <h2 class="visually-hidden">Filter projects</h2>
-      {''.join(groups)}
-      <div class="filters__footer">
-        <p class="filters__count" aria-live="polite"></p>
-        <button type="button" class="filters__clear">Clear filters</button>
-      </div>
+  </header>
+  <div class="filters" hidden>
+    <h2 class="visually-hidden">Filter projects</h2>
+    {''.join(groups)}
+    <div class="filters__footer">
+      <p class="filters__count" aria-live="polite"></p>
+      <button type="button" class="filters__clear">Clear filters</button>
     </div>
-    <ul class="projects">{''.join(items)}</ul>
-    <p class="projects__empty" hidden>No projects match these filters. Try clearing one.</p>
   </div>
-</div>
-<script src="{root}assets/work.js" defer></script>"""
+  <ul class="pcards pcards--work">{cards}</ul>
+  <p class="projects__empty" hidden>No projects match these filters. Try clearing one.</p>
+</div>"""
 
 
 def styleguide_page():
@@ -1005,8 +1059,9 @@ def build():
     projects_meta, projects = load_projects()
     write("work", layout(
         title=projects_meta["title"], description=projects_meta["description"],
-        body=work_index_page(projects_meta, projects),
+        body=work_index_page(projects_meta, projects, studies, image_sizes),
         root="../", path="work/", current="work", home=home,
+        scripts='<script src="../assets/work.js" defer></script>',
     ))
     write("about", layout(
         title=about["title"], description=about["description"],

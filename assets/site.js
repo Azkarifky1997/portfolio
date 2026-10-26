@@ -29,3 +29,36 @@
   (small.addEventListener ? small.addEventListener("change", setup) : small.addListener(setup));
   setup();
 })();
+
+// Copy email (home page "Let's talk"). Without the script, the email link shows instead.
+(function () {
+  var btn = document.querySelector(".talk__copy");
+  if (!btn || !navigator.clipboard) return;
+  var status = document.querySelector("[data-copy-status]");
+  var label = btn.querySelector(".talk__copy-label");
+  btn.hidden = false;
+  var mail = document.querySelector(".talk__mail");
+  if (mail) mail.hidden = true;
+  btn.addEventListener("click", function () {
+    navigator.clipboard.writeText(btn.dataset.email).then(function () {
+      status.textContent = "Email copied";
+      label.textContent = "Copied";
+      setTimeout(function () { label.textContent = "Copy email"; status.textContent = ""; }, 3000);
+    });
+  });
+})();
+
+// Testimonials: previous and next buttons (only when there is more than one quote).
+(function () {
+  var box = document.querySelector(".quotes");
+  if (!box) return;
+  var slides = Array.prototype.slice.call(box.querySelectorAll(".quote"));
+  var i = 0;
+  box.querySelectorAll(".quotes__btn").forEach(function (b) {
+    b.addEventListener("click", function () {
+      slides[i].hidden = true;
+      i = (i + Number(b.dataset.dir) + slides.length) % slides.length;
+      slides[i].hidden = false;
+    });
+  });
+})();

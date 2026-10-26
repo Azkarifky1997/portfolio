@@ -2,7 +2,7 @@
 (function () {
   var filters = document.querySelector(".filters");
   if (!filters) return;
-  var projects = Array.prototype.slice.call(document.querySelectorAll(".project"));
+  var projects = Array.prototype.slice.call(document.querySelectorAll(".pcards--work > .pcard"));
   var buttons = Array.prototype.slice.call(filters.querySelectorAll(".filter"));
   var count = filters.querySelector(".filters__count");
   var clear = filters.querySelector(".filters__clear");
@@ -26,7 +26,7 @@
       p.hidden = !match;
       if (match) shown++;
     });
-    count.textContent = "Showing " + shown + " of " + projects.length + " projects";
+    count.textContent = "Showing " + shown + (shown === 1 ? " project" : " projects");
     empty.hidden = shown !== 0;
     clear.disabled = Object.keys(chosen).length === 0;
   }

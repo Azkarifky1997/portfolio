@@ -1,120 +1,155 @@
 ---
-title: All work
-description: Every project Azka Rifky can share, from full case studies to short summaries. Clients are anonymised.
-intro: Every project I can share, from full case studies to short summaries. Clients are anonymised.
+title: My work
+title_html: My *work*
+description: Research and service design across finance, transport, public policy, membership and agriculture, by Azka Rifky.
+intro: Research and service design across finance, transport, public policy, membership and agriculture.
 ---
 
 <!--
-Each "## Heading" is one project on the Work page, in this order.
-summary:  one line
+Each "## Heading" is one project card, used on the Work page (in this order)
+and on the home page (see "selected" in home.md).
+
+link:     the case study address (e.g. rural-loan). Leave blank for no link.
+image:    picture for the card (from images/). Optional.
+meta:     sector · place, shown above the title
 year:     leave blank if there isn't one
-type:     any of: Research, Service design, UX design (comma-separated)
-sector:   one of: Education and membership, Financial inclusion,
-          Public sector and transport, Tourism and culture, Property, AI and technology
-region:   one of: UK, Sri Lanka, Asia Pacific, Middle East, Multi-country
-link:     the case study address, or leave blank for "Summary only"
+chips:    methods, comma-separated
+result:   one line. **Bold** works for numbers.
+home_result:  optional different line for the home page card
+numbers:  for the featured card only: number | label; number | label
+type:     filter, any of: Research, Service design, Strategy, Research operations
+sector:   filter (one)
+region:   filter (one)
 -->
 
-## Rural Loan, Papua New Guinea
-summary: A first loan for farmers with no bank account, ID or credit history
-year: 2021
-type: Research, Service design, UX design
-sector: Financial inclusion
-region: Asia Pacific
+## A first loan for farmers with no ID, bank account or credit history
 link: rural-loan
-
-## Tea, weather and trust
-summary: Field research in Sinhala on whether tea factories could deliver drought insurance
-year: 2020
-type: Research
+image: rural-loan-kyc.png
+image_alt: Diagram comparing identity checks before and after: the bank asking for ID, and the exporter confirming farmers from its trading records
+meta: Financial inclusion · Papua New Guinea
+year: 2021
+chips: In-language field research, Affinity mapping, Journey mapping, Service blueprint, Wireframes
+result: **355** loans to 330 farmers, **35%** women
+numbers: 355 | loans to 330 farmers; 35% | of borrowers were women; 99% | first-time access to a loan
+type: Research, Service design
 sector: Financial inclusion
-region: Sri Lanka
-link: tea-sri-lanka
+region: Papua New Guinea
 
-## Getting more people on rural buses
-summary: Three test-and-learn studies; passengers up 38% and 23% year on year on two routes
-year: 2025
-type: Research
-sector: Public sector and transport
-region: UK
+## Testing and learning our way to more bus passengers
 link: rural-bus
-
-## Member services for a UK membership organisation
-summary: Moving manual member services online, with staff kept for exceptions
-year:
-type: Service design, UX design
-sector: Education and membership
+image: bus-card.jpg
+image_alt: A rural bus at a stop, with identifying details blurred
+meta: Public transport · England
+year: 2025
+chips: Field research, Surveys, Test and learn
+result: **+38%** and **+23%** passengers year on year on two routes
+type: Research
+sector: Public transport
 region: UK
+
+## Is Wales ready for a wellbeing economy?
+link: wellbeing-wales
+meta: Public policy · Wales
+year: 2024
+chips: National survey, Community dialogues, Thematic analysis
+result: **750** residents surveyed, **6** community dialogues
+type: Research
+sector: Public policy
+region: UK
+
+## Simplifying member services for a UK membership organisation
 link: membership-journeys
+image: member-services-blueprint.svg
+image_alt: A simple service blueprint with member, system and staff lanes
+meta: Membership · UK
+year:
+chips: Workshops, Process mapping, Service blueprints
+result: Live in phases
+home_result: Routine checks automated, exceptions kept for staff. Live in phases.
+type: Service design
+sector: Membership
+region: UK
+
+## Tea, weather and trust in rural Sri Lanka
+link: tea-sri-lanka
+image: Farmer interviews.jpeg
+image_alt: Interviewing a tea farmer on his veranda in Sri Lanka
+meta: Agriculture · Sri Lanka
+year: 2020
+chips: Interviews in Sinhala, Ride-alongs, Journey maps
+result: Research report, journey maps and recommendations
+type: Research
+sector: Agriculture
+region: Sri Lanka
+
+## Members' needs across five countries
+meta: Professional body · UK, India, Singapore, Malaysia, China
+year: 2023
+chips: Longitudinal surveys, Choice grids, Need states
+result: Around **200** members per wave; a need-state tool the client uses to plan services
+type: Research
+sector: Membership
+region: Multi-country
 
 ## What future members want
-summary: Survey of 654 students in 5 countries for a global professional body
+meta: Education · UK, India, Singapore, Saudi Arabia, China
 year: 2024
+chips: Interviews, Survey, LLM-assisted analysis
+result: **654** students surveyed in 5 countries
 type: Research
-sector: Education and membership
+sector: Education
 region: Multi-country
-link:
-
-## Need states for a global membership body
-summary: Later waves of a four-wave study with around 200 members per wave in 5 countries, plus longitudinal analysis across all four waves
-year: 2023
-type: Research
-sector: Education and membership
-region: Multi-country
-link:
-
-## Digital experience for a global professional body
-summary: Review of the member portal, learning platform, website and community platform, and a navigation strategy
-year: 2023
-type: UX design, Service design
-sector: Education and membership
-region: UK
-link:
-
-## Wellbeing economy in Wales
-summary: Around 700 people aged 7 to over 90, including children with parents
-year: 2024
-type: Research
-sector: Public sector and transport
-region: UK
-link:
 
 ## How people feel about AI
-summary: Around 3,000 people on attitudes to AI, plus a readiness-to-adopt tool
+meta: Technology · UK
 year:
+chips: Survey, Readiness tool
+result: Around **3,000** people; a tool to measure readiness to adopt AI
 type: Research
-sector: AI and technology
+sector: Technology
 region: UK
-link:
 
-## Ultra-luxury property buyers
-summary: Mixed-methods study with high-profile participants, leading to a framework agreement
+## Ultra-luxury property buyers in Saudi Arabia
+meta: Property · Saudi Arabia
 year:
-type: Research
+chips: Mixed methods, Moderator management, Personas
+result: Led to a framework agreement
+type: Research, Strategy
 sector: Property
 region: Middle East
-link:
 
 ## Understanding a city's visitors
-summary: Brand perception survey with over 1,000 respondents, and a customer intelligence portal
+meta: Tourism · UK
 year:
+chips: Survey, Segmentation, Insight portal
+result: Over **1,000** respondents; a customer intelligence portal
 type: Research
 sector: Tourism and culture
 region: UK
-link:
 
-## A cultural institution in the Middle East
-summary: Brand and value proposition research, in person
-year:
-type: Research
+## Digital experience for a global professional body
+meta: Professional body · Global
+year: 2023
+chips: Expert review, Content mapping, Navigation strategy
+result: A navigation strategy built around members' needs
+type: Strategy
+sector: Membership
+region: Multi-country
+
+## Brand research for a cultural institution
+meta: Culture · Middle East
+year: Ongoing
+chips: In-country research, Value proposition
+result: Ongoing
+type: Research, Strategy
 sector: Tourism and culture
 region: Middle East
-link:
 
-## Designing AI assistants
-summary: AI assistants, chatbots and AI-driven search with clear routes to human help
-year:
-type: UX design
-sector: AI and technology
+## Building a research practice
+meta: Research operations · UK
+year: 2023 to 2026
+chips: Research standards, Insight repository, Coaching
+result: Standards, consent and GDPR processes, a Notion repository, AI training
+type: Research operations
+sector: Research operations
 region: UK
-link:
