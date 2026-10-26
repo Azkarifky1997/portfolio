@@ -11,6 +11,7 @@ and on the home page (see "selected" in home.md).
 
 link:     the case study address (e.g. rural-loan). Leave blank for no link.
 image:    picture for the card (from images/). Optional.
+icon:     if there's no picture, an icon to show instead (e.g. globe, speech, leaf).
 meta:     sector · place, shown above the title
 year:     leave blank if there isn't one
 chips:    methods, comma-separated
@@ -50,6 +51,7 @@ region: UK
 
 ## Is Wales ready for a wellbeing economy?
 link: wellbeing-wales
+icon: globe
 meta: Public policy · Wales
 year: 2024
 chips: National survey, Community dialogues, Thematic analysis

@@ -396,6 +396,8 @@ def project_card(p, root, image_sizes, studies, featured=False, lazy=True, home=
         img = image_tag(p["image"], p.get("image_alt", ""), root, sizes, image_sizes, lazy=lazy)
         if p["image"].lower().endswith((".png", ".svg")):
             img = f'<div class="pcard__diagram">{img}</div>'  # diagrams show whole, not cropped
+    elif p.get("icon"):
+        img = f'<div class="pcard__fallback"><span class="pcard__icon">{icon(p["icon"], 48)}</span></div>'
     else:
         img = ""  # no picture: the card is text only
     chips = "".join(f'<li class="chip">{e(c.strip())}</li>' for c in p.get("chips", "").split(",") if c.strip())
