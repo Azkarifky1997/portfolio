@@ -4,7 +4,7 @@ title_html: *Rural Loan:* a first loan for farmers with no ID, bank account or c
 slug: rural-loan
 label: Case study · Financial inclusion · 2021
 summary: Designing a first loan for farmers who had never had a bank account, ID card or credit history.
-intro: How in-language field research shaped a loan, its rules and the tool bank staff used in the village.
+intro: How in-language field research shaped a loan, its rules and the tool field agents used in the village.
 chips: Design thinking, In-language field research, Mixed-method interviews, Affinity mapping, Journey mapping, Service blueprint, Wireframes
 header_image: rural-loan-kyc.png
 header_image_alt: Diagram comparing identity checks: the bank asking for ID, and the exporter confirming farmers from its trading records
@@ -45,7 +45,7 @@ Most smallholder farmers had no ID, bank account, financial history or collatera
 +++
 section: process
 eyebrow: Research process
-stages: Empathise: Desk research, Stakeholder interviews, App demo, Field interviews, Gamified voting; Define: Affinity mapping, Journey mapping, Key insights; Ideate: Service flows, Partner workshops; Prototype: Service blueprint, Wireframes, Functional specifications; Deliver: MVP agreed by the consortium, Launched by MiBank
+stages: Empathise: Desk research, Stakeholder interviews, App demo, Field interviews, Gamified voting; Define: Affinity mapping, Journey mapping, Key insights; Ideate: Service flows, Partner workshops; Prototype: Service blueprint, Wireframes, Functional specifications, Usability testing; Deliver: MVP agreed by the consortium, Launched by MiBank
 +++
 
 ## *Design thinking*, run remotely through local researchers
@@ -58,7 +58,7 @@ Researchers drew grids, and farmers voted by marking them with fruit peel.
 
 ### Mapping a farmer's financial year
 image: rural-loan-farmers-year.png | A 12-month band showing the vanilla cycle in three phases: growing and pollinating, harvest and selling, and waiting for the next harvest. Money is needed for tools and labour while growing, income arrives at harvest, and repayment should follow income. | A farmer's year. Recreated from memory.
-We synthesised the transcripts on the wall into pain points, needs and themes, then mapped farmers' financial lives across the harvest year.
+I built affinity boards in Miro, clustering every point by theme, then mapped farmers' financial lives across the harvest year.
 
 ### The whole service, not just a screen
 image: rural-loan-blueprint.png | Service blueprint with four lanes: farmer, field staff using the loan tool, exporter, and back office. In the village and offline: staff visit the farmer and capture the application, the exporter confirms identity from its trading records, and staff check eligibility. At the bank: data syncs and the back office makes the credit decision. Then the farmer is notified and repays. | Service blueprint, from village visit to repayment. Recreated from memory.
@@ -84,7 +84,7 @@ eyebrow: Key insights
 section: thinking
 +++
 
-One early question was whether farmers could apply for the loan through an app themselves. Field research answered it quickly: many farmers had low literacy, little experience of formal finance and often no ID, so a self-service app would have shut most of them out. We shifted to an assisted model, with bank staff applying alongside farmers in their villages, and rethought identity checks around the trading records farmers already had.
+One early question was whether farmers could apply for the loan through an app themselves. Field research answered it quickly: many farmers had low literacy, little experience of formal finance and often no ID, so a self-service app would have shut most of them out. We shifted to an assisted model, with the vanilla trader's field agents, acting for the bank, applying alongside farmers in their villages, and rethought identity checks around the trading records farmers already had.
 
 +++
 section: solution
@@ -94,17 +94,18 @@ eyebrow: The solution
 ## From insight to *design decision*
 
 - No ID, but a trusted trading relationship | Identity from the buyer's trading records
-- Few smartphones, agents have them | An assisted model: agents apply alongside farmers in the village
+- Few smartphones, agents have them | An assisted model: trained field agents apply alongside farmers in the village
 - Loans needed to expand | Three loan sizes tied to vine count (300, 500 and 1,000 kina, about £69 to £230)
-- Credit is unfamiliar | Mandatory financial literacy training
+- Money needs went beyond farming: death, school fees, sickness | Wider loan purposes, with an 'Other' option
+- Credit is unfamiliar | Financial literacy training before applying, part of eligibility
 
 **Trade-off:** basing identity on trading records limited the loan to farmers already trading with one buyer. In return, it made KYC possible at all, and it built on a relationship farmers already trusted.
 
 ![Before and after comparison. Before: the bank asks for an ID or birth certificate, so most farmers cannot apply. After: the exporter confirms the farmer from its trading records, so the farmer can apply, and their trading history starts their credit history.](rural-loan-kyc.png "KYC without ID documents: how a farmer proves who they are. Recreated from memory.")
 
-**Trade-off:** the tool had to work offline in the field. In our designs, that meant applications were captured in the village and the credit decision followed once staff were back at the bank.
+**Trade-off:** the tool had to work offline in the field. In our designs, that meant applications were captured in the village and the credit decision followed once the data synced with the bank.
 
-![Four phone-screen wireframes in sequence. 1, Log in: phone number and PIN fields. 2, Enter your details: full name, village and phone number. 3, Choose the amount: a loan amount in kina, chosen from three options, with a note to repay after harvest. 4, Check and apply: a summary of name, village, amount and repayment, a tick box to agree to the loan terms, and an Apply button.](rural-loan-wireframes.png "Wireframes of the loan application tool that MiBank field staff used with farmers. Recreated from memory.")
+![Four phone-screen wireframes in sequence. 1, Log in: phone number and PIN fields. 2, Enter your details: full name, village and phone number. 3, Choose the amount: a loan amount in kina, chosen from three options, with a note to repay after harvest. 4, Check and apply: a summary of name, village, amount and repayment, a tick box to agree to the loan terms, and an Apply button.](rural-loan-wireframes.png "Wireframes of the loan application tool that field agents used with farmers. Recreated from memory.")
 
 +++
 section: impact
@@ -125,7 +126,7 @@ eyebrow: Reflection
 
 - **Test the rules, not just the screens.** Farmers still struggled with a fixed due date that didn't match when they were paid. Terms and fees decide whether someone can repay, so I'd test them with farmers before launch.
 - **Design for who's missing.** We heard that women often had no money of their own. GSMA found women were 4% of borrowers early in the pilot and 35% by the end. Next time I'd act on what we heard about women from the start.
-- **Make insights survive delivery.** I left before the pilot, so I couldn't see which recommendations held. I'd agree up front how the key findings will be checked in the live product.
+- **Make insights survive delivery.** The MVP the partners agreed had shorter terms than we recommended, to meet the pilot deadline. Next time I'd bring partners into the synthesis, so they see the evidence, not just the results.
 
 +++
 section: sources
